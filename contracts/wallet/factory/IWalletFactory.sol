@@ -3,11 +3,29 @@
 pragma solidity ^0.8.4;
 
 import {IWalletFactoryInternal} from "./IWalletFactoryInternal.sol";
+import {WalletFactoryStorage} from "./WalletFactoryStorage.sol";
 
 /**
  * @title Semaphore interface
  */
 interface IWalletFactory is IWalletFactoryInternal {
+    /**
+     * @notice query the mapping index of facet.
+     * @param facetAddress: the address of the facet.
+     */
+    function getFacetIndex(address facetAddress) external view returns (uint);
+
+    /**
+     * @notice query a facet.
+     * @param arrayIndex: the index of Facet array.
+     */
+    function getFacet(uint arrayIndex) external view returns (WalletFactoryStorage.Facet memory);
+
+    /**
+     * @notice query all facets from the storage
+     */
+    function getFacets() external view returns (WalletFactoryStorage.Facet[] memory);
+
     /**
      * @notice predict the address of the new wallet
      * @param salt: salt to deterministically deploy the clone
@@ -62,9 +80,10 @@ interface IWalletFactory is IWalletFactoryInternal {
     /**
      * @notice deploy a new wallet from WalletDiamond
      * @param hashId: the hash of the identification of the user
+     * @param owner: the owner of the wallet
      * @return the address of the new wallet
      */
-    function createWallet(bytes32 hashId) external returns (address);
+    function createWallet(bytes32 hashId, address owner) external returns (address);
 
     /**
      * @notice create a new wallet from WalletDiamond

@@ -4,28 +4,25 @@ import { task, types } from "hardhat/config";
 task("deploy:diamond", "Deploy diamond contract")
   .addOptionalParam<boolean>("logs", "Print the logs", true, types.boolean)
   .addOptionalParam(
-    "account",
+    "owner",
     "The account to deploy the contract from",
     undefined,
     types.string
   )
   .addParam("name", "Diamond name", undefined, types.string)
-  .setAction(async ({ logs, account, name }, { ethers }): Promise<Contract> => {
+  .setAction(async ({ logs, owner, name }, { ethers }): Promise<Contract> => {
     const [deployer, aliceWallet, bobWallet] = await ethers.getSigners();
 
-    let deployerAccount;
-    if (account === "alice") {
-      deployerAccount = aliceWallet;
-    } else if (account === "bob") {
-      deployerAccount = bobWallet;
+    const ContractFactory = await ethers.getContractFactory(name, {
+      signer: deployer,
+    });
+
+    let diamond: Contract;
+    if (owner) {
+      diamond = await ContractFactory.deploy(owner);
     } else {
-      deployerAccount = deployer;
+      diamond = await ContractFactory.deploy();
     }
-
-    logs && console.log("deployAccount:", deployerAccount.address);
-    const ContractFactory = await ethers.getContractFactory(name);
-
-    const diamond = await ContractFactory.deploy();
 
     await diamond.deployed();
 

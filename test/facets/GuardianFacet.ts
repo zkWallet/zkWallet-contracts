@@ -61,6 +61,7 @@ describe("GuardianFacet", function () {
   beforeEach(async function () {
     diamond = await run("deploy:diamond", {
       name: "SimplicyWalletDiamond",
+      owner: owner.address,
       logs: false,
     });
 

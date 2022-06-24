@@ -28,10 +28,10 @@ interface IWalletFactoryInternal {
 
     /**
      * @notice emitted when a new facet is removed to WalletFactory
-     * @param facetName: name of the facet
+     * @param facetAddress: the address of the facet contract
      *
      */
-    event FacetIsRemoved(string facetName);
+    event FacetIsRemoved(address facetAddress);
 
     /**
      * @notice emitted when a guardian is added to WalletFactory

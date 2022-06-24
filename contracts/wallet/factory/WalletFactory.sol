@@ -4,8 +4,33 @@ pragma solidity ^0.8.4;
 
 import {IWalletFactory} from "./IWalletFactory.sol";
 import {WalletFactoryInternal} from "./WalletFactoryInternal.sol";
+import {WalletFactoryStorage} from "./WalletFactoryStorage.sol";
+
 
 abstract contract WalletFactory is IWalletFactory, WalletFactoryInternal {
+    /**
+     * @notice query the mapping index of facet.
+     * @param facetAddress: the address of the facet.
+     */
+    function getFacetIndex(address facetAddress) external view override returns (uint) {
+        return _getFacetIndex(facetAddress);
+    }
+
+    /**
+     * @notice query a facet.
+     * @param arrayIndex: the index of Facet array.
+     */
+    function getFacet(uint arrayIndex) external view override returns (WalletFactoryStorage.Facet memory) {
+        _getFacet(arrayIndex);
+    }
+
+    /**
+     * @notice query all facets from the storage
+     */
+    function getFacets() external view override returns (WalletFactoryStorage.Facet[] memory) {
+        _getFacets();
+    }
+    
     /**
      * @notice set the address of the Diamond contract
      * @param diamond: the address of the Diamond contract
@@ -53,10 +78,11 @@ abstract contract WalletFactory is IWalletFactory, WalletFactoryInternal {
     /**
      * @notice deploy a new wallet from WalletDiamond
      * @param hashId: the hash of the identification of the user
+     * @param owner: the owner of the wallet
      * @return the address of the new wallet
      */
-    function createWallet(bytes32 hashId) external override returns (address) {
-        return _createWallet(hashId, msg.sender);
+    function createWallet(bytes32 hashId, address owner) external override returns (address) {
+        return _createWallet(hashId, owner);
     }
 
     /**

@@ -13,10 +13,16 @@ task("deploy:facets", "Deploy Facet contracts")
   .setAction(
     async ({ logs, facets }, { ethers }): Promise<DeployedContract[]> => {
       let contracts: DeployedContract[] = [];
+      const [deployer, aliceWallet, bobWallet] = await ethers.getSigners();
 
       logs && console.log(facets);
       for (let i = 0; i < facets.length; i++) {
-        const ContractFactory = await ethers.getContractFactory(facets[i].name);
+        const ContractFactory = await ethers.getContractFactory(
+          facets[i].name,
+          {
+            signer: deployer,
+          }
+        );
         const contract = await ContractFactory.deploy();
 
         await contract.deployed();

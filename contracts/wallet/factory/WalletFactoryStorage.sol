@@ -13,9 +13,12 @@ library WalletFactoryStorage {
     struct Layout {
         mapping(bytes32 => bytes32) guardians;
         mapping(bytes32 => address) wallets;
-        mapping(string => Facet) facets;
         mapping(address => uint256) indexOfErc721Token;
         address diamond;
+
+        // facet address -> facetsIdx
+        mapping(address => uint) facetIndex;
+        Facet[] facets;
     }
 
     bytes32 internal constant STORAGE_SLOT =
@@ -36,29 +39,60 @@ library WalletFactoryStorage {
         s.diamond = diamond;
     }
 
-    /**
-     * @notice add a new facet to facets mapping
-     * @param name: the name of the facet
-     * @param facetAddress: the address of the facet contract
-     * @param version: the version of the facet
+     /**
+     * @notice store a new facet in WalletFactory.
+     * @param name: the name of the Facet.
+     * @param facetAddress: the address of the facet.
+     * @param version: the version of the facet.
+     * @return returns a boolean value indicating whether the operation succeeded.
      */
-    function addFacet(
+    function storeFacet(
         Layout storage s,
         string memory name,
         address facetAddress,
         string memory version
-    ) internal {
-        s.facets[name].name = name;
-        s.facets[name].facetAddress = facetAddress;
-        s.facets[name].version = version;
+    ) internal returns (bool){
+        uint arrayIndex = s.facets.length;
+        uint index = arrayIndex + 1;
+        s.facets.push(
+            Facet(
+                name,
+                facetAddress,
+                version
+            )
+        );
+        s.facetIndex[facetAddress] = index;
+        return true;
     }
 
-    /**
-     * @notice remove a facet from facets mapping
-     * @param facetName: the name of the facet
+     /**
+     * @notice delete a facet from the storage,
+     * we are going to switch the last item in the array with the one we are replacing.
+     * That way when we pop, we are removing the correct item. 
+     *
+     * There are two cases we need to handle:
+     *  - the address we are removing is not the last address in the array
+     *  - or it is the last address in the array. 
+     * @param facetAddress: the address of the facet.
+     * @return returns a boolean value indicating whether the operation succeeded. 
      */
-    function removeFacet(Layout storage s, string memory facetName) internal {
-        delete s.facets[facetName];
+    function deleteFacet(
+        Layout storage s,
+        address facetAddress
+    ) internal returns (bool) {
+        uint index = s.facetIndex[facetAddress];
+        require(index > 0, "WalletFactory: FACET_NOT_EXISTS");
+
+        uint arrayIndex = index - 1;
+        require(arrayIndex >= 0, "WalletFactory: ARRAY_INDEX_OUT_OF_BOUNDS");
+
+        if(arrayIndex != s.facets.length - 1) {
+            s.facets[arrayIndex] = s.facets[s.facets.length - 1];
+            s.facetIndex[s.facets[arrayIndex].facetAddress] = index;
+        }
+        s.facets.pop();
+        delete s.facetIndex[facetAddress];
+        return true;
     }
 
     /**

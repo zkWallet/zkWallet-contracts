@@ -2,10 +2,13 @@
 
 pragma solidity ^0.8.4;
 
-import {SolidStateDiamond} from "@solidstate/contracts/proxy/diamond/SolidStateDiamond.sol";
+import {SimplicyDiamond} from "./SimplicyDiamond.sol";
 import {ISimplicyWalletDiamond} from "./ISimplicyWalletDiamond.sol";
 
-contract SimplicyWalletDiamond is ISimplicyWalletDiamond, SolidStateDiamond {
+contract SimplicyWalletDiamond is ISimplicyWalletDiamond, SimplicyDiamond {
+    constructor(address owner_) public {
+        _init(owner_);
+    }
     /**
      * @notice return the current version of the diamond
      */
@@ -18,3 +21,4 @@ contract SimplicyWalletDiamond is ISimplicyWalletDiamond, SolidStateDiamond {
         return "0.0.1";
     }
 }
+

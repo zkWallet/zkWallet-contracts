@@ -5,7 +5,7 @@ pragma solidity ^0.8.4;
 import "hardhat/console.sol";
 import {ERC165, IERC165, ERC165Storage} from "@solidstate/contracts/introspection/ERC165.sol";
 import {IDiamondWritable} from "@solidstate/contracts/proxy/diamond/writable/IDiamondWritable.sol";
-import {ISafeOwnable} from "@solidstate/contracts/access/ownable/ISafeOwnable.sol";
+import {ISafeOwnable, IOwnable} from "@solidstate/contracts/access/ownable/ISafeOwnable.sol";
 import "@openzeppelin/contracts/utils/Create2.sol";
 
 import {SimplicyWalletDiamond, ISimplicyWalletDiamond} from "../../diamond/SimplicyWalletDiamond.sol";
@@ -27,34 +27,33 @@ abstract contract WalletFactoryInternal is IWalletFactoryInternal {
     string public constant WALLET_CREATION = "WALLET_CREATION";
 
     /**
+     * @notice internal function query the mapping index of facet.
+     * @param facetAddress: the address of the facet.
+     */
+    function _getFacetIndex(address facetAddress) internal view virtual returns (uint) {
+        return WalletFactoryStorage.layout().facetIndex[facetAddress];
+    }
+
+    /**
+     * @notice internal function query a facet.
+     * @param arrayIndex: the index of Facet array.
+     */
+    function _getFacet(uint arrayIndex) internal view virtual returns (WalletFactoryStorage.Facet memory) {
+        return WalletFactoryStorage.layout().facets[arrayIndex];
+    }
+
+    /**
+     * @notice internal function query all facets from the storage
+     */
+    function _getFacets() internal view virtual returns (WalletFactoryStorage.Facet[] memory) {
+        return WalletFactoryStorage.layout().facets;
+    }
+
+    /**
      * @notice internal function query the address of the Diamond contract
      */
     function _getDiamond() internal view virtual returns (address) {
         return WalletFactoryStorage.layout().diamond;
-    }
-
-    /**
-     * @notice internal function query the facet address
-     */
-    function _getFacetAddress(string memory name)
-        internal
-        view
-        virtual
-        returns (address)
-    {
-        return (WalletFactoryStorage.layout().facets[name]).facetAddress;
-    }
-
-    /**
-     * @notice internal function query the facet version
-     */
-    function _getFacetVersion(string memory name)
-        internal
-        view
-        virtual
-        returns (string memory)
-    {
-        return (WalletFactoryStorage.layout().facets[name]).version;
     }
 
     /**
@@ -104,19 +103,19 @@ abstract contract WalletFactoryInternal is IWalletFactoryInternal {
         address facetAddress,
         string memory version
     ) internal virtual {
-        WalletFactoryStorage.layout().addFacet(name, facetAddress, version);
+        WalletFactoryStorage.layout().storeFacet(name, facetAddress, version);
 
         emit FacetIsAdded(name, facetAddress, version);
     }
 
     /**
      * @notice internal function remove facet to facets mapping
-     * @param facetName: facet name to be removed
+     * @param facetAddress: facet name to be removed
      */
-    function _removeFacet(string memory facetName) internal virtual {
-        WalletFactoryStorage.layout().removeFacet(facetName);
+    function _removeFacet(address facetAddress) internal virtual {
+        WalletFactoryStorage.layout().deleteFacet(facetAddress);
 
-        emit FacetIsRemoved(facetName);
+        emit FacetIsRemoved(facetAddress);
     }
 
     /**
@@ -155,7 +154,7 @@ abstract contract WalletFactoryInternal is IWalletFactoryInternal {
     {
         address diamond = _getDiamond();
 
-        address deployed = address(new SimplicyWalletDiamond());
+        address deployed = address(new SimplicyWalletDiamond(owner));
 
         WalletFactoryStorage.layout().addWallet(hashId, deployed);
 

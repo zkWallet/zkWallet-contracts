@@ -10,7 +10,14 @@ task("deploy:verifier", "Deploy a Verifier contract")
   )
   .addOptionalParam<boolean>("logs", "Print the logs", true, types.boolean)
   .setAction(async ({ depth, logs }, { ethers }): Promise<Contract> => {
-    const ContractFactory = await ethers.getContractFactory(`Verifier${depth}`);
+    const [deployer, aliceWallet, bobWallet] = await ethers.getSigners();
+
+    const ContractFactory = await ethers.getContractFactory(
+      `Verifier${depth}`,
+      {
+        signer: deployer,
+      }
+    );
 
     const contract = await ContractFactory.deploy();
 

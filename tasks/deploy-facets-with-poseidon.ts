@@ -16,6 +16,8 @@ task("deploy:facets-with-poseidon", "Deploy Facet with poseidon contract")
       { logs, library, facets },
       { ethers }
     ): Promise<DeployedContract[]> => {
+      const [deployer, aliceWallet, bobWallet] = await ethers.getSigners();
+
       let contracts: DeployedContract[] = [];
 
       logs && console.log(facets);
@@ -26,6 +28,7 @@ task("deploy:facets-with-poseidon", "Deploy Facet with poseidon contract")
             libraries: {
               PoseidonT3: library,
             },
+            signer: deployer,
           }
         );
         const contract = await ContractFactory.deploy();

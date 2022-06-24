@@ -32,7 +32,7 @@ library GuardianStorage {
     }
 
     /**
-     * @notice add an new guardian to the storage.
+     * @notice store an new guardian to the storage.
      * @param hashId: the hashId of the guardian.
      * @param validSince: the valid period since the guardian is added.
      * @return returns a boolean value indicating whether the operation succeeded.

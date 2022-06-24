@@ -10,7 +10,7 @@
     "build": "hardhat compile && lerna run tsc",
     "prepare": "husky install",
     "download:snark-artifacts": "hardhat run scripts/download-snark-artifacts.ts",
-    "deploy:all": "hardhat run scripts/deploy-all.ts",
+    "deploy:all": "hardhat run scripts/deploy-all.ts --network",
     "deploy:factory": "hardhat run scripts/deploy-factory.ts",
     "compile:circuits": "ts-node scripts/compile-circuits.ts",
     "deploy:verifier": "hardhat deploy:verifier",

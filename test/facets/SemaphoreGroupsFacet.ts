@@ -42,6 +42,7 @@ describe("SemaphoreGroupsFacet", function () {
     this.deployer = deployer;
     diamond = await run("deploy:diamond", {
       name: "SimplicyWalletDiamond",
+      owner: owner.address,
       logs: false,
     });
 
