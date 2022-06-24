@@ -1,6 +1,6 @@
 import fs from "fs";
 import { BigNumber, Contract } from "ethers";
-import { run, hardhatArguments, ethers } from "hardhat";
+import { run, hardhatArguments, ethers, network } from "hardhat";
 import {
   SimplicyWalletDiamond,
   WalletFactoryDiamond,
@@ -52,9 +52,13 @@ async function main() {
 
   const [deployer, aliceWallet, bobWallet] = await ethers.getSigners();
 
+  console.log("network:", network.name);
   console.log("deployer", deployer.address);
+  console.log("Account balance:", (await deployer.getBalance()).toString());
   console.log("aliceWallet", aliceWallet.address);
+  console.log("Account balance:", (await aliceWallet.getBalance()).toString());
   console.log("bobWallet", bobWallet.address);
+  console.log("Account balance:", (await bobWallet.getBalance()).toString());
 
   const deployedContracts: { name: string; address: string }[] = [];
   const transactionHash: {

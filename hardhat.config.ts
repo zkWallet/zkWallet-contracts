@@ -73,6 +73,14 @@ const config: HardhatUserConfig = {
         process.env.BOB_PRIVATE_KEY as string,
       ],
     },
+    harmonyDevnet: {
+      url: process.env.HARMONY_DEVNET_URL || "",
+      accounts: [
+        process.env.PRIVATE_KEY as string,
+        process.env.ALICE_PRIVATE_KEY as string,
+        process.env.BOB_PRIVATE_KEY as string,
+      ],
+    },
     harmonyTestnet: {
       url: process.env.HARMONY_TESTNET_URL || "",
       accounts: [
