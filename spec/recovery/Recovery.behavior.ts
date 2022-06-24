@@ -8,7 +8,7 @@ import { createMerkleProof } from "@semaphore-protocol/proof";
 import { MerkleProof } from "@zk-kit/incremental-merkle-tree";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { describeFilter } from "@solidstate/library";
-import { IRecovery } from "@solidstate/typechain-types";
+import { IRecovery } from "@simplicy/typechain-types";
 import { expect } from "chai";
 import { BigNumber, ContractTransaction } from "ethers";
 import { ethers } from "hardhat";
@@ -32,8 +32,8 @@ export interface RecoveryBehaviorArgs {
   getDepth: () => Promise<Number>;
   getMembers: () => Promise<bigint[]>;
   getRecoveryStatus: () => Promise<number>;
-  getMajority: () => Promise<Number>;
-  getRecoveryNominee: () => Promise<SignerWithAddress>;
+  getMajority: () => Promise<BigNumber>;
+  getRecoveryNominee: () => Promise<string>;
   getRecoveryCounter: () => Promise<number>;
   recover: (
     groupId: BigNumber,
@@ -104,32 +104,10 @@ export function describeBehaviorOfRecovery(
       it("should starts with 0", async function () {
         expect(await instance.callStatic["getRecoveryStatus()"]()).to.equal(0);
       });
-      it("should change to 1", async function () {
-        await instance["recover(uint256,bytes32,uint256,uint256[8],address)"](
-          groupId,
-          bytes32Signal,
-          fullProof.publicSignals.nullifierHash,
-          fullProof.publicSignals.externalNullifier,
-          solidityProof,
-          nominee.address
-        );
-        expect(await instance.callStatic["getRecoveryStatus()"]()).to.equal(1);
-      });
     });
     describe("#getMajority()", function () {
       it("should starts with 0", async function () {
         expect(await instance.callStatic["getMajority()"]()).to.equal(0);
-      });
-      it("should change to 2", async function () {
-        await instance["recover(uint256,bytes32,uint256,uint256[8],address)"](
-          groupId,
-          bytes32Signal,
-          fullProof.publicSignals.nullifierHash,
-          fullProof.publicSignals.externalNullifier,
-          solidityProof,
-          nominee.address
-        );
-        expect(await instance.callStatic["getMajority()"]()).to.equal(2);
       });
     });
     describe("#getRecoveryNominee()", function () {
@@ -138,40 +116,16 @@ export function describeBehaviorOfRecovery(
           ethers.constants.AddressZero
         );
       });
-      it("should change to nominee", async function () {
-        await instance["recover(uint256,bytes32,uint256,uint256[8],address)"](
-          groupId,
-          bytes32Signal,
-          fullProof.publicSignals.nullifierHash,
-          fullProof.publicSignals.externalNullifier,
-          solidityProof,
-          nominee.address
-        );
-        expect(await instance.callStatic["getRecoveryNominee()"]()).to.equal(
-          nominee.address
-        );
-      });
     });
     describe("#getRecoveryCounter()", function () {
       it("should starts with 0", async function () {
         expect(await instance.callStatic["getRecoveryCounter()"]()).to.equal(0);
       });
-      it("should change to 1", async function () {
-        await instance["recover(uint256,bytes32,uint256,uint256[8],address)"](
-          groupId,
-          bytes32Signal,
-          fullProof.publicSignals.nullifierHash,
-          fullProof.publicSignals.externalNullifier,
-          solidityProof,
-          nominee.address
-        );
-        expect(await instance.callStatic["getRecoveryCounter()"]()).to.equal(1);
-      });
     });
-    describe("#recover(uint256,bytes32,uint256,uint256[8],address)", function () {
+    describe("#recover(uint256,bytes32,uint256,uint256,uint256[8],address)", function () {
       it("should emits events", async function () {
         const transaction = await instance[
-          "recover(uint256,bytes32,uint256,uint256[8],address)"
+          "recover(uint256,bytes32,uint256,uint256,uint256[8],address)"
         ](
           groupId,
           bytes32Signal,
@@ -181,14 +135,83 @@ export function describeBehaviorOfRecovery(
           nominee.address
         );
 
-        const receipt = await transaction.wait();
-        console.log(receipt.events);
-
         await expect(transaction)
           .to.emit(instance, "ProofVerified")
           .withArgs(groupId, bytes32Signal);
       });
-      describe("reverts if", function () {});
+      describe("#getRecoveryStatus()", function () {
+        it("should have status PENDING", async function () {
+          await instance[
+            "recover(uint256,bytes32,uint256,uint256,uint256[8],address)"
+          ](
+            groupId,
+            bytes32Signal,
+            fullProof.publicSignals.nullifierHash,
+            fullProof.publicSignals.externalNullifier,
+            solidityProof,
+            nominee.address
+          );
+
+          expect(await instance.callStatic["getRecoveryStatus()"]()).to.equal(
+            1
+          );
+        });
+      });
+      describe("#getMajority()", function () {
+        it("should haver majority 2", async function () {
+          await instance[
+            "recover(uint256,bytes32,uint256,uint256,uint256[8],address)"
+          ](
+            groupId,
+            bytes32Signal,
+            fullProof.publicSignals.nullifierHash,
+            fullProof.publicSignals.externalNullifier,
+            solidityProof,
+            nominee.address
+          );
+
+          expect(await instance.callStatic["getMajority()"]()).to.equal(2);
+        });
+      });
+      describe("#getRecoveryNominee()", function () {
+        it("should have nominee address", async function () {
+          await instance[
+            "recover(uint256,bytes32,uint256,uint256,uint256[8],address)"
+          ](
+            groupId,
+            bytes32Signal,
+            fullProof.publicSignals.nullifierHash,
+            fullProof.publicSignals.externalNullifier,
+            solidityProof,
+            nominee.address
+          );
+
+          expect(await instance.callStatic["getRecoveryNominee()"]()).to.equal(
+            nominee.address
+          );
+        });
+      });
+      describe("#getRecoveryCounter()", function () {
+        it("should add counter", async function () {
+          await instance[
+            "recover(uint256,bytes32,uint256,uint256,uint256[8],address)"
+          ](
+            groupId,
+            bytes32Signal,
+            fullProof.publicSignals.nullifierHash,
+            fullProof.publicSignals.externalNullifier,
+            solidityProof,
+            nominee.address
+          );
+
+          expect(await instance.callStatic["getRecoveryCounter()"]()).to.equal(
+            1
+          );
+        });
+      });
+      describe("reverts if", function () {
+        // TODO: non semaphore
+      });
     });
   });
 }

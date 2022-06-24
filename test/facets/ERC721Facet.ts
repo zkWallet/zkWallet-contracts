@@ -5,7 +5,7 @@ import {
   ERC721Mock,
   ERC721Mock__factory,
   SimplicyWalletDiamond,
-} from "@solidstate/typechain-types";
+} from "@simplicy/typechain-types";
 
 describe("ERC721Facet", function () {
   let owner: SignerWithAddress;

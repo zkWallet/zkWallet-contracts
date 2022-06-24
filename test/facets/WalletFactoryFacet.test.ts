@@ -5,7 +5,7 @@ import { Contract } from "ethers";
 import {
   SimplicyWalletDiamond,
   WalletFactoryDiamond,
-} from "@solidstate/typechain-types";
+} from "@simplicy/typechain-types";
 
 type DeployedContract = {
   name: string;

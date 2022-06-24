@@ -4,7 +4,7 @@ import { ethers, run } from "hardhat";
 import {
   ISemaphoreGroupsBase,
   SimplicyWalletDiamond,
-} from "@solidstate/typechain-types";
+} from "@simplicy/typechain-types";
 import { createIdentityCommitments } from "../utils";
 import { describeBehaviorOfSemaphoreGroupsBase } from "@simplicy/spec";
 import { BigNumber } from "ethers";

@@ -67,7 +67,7 @@ async function main() {
     facets: [{ name: "WalletFactoryFacet" }],
   });
 
-  for (let i = 0; i < facets.length; i++) {
+  for (let i = 0; i < factoryFacets.length; i++) {
     deployedContracts.push({
       name: factoryFacets[i].name,
       address: factoryFacets[i].address,
@@ -77,7 +77,7 @@ async function main() {
       target: factoryFacets[i].address,
       action: 0,
       selectors: Object.keys(factoryFacets[i].contract.interface.functions).map(
-        (fn) => facets[i].contract.interface.getSighash(fn)
+        (fn) => factoryFacets[i].contract.interface.getSighash(fn)
       ),
     });
   }

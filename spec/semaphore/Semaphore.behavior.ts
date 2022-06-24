@@ -8,7 +8,7 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { createMerkleProof } from "@semaphore-protocol/proof";
 import { MerkleProof } from "@zk-kit/incremental-merkle-tree";
 import { describeFilter } from "@solidstate/library";
-import { ISemaphore } from "@solidstate/typechain-types";
+import { ISemaphore } from "@simplicy/typechain-types";
 import { expect } from "chai";
 import { BigNumber, ContractTransaction } from "ethers";
 import { ethers } from "hardhat";

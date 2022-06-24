@@ -7,7 +7,7 @@ import {IGuardian} from "../guardian/IGuardian.sol";
 /**
  * @title GuardianFacet interface
  */
-interface IGuardianFacet is IGuardian {
+interface IGuardianFacet {
     /**
      * @notice return the current version of GuardianFacet
      */
@@ -23,6 +23,6 @@ interface IGuardianFacet is IGuardian {
      function addGuardians(
         uint256 groupId,
         uint256[] memory identityCommitments,
-        GuardianDTO[] calldata guardians
+        IGuardian.GuardianDTO[] calldata guardians
     ) external;
 }

@@ -4,7 +4,7 @@ import { ethers, run } from "hardhat";
 import {
   ERC20Mock__factory,
   SimplicyWalletDiamond,
-} from "@solidstate/typechain-types";
+} from "@simplicy/typechain-types";
 
 describe("ERC20Facet", function () {
   let owner: SignerWithAddress;

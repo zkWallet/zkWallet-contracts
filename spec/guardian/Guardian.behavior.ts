@@ -1,7 +1,7 @@
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { createMerkleTree } from "@semaphore-protocol/proof";
 import { describeFilter } from "@solidstate/library";
-import { IGuardian } from "@solidstate/typechain-types";
+import { IGuardian } from "@simplicy/typechain-types";
 import { expect } from "chai";
 import { BigNumber, ContractTransaction } from "ethers";
 import { ethers } from "hardhat";

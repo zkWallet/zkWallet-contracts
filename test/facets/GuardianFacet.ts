@@ -15,7 +15,7 @@ import {
   ISemaphoreGroups,
   ISafeOwnable,
   SimplicyWalletDiamond,
-} from "@solidstate/typechain-types";
+} from "@simplicy/typechain-types";
 import { createIdentityCommitments } from "../utils";
 import { describeBehaviorOfGuardian } from "@simplicy/spec";
 import { BigNumber } from "ethers";
@@ -40,7 +40,7 @@ type Verifier = {
   merkleTreeDepth: number;
 };
 
-describe.only("GuardianFacet", function () {
+describe("GuardianFacet", function () {
   let owner: SignerWithAddress;
   let nomineeOwner: SignerWithAddress;
   let nonOwner: SignerWithAddress;
@@ -59,8 +59,6 @@ describe.only("GuardianFacet", function () {
   });
 
   beforeEach(async function () {
-    const [deployer] = await ethers.getSigners();
-    this.deployer = deployer;
     diamond = await run("deploy:diamond", {
       name: "SimplicyWalletDiamond",
       logs: false,
@@ -80,7 +78,7 @@ describe.only("GuardianFacet", function () {
       logs: false,
     });
 
-    facets = await run("deploy:with-poseidon", {
+    facets = await run("deploy:facets-with-poseidon", {
       library: poseidonT3.address,
       facets: [{ name: "GuardianFacet" }, { name: "SemaphoreGroupsFacet" }],
       logs: false,
@@ -104,9 +102,7 @@ describe.only("GuardianFacet", function () {
     ];
 
     //do the cut
-    await diamond
-      .connect(deployer)
-      .diamondCut(facetCuts, ethers.constants.AddressZero, "0x");
+    await diamond.diamondCut(facetCuts, ethers.constants.AddressZero, "0x");
 
     facets = await run("deploy:facets", {
       facets: [{ name: "SemaphoreFacet" }, { name: "RecoveryFacet" }],
@@ -131,9 +127,7 @@ describe.only("GuardianFacet", function () {
     ];
 
     //do the cut
-    await diamond
-      .connect(deployer)
-      .diamondCut(facetCuts, ethers.constants.AddressZero, "0x");
+    await diamond.diamondCut(facetCuts, ethers.constants.AddressZero, "0x");
 
     instance = await ethers.getContractAt("GuardianFacet", diamond.address);
     recoveryInstance = await ethers.getContractAt(
@@ -158,7 +152,7 @@ describe.only("GuardianFacet", function () {
 
   describe("::SimplicyWalletDiamond", function () {
     it("can call functions through diamond address", async function () {
-      expect(await diamond.owner()).to.equal(this.deployer.address);
+      expect(await diamond.owner()).to.equal(owner.address);
       expect(await diamond.version()).to.equal("0.0.1");
       expect(await instance.guardianFacetVersion()).to.equal("0.0.1");
       expect(await recoveryInstance.recoveryFacetVersion()).to.equal("0.0.1");
@@ -192,7 +186,7 @@ describe.only("GuardianFacet", function () {
         { merkleTreeDepth: Number(depth), contractAddress: verifierAddress },
       ];
 
-      await semaphoreInstance.connect(this.deployer).setVerifiers(verifiers);
+      await semaphoreInstance.connect(owner).setVerifiers(verifiers);
 
       await semaphoreGroupsInstance.createGroup(
         groupId,

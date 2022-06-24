@@ -57,6 +57,12 @@ yarn lerna-publish
 
 ## Deployment
 
+### All contracts
+
+```bash
+yarn deploy:all --network harmonyTestnet
+```
+
 ### Diamond
 
 ```bash

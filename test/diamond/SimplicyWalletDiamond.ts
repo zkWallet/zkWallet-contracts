@@ -3,11 +3,11 @@ import { describeBehaviorOfSolidStateDiamond } from "@solidstate/spec";
 import {
   SimplicyWalletDiamond,
   SimplicyWalletDiamond__factory,
-} from "@solidstate/typechain-types";
+} from "@simplicy/typechain-types";
 import { expect } from "chai";
 import { ethers } from "hardhat";
 
-describe.skip("SolidStateDiamond", function () {
+describe("SimplicyWalletDiamond", function () {
   let owner: SignerWithAddress;
   let getNomineeOwner: SignerWithAddress;
   let getNonOwner: SignerWithAddress;

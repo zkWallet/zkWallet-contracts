@@ -10,7 +10,7 @@ import { expect } from "chai";
 import { utils } from "ethers";
 import { ethers, run } from "hardhat";
 import { Contract } from "ethers";
-import { SimplicyWalletDiamond } from "@solidstate/typechain-types";
+import { SimplicyWalletDiamond } from "@simplicy/typechain-types";
 import { config } from "../../package.json";
 import { createTree, createIdentityCommitments } from "../utils";
 
