@@ -63,6 +63,7 @@ typechain
 # Hardhat
 artifacts
 cache
+flattened
 
 # Docusaurus cache and generated files
 .docusaurus

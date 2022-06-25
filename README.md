@@ -270,3 +270,16 @@ Verifier20 0x6a8DC73b21AE2A517BD3CFcf53CE32c89566BB6f
 Alice setVerifiers transaction hash:  0xb36c5a0e6d4d5a3d5413825fa23781e55e5a07598e55b764294532c48799388e
 Bob setVerifiers transaction hash:  0xe21c21ffe67281ba44fc2a445d262bf541763b4ae8c57e3f54e42445a7491e03
 ```
+
+## Deployment on Testnet
+```
+
+```
+
+## Contribute
+
+zkWallet Contracts exists thanks to its contributors. There are many ways you can participate and help build high quality software. Check out the [contribution guide](CONTRIBUTING.md)!
+
+## License
+
+zkWallet Contracts is released under the [Apache 2.0 License](LICENSE).

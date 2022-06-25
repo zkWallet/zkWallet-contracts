@@ -18,7 +18,9 @@ library GuardianStorage {
     struct Layout {
         // hashId -> guardianIdx
         mapping(uint256 => uint) guardianIndex;
+
         Guardian[] guardians;
+        
     }
 
     bytes32 internal constant STORAGE_SLOT =
@@ -75,8 +77,6 @@ library GuardianStorage {
 
         uint arrayIndex = index - 1;
          require(arrayIndex >= 0, "Guardian: ARRAY_INDEX_OUT_OF_BOUNDS");
-
-        // require(s.guardians[arrayIndex].status == 1, "Guardian: GUARDIAN_NOT_ADDED");
 
         if(arrayIndex != s.guardians.length - 1) {
             s.guardians[arrayIndex] = s.guardians[s.guardians.length - 1];
