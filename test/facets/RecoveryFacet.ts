@@ -18,7 +18,7 @@ const depth: Number = Number(process.env.TREE_DEPTH);
 const zero: BigNumber = ethers.constants.Zero;
 const members: bigint[] = createIdentityCommitments(3);
 
-describe.only("RecoveryFacet", function () {
+describe("RecoveryFacet", function () {
   let owner: SignerWithAddress;
   let nonOwner: SignerWithAddress;
   let nominee: SignerWithAddress;

@@ -89,14 +89,6 @@ const config: HardhatUserConfig = {
         process.env.BOB_PRIVATE_KEY as string,
       ],
     },
-    ropsten: {
-      url: process.env.ROPSTEN_URL || "",
-      accounts: [
-        process.env.PRIVATE_KEY as string,
-        process.env.ALICE_PRIVATE_KEY as string,
-        process.env.BOB_PRIVATE_KEY as string,
-      ],
-    },
   },
 
   gasReporter: {
