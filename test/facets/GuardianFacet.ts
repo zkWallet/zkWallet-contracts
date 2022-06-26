@@ -16,7 +16,7 @@ const depth: Number = Number(process.env.TREE_DEPTH);
 const zero: BigNumber = ethers.constants.Zero;
 const members: bigint[] = createIdentityCommitments(3);
 
-describe("GuardianFacet", function () {
+describe.only("GuardianFacet", function () {
   let owner: SignerWithAddress;
   let nonOwner: SignerWithAddress;
   let diamond: SimplicyWalletDiamond;

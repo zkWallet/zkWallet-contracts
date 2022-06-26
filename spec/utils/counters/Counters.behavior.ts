@@ -41,6 +41,14 @@ export function describeBehaviorOfCounters(
           .to.emit(instance, "Incremented")
           .withArgs("1", "1");
       });
+      describe("#current(uint256)", function () {
+        it("returns the current counter", async function () {
+          await instance["increment(uint256)"](firstIndex);
+          expect(
+            await instance.callStatic["current(uint256)"](firstIndex)
+          ).to.equal("1");
+        });
+      });
       describe("reverts if", function () {
         it("zero index", async function () {
           await expect(instance["increment(uint256)"](0)).to.be.revertedWith(
@@ -52,7 +60,22 @@ export function describeBehaviorOfCounters(
     describe("#decrement(uint256)", function () {
       it("should emit event", async function () {
         await instance.increment(firstIndex);
-        await instance["decrement(uint256)"](firstIndex);
+
+        const transaction = await instance["decrement(uint256)"](firstIndex);
+
+        await expect(transaction)
+          .to.emit(instance, "Decremented")
+          .withArgs("1", "0");
+      });
+      describe("#current(uint256)", function () {
+        it("returns the current counter", async function () {
+          await instance.increment(firstIndex);
+
+          await instance["decrement(uint256)"](firstIndex);
+          expect(
+            await instance.callStatic["current(uint256)"](firstIndex)
+          ).to.equal("0");
+        });
       });
       describe("reverts if", function () {
         it("zero index", async function () {
@@ -71,7 +94,19 @@ export function describeBehaviorOfCounters(
       it("should emit event", async function () {
         await instance.increment(firstIndex);
 
-        await instance["reset(uint256)"](firstIndex);
+        const transaction = await instance["reset(uint256)"](firstIndex);
+
+        await expect(transaction).to.emit(instance, "Reset").withArgs("1", "0");
+      });
+      describe("#current(uint256)", function () {
+        it("returns the current counter", async function () {
+          await instance.increment(firstIndex);
+
+          await instance["reset(uint256)"](firstIndex);
+          expect(
+            await instance.callStatic["current(uint256)"](firstIndex)
+          ).to.equal("0");
+        });
       });
       describe("reverts if", function () {
         it("zero index", async function () {

@@ -1,0 +1,180 @@
+[
+    {
+        "name": "Verifier16",
+        "address": "0x8A2b8203aec1b11d130A7Db6D0D87D5c44995095"
+    },
+    {
+        "name": "Verifier17",
+        "address": "0x65f00e0df2a6c51c3014Cc231DC501BaA706b6ea"
+    },
+    {
+        "name": "Verifier18",
+        "address": "0xF2AcC0D3cBf8ACb6c37f59cBFd3E2AFff751Ce2a"
+    },
+    {
+        "name": "Verifier19",
+        "address": "0x4F33CD3bD38F0373594FaA42A4aE1a893e0f6A49"
+    },
+    {
+        "name": "Verifier20",
+        "address": "0x3259Af63799D2b3fF46EFC3C72626484F792f42b"
+    },
+    {
+        "name": "Verifier21",
+        "address": "0xaCdA7828C9300cd7B2B89F429CAaeec2D04CfCdc"
+    },
+    {
+        "name": "Verifier22",
+        "address": "0xCF97AeC8FbE72162b32E4EE6e3e1B14221293B92"
+    },
+    {
+        "name": "Verifier23",
+        "address": "0xa3BF9eAf67bCC620eE816E0539A1AC0573629710"
+    },
+    {
+        "name": "Verifier24",
+        "address": "0x19bE795aAfEd702EE152F3caCf074882e2824F5F"
+    },
+    {
+        "name": "Verifier25",
+        "address": "0x2A7f2AF05431De3A88Bb3F545E1e39E45fD0815A"
+    },
+    {
+        "name": "Verifier26",
+        "address": "0xF4918aF34B1Acbe8fB134d0CE0acd7D22Dd4C871"
+    },
+    {
+        "name": "Verifier27",
+        "address": "0xf7480Aff97dcF30833a738E00e4d104A0A29D5c8"
+    },
+    {
+        "name": "Verifier28",
+        "address": "0x5eDD93fCa95496A2bf6D1C95f1dB47302f80f0DF"
+    },
+    {
+        "name": "Verifier29",
+        "address": "0x92a829f24114AD40dD19B2e00CE84457d63B7756"
+    },
+    {
+        "name": "Verifier30",
+        "address": "0x42B456fac07492DeafF822b31372D13eD8CdD051"
+    },
+    {
+        "name": "Verifier31",
+        "address": "0x08F784a2f7741F81179Eb489f6916dc69bC5829c"
+    },
+    {
+        "name": "Verifier32",
+        "address": "0x5332243d6e870FdFfaC2c64F11c1C1D9bC59ea7b"
+    },
+    {
+        "name": "WalletFactoryDiamond",
+        "address": "0xee6637D142A6A7f0a032aA3f17b14b07821d1407"
+    },
+    {
+        "name": "WalletFactoryFacet",
+        "address": "0xF140101392132f00C4F974fF001594779F27e866"
+    },
+    {
+        "name": "CountersFacet",
+        "address": "0x42C692f92F3872A5129D86AB84C782e2338597f1"
+    },
+    {
+        "name": "SimplicyWalletDiamond",
+        "address": "0xA122cd999ff7f03D6AC9B986eBC888425195F1a7"
+    },
+    {
+        "name": "PoseidonT3",
+        "address": "0x90682d322415e1833E566A3747A361F0f69c5f05"
+    },
+    {
+        "name": "GuardianFacet",
+        "address": "0x4F620660Ba0B531Ff7B08867ca10C5B1f338EB3B"
+    },
+    {
+        "name": "SemaphoreGroupsFacet",
+        "address": "0x691d261BEb6d4107e653EBf54D1fDfE20F8E25e2"
+    },
+    {
+        "name": "ERC20Facet",
+        "address": "0x2Fd8f53Ba5D32A181D92e609fBf4A396fcA38de3"
+    },
+    {
+        "name": "ERC721Facet",
+        "address": "0x1Fa26E1146AeCe5A617D79Df43132A21d58cAcb1"
+    },
+    {
+        "name": "Alice Wallet",
+        "address": "0x64C2Fbc31afE74BAEcAe92Bb28D33bce6B454C0B"
+    },
+    {
+        "name": "Bob Wallet",
+        "address": "0xE5581265432511eF7470759BeB3275cCEc529b75"
+    }
+][
+    {
+        "name": "Add facet to Factory, facet name: ERC20Facet",
+        "contractAddress": "0x2Fd8f53Ba5D32A181D92e609fBf4A396fcA38de3",
+        "hash": "0xf582e9ed01c75519d0a5d3ac12dce428600352206b2adb0307e1783d81afb329"
+    },
+    {
+        "name": "Add facet to Factory, facet name: ERC721Facet",
+        "contractAddress": "0x1Fa26E1146AeCe5A617D79Df43132A21d58cAcb1",
+        "hash": "0x566d8ce2599c449ef4e566e19283aa42af113c28959ff40c56bea24a53e34820"
+    },
+    {
+        "name": "Add facet to Factory, facet name: RecoveryFacet",
+        "contractAddress": "0xc12eF7d779bE1EaAF6d29fA5B5F76EBcFb4a3c5a",
+        "hash": "0x84c9808a55ab0851d1ec036fa44b1f0eeed9dee02ae6c34a4274edb1001fb6ff"
+    },
+    {
+        "name": "Add facet to Factory, facet name: SemaphoreFacet",
+        "contractAddress": "0x32A7C90b35A424ae390ad02dC70C5dBfE40d12B9",
+        "hash": "0xc64bb76265693cb7cf9ad9b67112ec8cc0d5a75d126dcba322b9e47ee406f5eb"
+    },
+    {
+        "name": "Add facet to Factory, facet name: SemaphoreVotingFacet",
+        "contractAddress": "0x9F1C425CC7ef7DfDC963Ff4562132dc276e3B094",
+        "hash": "0x72051fec25d1c641b26d1367a0f65bc2a0f806dfe4468ed59850c1433fd60943"
+    },
+    {
+        "name": "Create wallet for alice",
+        "contractAddress": "0x64C2Fbc31afE74BAEcAe92Bb28D33bce6B454C0B",
+        "hash": "0xf233e0e90092db9e10065676e5610e1d03e3a902228818ad8e06ea97faf0dbeb"
+    },
+    {
+        "name": "Create wallet for bob",
+        "contractAddress": "0xE5581265432511eF7470759BeB3275cCEc529b75",
+        "hash": "0xf233e0e90092db9e10065676e5610e1d03e3a902228818ad8e06ea97faf0dbeb"
+    },
+    {
+        "name": "Alice setVerifiers",
+        "contractAddress": "0x64C2Fbc31afE74BAEcAe92Bb28D33bce6B454C0B",
+        "hash": "0x451efad5993a47d155a17b573b2c7b0b9226c364f3c730ca5d06c424e943e6c9"
+    },
+    {
+        "name": "Bob setVerifiers",
+        "contractAddress": "0xE5581265432511eF7470759BeB3275cCEc529b75",
+        "hash": "0xc9db152c18348593eff6a8429dfbb7cb128021a7fe7b4eaace7579e186d6efaa"
+    },
+    {
+        "name": "aliceCreateGroupTransaction",
+        "contractAddress": "0x64C2Fbc31afE74BAEcAe92Bb28D33bce6B454C0B",
+        "hash": "0x3c4726f5d2e019f5ba56000da71e61c4342952acad40462069ef99990fa466e6"
+    },
+    {
+        "name": "bobCreateGroupTransaction",
+        "contractAddress": "0xE5581265432511eF7470759BeB3275cCEc529b75",
+        "hash": "0xcfbd872de41020de551206866d374e478be8072fd65c55fd2f1bf76939235768"
+    },
+    {
+        "name": "Add Guardians to Alice Wallet",
+        "contractAddress": "0x64C2Fbc31afE74BAEcAe92Bb28D33bce6B454C0B",
+        "hash": "0xf233e0e90092db9e10065676e5610e1d03e3a902228818ad8e06ea97faf0dbeb"
+    },
+    {
+        "name": "Add Guardians to Bob Wallet",
+        "contractAddress": "0xE5581265432511eF7470759BeB3275cCEc529b75",
+        "hash": "0xf233e0e90092db9e10065676e5610e1d03e3a902228818ad8e06ea97faf0dbeb"
+    }
+]

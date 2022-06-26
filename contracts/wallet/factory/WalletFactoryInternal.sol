@@ -16,10 +16,12 @@ import {ISemaphore} from "../../semaphore/ISemaphore.sol";
 import {ISemaphoreGroups} from "../../semaphore/ISemaphoreGroups.sol";
 import {ISemaphoreVoting} from "../../semaphore/extensions/SemaphoreVoting/ISemaphoreVoting.sol";
 
+import {CountersInternal} from "../../utils/counters/CountersInternal.sol";
+
 /**
  * @title WalletFactory internal functions
  */
-abstract contract WalletFactoryInternal is IWalletFactoryInternal {
+abstract contract WalletFactoryInternal is IWalletFactoryInternal, CountersInternal {
     using WalletFactoryStorage for WalletFactoryStorage.Layout;
     using WalletFactoryStorage for WalletFactoryStorage.Facet;
     using ERC165Storage for ERC165Storage.Layout;

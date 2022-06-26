@@ -8,17 +8,7 @@ import {
   SimplicyWalletDiamond,
   WalletFactoryFacet,
 } from "@simplicy/typechain-types";
-
-type Verifier = {
-  contractAddress: string;
-  merkleTreeDepth: number;
-};
-
-type DeployedContract = {
-  name: string;
-  contract: Contract;
-  address: string;
-};
+import { DeployedContract, Verifier } from "../types";
 
 async function main() {
   let factoryAddress: string;

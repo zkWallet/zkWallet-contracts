@@ -52,7 +52,7 @@ abstract contract CountersInternal is ICountersInternal {
     function _reset(uint256 index) internal {
         CountersStorage.layout().reset(index);
 
-        emit Reseted(index, _current(index));
+        emit Reset(index, _current(index));
     }
 
     /**

@@ -6,22 +6,7 @@ import {
   WalletFactoryDiamond,
   WalletFactoryFacet,
 } from "@simplicy/typechain-types";
-import { createIdentityCommitments } from "../test/utils";
-
-type Verifier = {
-  contractAddress: string;
-  merkleTreeDepth: number;
-};
-
-type DeployedContract = {
-  name: string;
-  contract: Contract;
-  address: string;
-};
-
-type GuardianDTO = {
-  hashId: BigNumber;
-};
+import { DeployedContract, Verifier } from "../types";
 
 async function main() {
   let factoryDiamond: WalletFactoryDiamond;
@@ -39,12 +24,22 @@ async function main() {
   let facets: DeployedContract[];
   let walletFacets: DeployedContract[];
 
-  const members: bigint[] = createIdentityCommitments(3);
-  let guardians: GuardianDTO[] = [];
-  guardians = [
-    { hashId: BigNumber.from(members[0]) },
-    { hashId: BigNumber.from(members[1]) },
-    { hashId: BigNumber.from(members[2]) },
+  const identityCommitments: BigNumber[] = [
+    BigNumber.from(
+      BigInt(
+        "417120863369177508448587683482618072152507466439565022803025664957553068359"
+      )
+    ),
+    BigNumber.from(
+      BigInt(
+        "2406831775386746519644490267981058842396908979429908114658351987980684638639"
+      )
+    ),
+    BigNumber.from(
+      BigInt(
+        "15064152082777430876487719843144077929032170478230727111576035711043722732420"
+      )
+    ),
   ];
 
   const depth = Number(process.env.TREE_DEPTH);
@@ -91,7 +86,7 @@ async function main() {
   });
 
   factoryFacets = await run("deploy:facets", {
-    facets: [{ name: "WalletFactoryFacet" }],
+    facets: [{ name: "WalletFactoryFacet" }, { name: "CountersFacet" }],
   });
 
   for (let i = 0; i < factoryFacets.length; i++) {
@@ -99,15 +94,23 @@ async function main() {
       name: factoryFacets[i].name,
       address: factoryFacets[i].address,
     });
-
-    facetCuts.push({
-      target: factoryFacets[i].address,
-      action: 0,
-      selectors: Object.keys(factoryFacets[i].contract.interface.functions).map(
-        (fn) => factoryFacets[i].contract.interface.getSighash(fn)
-      ),
-    });
   }
+  facetCuts = [
+    {
+      target: factoryFacets[0].address,
+      action: 0,
+      selectors: Object.keys(factoryFacets[0].contract.interface.functions).map(
+        (fn) => factoryFacets[0].contract.interface.getSighash(fn)
+      ),
+    },
+    {
+      target: factoryFacets[1].address,
+      action: 0,
+      selectors: Object.keys(factoryFacets[1].contract.interface.functions).map(
+        (fn) => factoryFacets[1].contract.interface.getSighash(fn)
+      ),
+    },
+  ];
 
   //do the cut
   await factoryDiamond.diamondCut(
@@ -139,7 +142,7 @@ async function main() {
   facets = await run("deploy:facets-with-poseidon", {
     library: poseidonT3Address,
     facets: [{ name: "GuardianFacet" }, { name: "SemaphoreGroupsFacet" }],
-    logs: false,
+    logs: true,
   });
 
   for (let i = 0; i < facets.length; i++) {
@@ -179,7 +182,7 @@ async function main() {
     ],
   });
 
-  for (let i = 0; i < facets.length; i++) {
+  for (let i = 0; i < walletFacets.length; i++) {
     deployedContracts.push({
       name: walletFacets[i].name,
       address: walletFacets[i].address,
@@ -446,7 +449,7 @@ async function main() {
 
   await aliceGuardianInstance
     .connect(aliceWallet)
-    .addGuardians(groupId, members, guardians);
+    .addGuardians(groupId, identityCommitments);
 
   transactionHash.push({
     name: "Add Guardians to Alice Wallet",
@@ -456,7 +459,7 @@ async function main() {
 
   await bobGuardianInstance
     .connect(bobWallet)
-    .addGuardians(groupId, members, guardians);
+    .addGuardians(groupId, identityCommitments);
 
   transactionHash.push({
     name: "Add Guardians to Bob Wallet",

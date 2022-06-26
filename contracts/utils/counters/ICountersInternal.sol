@@ -26,5 +26,5 @@ interface ICountersInternal {
      * @param index: the index of the counter
      * @param newValue: the new value of the counter
      */
-    event Reseted(uint256 indexed index, uint256 newValue);
+    event Reset(uint256 indexed index, uint256 newValue);
 }
