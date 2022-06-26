@@ -8,7 +8,6 @@ import {IGuardianInternal} from "./IGuardianInternal.sol";
 import {GuardianStorage} from "./GuardianStorage.sol";
 import {MIN_GUARDIANS, MAX_GUARDIANS, GUARDIAN_PENDING_PERIODS} from "../utils/Constants.sol";
 
-
 /**
  * @title Guardian internal functions, excluding optional extensions
  */
@@ -29,12 +28,12 @@ abstract contract GuardianInternal is IGuardianInternal {
         _;
     }
 
-    modifier isMinGuardian(GuardianDTO[] calldata guardians) {
+    modifier isMinGuardian(uint256[] memory guardians) {
         require(guardians.length >= MIN_GUARDIANS, "Guardian: MIN_GUARDIANS_NOT_MET");
         _;
     }
 
-    modifier isMaxGuardian(GuardianDTO[] calldata guardians) {
+    modifier isMaxGuardian(uint256[] memory guardians) {
         require(guardians.length <= MAX_GUARDIANS, "Guardian: MAX_GUARDIANS_EXCEEDED");
         _;
     }
@@ -165,7 +164,7 @@ abstract contract GuardianInternal is IGuardianInternal {
     /**
      * @notice hook that is called before setInitialGuardians
      */
-    function _beforeSetInitialGuardians(GuardianDTO[] calldata guardians) 
+    function _beforeSetInitialGuardians(uint256[] memory guardians) 
         internal 
         view
         virtual 
@@ -173,15 +172,15 @@ abstract contract GuardianInternal is IGuardianInternal {
         isMaxGuardian(guardians) 
     {
         for(uint i = 0; i < guardians.length; i++) {
-            require(guardians[i].hashId != 0, "Guardian: GUARDIAN_HASH_ID_IS_ZERO");
-            require(_getGuardianIndex(guardians[i].hashId) == 0, "Guardian: GUARDIAN_EXISTS");
+            require(guardians[i] != 0, "Guardian: GUARDIAN_HASH_ID_IS_ZERO");
+            require(_getGuardianIndex(guardians[i]) == 0, "Guardian: GUARDIAN_EXISTS");
         }
     }
 
     /**
      * @notice hook that is called after setInitialGuardians
      */
-    function _afterSetInitialGuardians(GuardianDTO[] calldata guardians) internal view virtual {}
+    function _afterSetInitialGuardians(uint256[] memory guardians) internal view virtual {}
 
     /**
      * @notice hook that is called before addGuardian
@@ -202,14 +201,14 @@ abstract contract GuardianInternal is IGuardianInternal {
     /**
      * @notice hook that is called before removeGuardians
      */
-    function _beforeRemoveGuardians(GuardianDTO[] calldata guardians) internal view virtual {
+    function _beforeRemoveGuardians(uint256[] memory guardians) internal view virtual {
         require(guardians.length > 0, "Guardian: NO_GUARDIANS_TO_REMOVE");
     }
 
     /**
      * @notice hook that is called after removeGuardians
      */
-    function _afterRemoveGuardians(GuardianDTO[] calldata guardians) internal view virtual  {}
+    function _afterRemoveGuardians(uint256[] memory guardians) internal view virtual  {}
 
 
     /**

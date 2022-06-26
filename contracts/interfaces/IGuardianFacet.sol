@@ -17,12 +17,10 @@ interface IGuardianFacet {
      * @notice add guardians
      * @param groupId: the group id of the semaphore group.
      * @param identityCommitments: the identity commitments of the guardian.
-     * @param guardians: guardians to add.
      *
      */
      function addGuardians(
         uint256 groupId,
-        uint256[] memory identityCommitments,
-        IGuardian.GuardianDTO[] calldata guardians
+        uint256[] memory identityCommitments
     ) external;
 }

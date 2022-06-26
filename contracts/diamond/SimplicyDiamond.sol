@@ -79,7 +79,6 @@ abstract contract SimplicyDiamond is
         DiamondBaseStorage.layout().diamondCut(facetCuts, address(0), "");
 
         // set owner
-        console.log("_init", owner_);
         OwnableStorage.layout().setOwner(owner_);
     }
 

@@ -8,7 +8,6 @@ import { ethers } from "hardhat";
 
 export interface SemaphoreGroupsBaseBehaviorArgs {
   getOwner: () => Promise<SignerWithAddress>;
-  getNonOwner: () => Promise<SignerWithAddress>;
   getGroupAdmin: () => Promise<SignerWithAddress>;
   getNonGroupAdmin: () => Promise<SignerWithAddress>;
   getAnotherGroupAdmin: () => Promise<SignerWithAddress>;
@@ -46,7 +45,6 @@ export function describeBehaviorOfSemaphoreGroupsBase(
   deploy: () => Promise<ISemaphoreGroupsBase>,
   {
     getOwner,
-    getNonOwner,
     getGroupAdmin,
     getNonGroupAdmin,
     getAnotherGroupAdmin,
@@ -66,7 +64,6 @@ export function describeBehaviorOfSemaphoreGroupsBase(
 
   describe("::SemaphoreGroupsBase", function () {
     let owner: SignerWithAddress;
-    let nonOwner: SignerWithAddress;
     let groupAdmin: SignerWithAddress;
     let nonGroupAdmin: SignerWithAddress;
     let anotherGroupAdmin: SignerWithAddress;
@@ -80,7 +77,6 @@ export function describeBehaviorOfSemaphoreGroupsBase(
     beforeEach(async function () {
       instance = await deploy();
       owner = await getOwner();
-      nonOwner = await getNonOwner();
       groupAdmin = await getGroupAdmin();
       nonGroupAdmin = await getNonGroupAdmin();
       anotherGroupAdmin = await getAnotherGroupAdmin();

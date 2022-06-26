@@ -13,17 +13,7 @@ import { Contract } from "ethers";
 import { SimplicyWalletDiamond } from "@simplicy/typechain-types";
 import { config } from "../../package.json";
 import { createTree, createIdentityCommitments } from "../utils";
-
-type DeployedContract = {
-  name: string;
-  contract: Contract;
-  address: string;
-};
-
-type Verifier = {
-  contractAddress: string;
-  merkleTreeDepth: number;
-};
+import { DeployedContract } from "../../types";
 
 describe("SemaphoreVotingFacet", function () {
   let owner: SignerWithAddress;

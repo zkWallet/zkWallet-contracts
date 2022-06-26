@@ -270,6 +270,10 @@ async function main() {
     "SimplicyWalletDiamond",
     receipt.events[0].address
   );
+  deployedContracts.push({
+    name: "Alice Wallet",
+    address: receipt.events[0].address,
+  });
   transactionHash.push({
     name: "Create wallet for alice",
     contractAddress: receipt.events[0].address,
@@ -286,6 +290,10 @@ async function main() {
     "SimplicyWalletDiamond",
     receiptBob.events[0].address
   );
+  deployedContracts.push({
+    name: "Bob Wallet",
+    address: receiptBob.events[0].address,
+  });
   transactionHash.push({
     name: "Create wallet for bob",
     contractAddress: receiptBob.events[0].address,

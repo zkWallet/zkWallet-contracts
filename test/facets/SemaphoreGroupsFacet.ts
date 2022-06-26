@@ -7,7 +7,8 @@ import {
 } from "@simplicy/typechain-types";
 import { createIdentityCommitments } from "../utils";
 import { describeBehaviorOfSemaphoreGroupsBase } from "@simplicy/spec";
-import { BigNumber } from "ethers";
+import { BigNumber, Contract } from "ethers";
+import { DeployedContract } from "../../types";
 
 const groupId: BigNumber = ethers.constants.One;
 const nonExistingGroupId: BigNumber = ethers.constants.Two;
@@ -15,26 +16,20 @@ const depth: Number = Number(process.env.TREE_DEPTH);
 const zero: BigNumber = ethers.constants.Zero;
 const members: bigint[] = createIdentityCommitments(3);
 
-describe("SemaphoreGroupsFacet", function () {
+describe.only("SemaphoreGroupsFacet", function () {
   let owner: SignerWithAddress;
-  let nomineeOwner: SignerWithAddress;
   let nonOwner: SignerWithAddress;
   let groupAdmin: SignerWithAddress;
   let nonGroupAdmin: SignerWithAddress;
   let anotherGroupAdmin: SignerWithAddress;
   let diamond: SimplicyWalletDiamond;
   let instance: any | ISemaphoreGroupsBase;
-  let facetCuts: any[] = [];
+  let facetCuts: { target: string; action: number; selectors: any }[] = [];
+  let facets: any | DeployedContract[];
 
   before(async function () {
-    [
-      owner,
-      nomineeOwner,
-      nonOwner,
-      groupAdmin,
-      nonGroupAdmin,
-      anotherGroupAdmin,
-    ] = await ethers.getSigners();
+    [owner, nonOwner, groupAdmin, nonGroupAdmin, anotherGroupAdmin] =
+      await ethers.getSigners();
   });
 
   beforeEach(async function () {
@@ -46,7 +41,7 @@ describe("SemaphoreGroupsFacet", function () {
       logs: false,
     });
 
-    const facets = await diamond.callStatic["facets()"]();
+    facets = await diamond.callStatic["facets()"]();
 
     expect(facets).to.have.lengthOf(1);
 
@@ -54,18 +49,19 @@ describe("SemaphoreGroupsFacet", function () {
       logs: false,
     });
 
-    const semaphoreGroupsFacet = await run("deploy:semaphoreGroupsFacet", {
+    facets = await run("deploy:facets-with-poseidon", {
       library: poseidonT3.address,
+      facets: [{ name: "SemaphoreGroupsFacet" }],
       logs: false,
     });
 
     facetCuts = [
       {
-        target: semaphoreGroupsFacet.address,
+        target: facets[0].address,
         action: 0,
-        selectors: Object.keys(
-          semaphoreGroupsFacet.contract.interface.functions
-        ).map((fn) => semaphoreGroupsFacet.contract.interface.getSighash(fn)),
+        selectors: Object.keys(facets[0].contract.interface.functions).map(
+          (fn) => facets[0].contract.interface.getSighash(fn)
+        ),
       },
     ];
 
@@ -88,7 +84,6 @@ describe("SemaphoreGroupsFacet", function () {
   });
   describeBehaviorOfSemaphoreGroupsBase(async () => instance, {
     getOwner: async () => owner,
-    getNonOwner: async () => nonOwner,
     getGroupAdmin: async () => groupAdmin,
     getNonGroupAdmin: async () => nonGroupAdmin,
     getAnotherGroupAdmin: async () => anotherGroupAdmin,

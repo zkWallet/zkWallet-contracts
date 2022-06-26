@@ -2,13 +2,11 @@
 
 pragma solidity ^0.8.4;
 
-import "hardhat/console.sol";
 import {SafeOwnableInternal} from "@solidstate/contracts/access/ownable/SafeOwnableInternal.sol";
 
 import {IGuardianFacet} from "../interfaces/IGuardianFacet.sol";
 import {Guardian} from "../guardian/Guardian.sol";
 import {GuardianStorage} from "../guardian/GuardianStorage.sol";
-
 
 import {SemaphoreGroupsBaseInternal} from "../semaphore/base/SemaphoreGroupsBase/SemaphoreGroupsBaseInternal.sol";
 import {SemaphoreGroupsBaseStorage} from "../semaphore/base/SemaphoreGroupsBase/SemaphoreGroupsBaseStorage.sol";
@@ -26,10 +24,9 @@ contract GuardianFacet is IGuardianFacet,  Guardian, SemaphoreGroupsBaseInternal
      */
     function addGuardians(
         uint256 groupId,
-        uint256[] memory identityCommitments,
-        GuardianDTO[] calldata guardians
-    ) public override onlyOwner {
-        setInitialGuardians(guardians);
+        uint256[] memory identityCommitments
+    ) public override onlyOwner groupExists(groupId) {
+        setInitialGuardians(identityCommitments);
         
         for (uint256 i; i < identityCommitments.length; i++) {
             _addMember(groupId, identityCommitments[i]);

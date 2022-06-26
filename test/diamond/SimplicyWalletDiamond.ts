@@ -22,7 +22,9 @@ describe("SimplicyWalletDiamond", function () {
 
   beforeEach(async function () {
     const [deployer] = await ethers.getSigners();
-    instance = await new SimplicyWalletDiamond__factory(deployer).deploy();
+    instance = await new SimplicyWalletDiamond__factory(deployer).deploy(
+      deployer.address
+    );
 
     const facets = await instance.callStatic["facets()"]();
 

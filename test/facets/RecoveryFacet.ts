@@ -11,26 +11,12 @@ import { expect } from "chai";
 import { BigNumber, Contract } from "ethers";
 import { ethers, run } from "hardhat";
 import { createIdentityCommitments } from "../utils";
+import { DeployedContract, Verifier } from "../../types";
 
 const groupId: BigNumber = ethers.constants.One;
 const depth: Number = Number(process.env.TREE_DEPTH);
 const zero: BigNumber = ethers.constants.Zero;
 const members: bigint[] = createIdentityCommitments(3);
-
-type DeployedContract = {
-  name: string;
-  contract: Contract;
-  address: string;
-};
-
-type GuardianDTO = {
-  hashId: BigNumber;
-};
-
-type Verifier = {
-  contractAddress: string;
-  merkleTreeDepth: Number;
-};
 
 describe.only("RecoveryFacet", function () {
   let owner: SignerWithAddress;
@@ -43,16 +29,15 @@ describe.only("RecoveryFacet", function () {
 
   let facetCuts: { target: string; action: number; selectors: any }[] = [];
   let facets: DeployedContract[];
-  let anotherFacets: DeployedContract[];
   let guardianInstance: any | IGuardian;
   let semaphoreInstance: any | ISemaphore;
   let semaphoreGroupsInstance: any | ISemaphoreGroups;
 
-  let guardians: GuardianDTO[] = [];
+  let guardians: BigNumber[] = [];
   guardians = [
-    { hashId: BigNumber.from(members[0]) },
-    { hashId: BigNumber.from(members[1]) },
-    { hashId: BigNumber.from(members[2]) },
+    BigNumber.from(members[0]),
+    BigNumber.from(members[1]),
+    BigNumber.from(members[2]),
   ];
 
   before(async function () {
@@ -182,7 +167,7 @@ describe.only("RecoveryFacet", function () {
 
       const transaction = await guardianInstance
         .connect(owner)
-        .addGuardians(groupId, members, guardians);
+        .addGuardians(groupId, guardians);
 
       const receipt = await transaction.wait();
 

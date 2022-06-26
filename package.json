@@ -17,6 +17,7 @@
     "deploy:diamond": "hardhat deploy:diamond",
     "deploy:facets": "hardhat deploy:facets",
     "deploy:facets-with-poseidon": "hardhat deploy:facets-with-poseidon",
+    "create-new-wallet": "hardhat run scripts/create-new-wallet.ts --network",
     "test": "hardhat test",
     "test:report-gas": "REPORT_GAS=true hardhat test",
     "test:coverage": "hardhat coverage",

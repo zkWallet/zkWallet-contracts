@@ -45,11 +45,11 @@ abstract contract Guardian is IGuardian, GuardianInternal {
     /**
      * @inheritdoc IGuardian
      */
-    function removeGuardians(GuardianDTO[] calldata guardians) external override {
+    function removeGuardians(uint256[] memory guardians) external override {
         _beforeRemoveGuardians(guardians);
 
          for (uint i = 0; i < guardians.length; i++) {
-            uint256 hashId = guardians[i].hashId;
+            uint256 hashId = guardians[i];
             require(removeGuardian(hashId), "Guardian: FAILED_TO_REMOVE_GUARDIAN");
          }         
         
@@ -66,11 +66,11 @@ abstract contract Guardian is IGuardian, GuardianInternal {
     /**
      * @inheritdoc IGuardian
      */
-    function setInitialGuardians(GuardianDTO[] calldata guardians) public override {
+    function setInitialGuardians(uint256[] memory guardians) public override {
         _beforeSetInitialGuardians(guardians);
 
          for (uint i = 0; i < guardians.length; i++) {
-            uint256 hashId = guardians[i].hashId;
+            uint256 hashId = guardians[i];
             require(addGuardian(hashId), "Guardian: FAILED_TO_ADD_GUARDIAN");         
         }
 

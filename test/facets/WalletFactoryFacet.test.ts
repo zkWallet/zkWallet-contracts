@@ -6,12 +6,7 @@ import {
   SimplicyWalletDiamond,
   WalletFactoryDiamond,
 } from "@simplicy/typechain-types";
-
-type DeployedContract = {
-  name: string;
-  contract: Contract;
-  address: string;
-};
+import { DeployedContract } from "../../types";
 
 describe("WalletFactoryFacet", function () {
   let owner: SignerWithAddress;

@@ -40,7 +40,7 @@ interface IGuardian is IGuardianInternal {
      *
      * Emits multiple {GuardianAdded} event.
      */
-     function setInitialGuardians(GuardianDTO[] calldata guardians) external;
+     function setInitialGuardians(uint256[] memory guardians) external;
 
     /**
      * @notice add a new guardian to the group.
@@ -66,7 +66,7 @@ interface IGuardian is IGuardianInternal {
      *
      * Emits multiple {GuardianRemoved} event.
      */
-     function removeGuardians(GuardianDTO[] calldata guardians) external;
+     function removeGuardians(uint256[] memory guardians) external;
 
 
     /**
