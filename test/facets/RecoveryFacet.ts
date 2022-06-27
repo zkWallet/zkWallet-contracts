@@ -42,6 +42,7 @@ describe.only("RecoveryFacet", function () {
 
   before(async function () {
     [owner, nonOwner, nominee, groupAdmin] = await ethers.getSigners();
+    console.log("members:", members);
   });
 
   beforeEach(async function () {

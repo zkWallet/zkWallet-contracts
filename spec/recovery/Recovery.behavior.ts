@@ -82,6 +82,8 @@ export function describeBehaviorOfRecovery(
       groupId = await getGroupId();
       depth = await getDepth();
       members = await getMembers();
+      console.log("members====>", members);
+      console.log("identityCommitment====>", members);
       merkleProof = createMerkleProof(
         Number(depth),
         BigInt(0),
