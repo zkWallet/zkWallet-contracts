@@ -245,6 +245,16 @@ async function main() {
 
   console.log("SimplicyWalletDiamond version:", await diamond.version());
 
+  console.log("#addDiamond====================================");
+  const tx = await walletFactoryFacetInstance.setDiamond(diamond.address);
+  const txEvent = await tx.wait();
+  console.log("txEvent:", txEvent.events);
+  transactionHash.push({
+    name: `Add diamond to Factory, diamond address: ${diamond.address}`,
+    contractAddress: walletFactoryFacetInstance.address,
+    hash: tx.hash,
+  });
+
   console.log(
     "#addFacet====================================",
     walletFacets.length

@@ -34,6 +34,12 @@ async function main() {
   let facets: DeployedContract[];
   let facetCuts: { target: string; action: number; selectors: any }[] = [];
 
+  // const identityCommitments: string[] = [
+  //   "417120863369177508448587683482618072152507466439565022803025664957553068359",
+  //   "2406831775386746519644490267981058842396908979429908114658351987980684638639",
+  //   "15064152082777430876487719843144077929032170478230727111576035711043722732420",
+  // ];
+
   const identityCommitments: BigNumber[] = [
     BigNumber.from(
       BigInt(
@@ -65,34 +71,32 @@ async function main() {
   console.log("bobWallet", bobWallet.address);
   console.log("Account balance:", (await bobWallet.getBalance()).toString());
 
-  factoryAddress = "0xF7A90fa8450b79F2727c5709Cc4Da4f1C03cA55e";
-  walletFactoryFacetAddress = "0xF7A90fa8450b79F2727c5709Cc4Da4f1C03cA55e";
-  zkWalletDiamondAddress = "0x8BeFc64AA83f6a822376D2fEd3BF928d870264Fb";
-  verifier20Address = "0x6a8DC73b21AE2A517BD3CFcf53CE32c89566BB6f";
-  poseidonT3Address = "0x07AfCA0456B59962588006a10895A15bCb751C71";
-  guardianFacetAddress = "0xb5EAa5bA96DDab615d887aF331cc78D34B6AA353";
-  eRC20FacetAddress = "0xaC71914E2A22f92d3F75106043aA4E7248Eda9C3";
-  eRC721FacetAddress = "0x4FEbbDE06b713Ecb9829b771d3dc18bD1F9DcbBE";
-  recoveryFacetAddress = "0x1A51d1C41be8a8A8F3092C65Ca0c3a0777a65f06";
-  semaphoreFacetAddress = "0x890be5081e75781F81d6eB86EF19Bceb21C9e160";
-  semaphoreGroupsFacetAddress = "0x0c2B1dD90cba0cAf2777bE41f91a8Ac45B0e185c";
-  semaphoreVotingFacetAddress = "0x3Efcd0a84EfFDFD8C16FC2a47eEf2CF0f4CA4352";
+  factoryAddress = "0xb9853e45b3537975035159ece4E9F53EC18480Fd";
+  walletFactoryFacetAddress = "0x58aD3eEFB1832ef971CDe8e45A7239E7dd8f9444";
+  zkWalletDiamondAddress = "0x2338c67c687F3d6A28C27Df15325F06A6BF1C627";
+  verifier20Address = "0x21176AA38497bdeab3CdB4368CFF53c428B001f7";
+  poseidonT3Address = "0x1fB6C0Cc4b846a4A25B41f3AAD59b4C719474E3F";
+  guardianFacetAddress = "0x3d4370D915c52E801963533E0aC54EAF4a57177b";
+  eRC20FacetAddress = "0x5BA6985e2F04cA4Ef362dCFF0Ac793E1715F2E10";
+  eRC721FacetAddress = "0xEA33dC1D03A626C899dfA6bD9BA61AcEce886AF1";
+  recoveryFacetAddress = "0xC509433465D6e3b60CA192e81659BBEDffE7fd3b";
+  semaphoreFacetAddress = "0xF6f822A0aaE0CDd6dDb6c0BA7284a74B006A0824";
+  semaphoreGroupsFacetAddress = "0x7bA44FAF27B18d04Af0950f30617B5AAACceC038";
+  semaphoreVotingFacetAddress = "0x43133D828f1E4c209eB60B4fEbD01221C72E4Ca4";
 
   if (network.name === "harmonyDevnet") {
-    factoryAddress = "0xF7A90fa8450b79F2727c5709Cc4Da4f1C03cA55e";
-    walletFactoryFacetAddress = "0xF7A90fa8450b79F2727c5709Cc4Da4f1C03cA55e";
-
-    zkWalletDiamondAddress = "0x8BeFc64AA83f6a822376D2fEd3BF928d870264Fb";
-
-    verifier20Address = "0x6a8DC73b21AE2A517BD3CFcf53CE32c89566BB6f";
-    poseidonT3Address = "0x07AfCA0456B59962588006a10895A15bCb751C71";
-    guardianFacetAddress = "0xb5EAa5bA96DDab615d887aF331cc78D34B6AA353";
-    eRC20FacetAddress = "0xaC71914E2A22f92d3F75106043aA4E7248Eda9C3";
-    eRC721FacetAddress = "0x4FEbbDE06b713Ecb9829b771d3dc18bD1F9DcbBE";
-    recoveryFacetAddress = "0x1A51d1C41be8a8A8F3092C65Ca0c3a0777a65f06";
-    semaphoreFacetAddress = "0x890be5081e75781F81d6eB86EF19Bceb21C9e160";
-    semaphoreGroupsFacetAddress = "0x0c2B1dD90cba0cAf2777bE41f91a8Ac45B0e185c";
-    semaphoreVotingFacetAddress = "0x3Efcd0a84EfFDFD8C16FC2a47eEf2CF0f4CA4352";
+    factoryAddress = "0xb9853e45b3537975035159ece4E9F53EC18480Fd";
+    walletFactoryFacetAddress = "0x58aD3eEFB1832ef971CDe8e45A7239E7dd8f9444";
+    zkWalletDiamondAddress = "0x2338c67c687F3d6A28C27Df15325F06A6BF1C627";
+    verifier20Address = "0x21176AA38497bdeab3CdB4368CFF53c428B001f7";
+    poseidonT3Address = "0x1fB6C0Cc4b846a4A25B41f3AAD59b4C719474E3F";
+    guardianFacetAddress = "0x3d4370D915c52E801963533E0aC54EAF4a57177b";
+    eRC20FacetAddress = "0x5BA6985e2F04cA4Ef362dCFF0Ac793E1715F2E10";
+    eRC721FacetAddress = "0xEA33dC1D03A626C899dfA6bD9BA61AcEce886AF1";
+    recoveryFacetAddress = "0xC509433465D6e3b60CA192e81659BBEDffE7fd3b";
+    semaphoreFacetAddress = "0xF6f822A0aaE0CDd6dDb6c0BA7284a74B006A0824";
+    semaphoreGroupsFacetAddress = "0x7bA44FAF27B18d04Af0950f30617B5AAACceC038";
+    semaphoreVotingFacetAddress = "0x43133D828f1E4c209eB60B4fEbD01221C72E4Ca4";
   } else if (network.name === "harmonyTestnet") {
     // factoryAddress = "0xF7A90fa8450b79F2727c5709Cc4Da4f1C03cA55e";
     // verifier20Address = "0x6a8DC73b21AE2A517BD3CFcf53CE32c89566BB6f";

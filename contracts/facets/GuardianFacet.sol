@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.4;
 
+import "hardhat/console.sol";
 import {SafeOwnableInternal} from "@solidstate/contracts/access/ownable/SafeOwnableInternal.sol";
 
 import {IGuardianFacet} from "../interfaces/IGuardianFacet.sol";

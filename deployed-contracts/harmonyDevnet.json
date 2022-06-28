@@ -1,180 +1,197 @@
 [
     {
         "name": "Verifier16",
-        "address": "0x8A2b8203aec1b11d130A7Db6D0D87D5c44995095"
+        "address": "0x1C453BF0530406914381f39B9F8d6Ecf53266cf5"
     },
     {
         "name": "Verifier17",
-        "address": "0x65f00e0df2a6c51c3014Cc231DC501BaA706b6ea"
+        "address": "0x7874Fca2a8C51359ae4681ea611d29D424A75765"
     },
     {
         "name": "Verifier18",
-        "address": "0xF2AcC0D3cBf8ACb6c37f59cBFd3E2AFff751Ce2a"
+        "address": "0xD487748095FA4d029B512b08eE501C2AFcB3dF36"
     },
     {
         "name": "Verifier19",
-        "address": "0x4F33CD3bD38F0373594FaA42A4aE1a893e0f6A49"
+        "address": "0x116d84a768D4C4307b999fcC5cce041586fF3c80"
     },
     {
         "name": "Verifier20",
-        "address": "0x3259Af63799D2b3fF46EFC3C72626484F792f42b"
+        "address": "0x4Bbc87f8b67dBD24fb43ca9D2695855cb8Da463c"
     },
     {
         "name": "Verifier21",
-        "address": "0xaCdA7828C9300cd7B2B89F429CAaeec2D04CfCdc"
+        "address": "0x902c508552E90461fF68DeEDd02b6A518E5F043B"
     },
     {
         "name": "Verifier22",
-        "address": "0xCF97AeC8FbE72162b32E4EE6e3e1B14221293B92"
+        "address": "0xc17C2c0A0C9BF72F777d31B97D6d7CB01f3e7f68"
     },
     {
         "name": "Verifier23",
-        "address": "0xa3BF9eAf67bCC620eE816E0539A1AC0573629710"
+        "address": "0x2499934A32908FAB4fC1C79c1524e55c029f6662"
     },
     {
         "name": "Verifier24",
-        "address": "0x19bE795aAfEd702EE152F3caCf074882e2824F5F"
+        "address": "0xE7E362DB19C75e5D96dc45A7674e152BBF978C00"
     },
     {
         "name": "Verifier25",
-        "address": "0x2A7f2AF05431De3A88Bb3F545E1e39E45fD0815A"
+        "address": "0x42de4fa8Cc135443Ef32348C8dE498aFC98CDF97"
     },
     {
         "name": "Verifier26",
-        "address": "0xF4918aF34B1Acbe8fB134d0CE0acd7D22Dd4C871"
+        "address": "0xF7af264F57e192011045963eB9E231771e4053e7"
     },
     {
         "name": "Verifier27",
-        "address": "0xf7480Aff97dcF30833a738E00e4d104A0A29D5c8"
+        "address": "0x8F5fdAa9e6a63F160f44bb84D980BfE18DC73044"
     },
     {
         "name": "Verifier28",
-        "address": "0x5eDD93fCa95496A2bf6D1C95f1dB47302f80f0DF"
+        "address": "0x7D03071c93ee51aB4094391919314b5B9214e94D"
     },
     {
         "name": "Verifier29",
-        "address": "0x92a829f24114AD40dD19B2e00CE84457d63B7756"
+        "address": "0x9139E398EFe2c30CAA0F2C7729DD64bC8C34dc3F"
     },
     {
         "name": "Verifier30",
-        "address": "0x42B456fac07492DeafF822b31372D13eD8CdD051"
+        "address": "0x07ac6e0E04cd9fa30bbfB71E86fd26BBB0804C14"
     },
     {
         "name": "Verifier31",
-        "address": "0x08F784a2f7741F81179Eb489f6916dc69bC5829c"
+        "address": "0x187ac7Eb94044B275b2e3582E3726BbF217F77b7"
     },
     {
         "name": "Verifier32",
-        "address": "0x5332243d6e870FdFfaC2c64F11c1C1D9bC59ea7b"
+        "address": "0x4fB7B64f723571E214C7901FB82AC3A27Ae5F2bB"
     },
     {
         "name": "WalletFactoryDiamond",
-        "address": "0xee6637D142A6A7f0a032aA3f17b14b07821d1407"
+        "address": "0x7Ad5a9017b74238dBEc6051844111D67de9d3c1D"
     },
     {
         "name": "WalletFactoryFacet",
-        "address": "0xF140101392132f00C4F974fF001594779F27e866"
+        "address": "0x2239c9A755e77002e612265Da9131E7319748C1B"
     },
     {
         "name": "CountersFacet",
-        "address": "0x42C692f92F3872A5129D86AB84C782e2338597f1"
+        "address": "0x44c63203521214eede7E3CE7a71f63D3933C52d4"
     },
     {
         "name": "SimplicyWalletDiamond",
-        "address": "0xA122cd999ff7f03D6AC9B986eBC888425195F1a7"
+        "address": "0x7927DE2FcE482086c004fc9A9ea26203284D0484"
     },
     {
         "name": "PoseidonT3",
-        "address": "0x90682d322415e1833E566A3747A361F0f69c5f05"
+        "address": "0xC0aCB860351e8A40722de421D689766eCf500e9B"
     },
     {
         "name": "GuardianFacet",
-        "address": "0x4F620660Ba0B531Ff7B08867ca10C5B1f338EB3B"
+        "address": "0x1D10d67F65b0c6517C9ed029a3886aCFF750A68c"
     },
     {
         "name": "SemaphoreGroupsFacet",
-        "address": "0x691d261BEb6d4107e653EBf54D1fDfE20F8E25e2"
+        "address": "0xeA0435D48d6c097631E8C7f1Cd869a18bcfb1D21"
     },
     {
         "name": "ERC20Facet",
-        "address": "0x2Fd8f53Ba5D32A181D92e609fBf4A396fcA38de3"
+        "address": "0xC11f6Ef78C65f3bA593E35d7b60A9079Ef4A46C7"
     },
     {
         "name": "ERC721Facet",
-        "address": "0x1Fa26E1146AeCe5A617D79Df43132A21d58cAcb1"
+        "address": "0x41C52b4Cdfc02541F20F6B2Ad4ed60e904FA51C2"
+    },
+    {
+        "name": "RecoveryFacet",
+        "address": "0x5F24bd5238F332f25bFC6B150962894ef62ef866"
+    },
+    {
+        "name": "SemaphoreFacet",
+        "address": "0xc99c61Bf010b57FDB4Be5b67701b08CdAa0Cf42C"
+    },
+    {
+        "name": "SemaphoreVotingFacet",
+        "address": "0x34263C9FBDc77102346123ec72ac00de2a0b2fD3"
     },
     {
         "name": "Alice Wallet",
-        "address": "0x64C2Fbc31afE74BAEcAe92Bb28D33bce6B454C0B"
+        "address": "0xac6E57d5D818b01F382FaAb630Be9176E51477Ee"
     },
     {
         "name": "Bob Wallet",
-        "address": "0xE5581265432511eF7470759BeB3275cCEc529b75"
+        "address": "0x2CcCa3b7561Ef9c301A45B36CfCb52b886D18D1e"
     }
 ][
     {
+        "name": "Add diamond to Factory, diamond address: 0x7927DE2FcE482086c004fc9A9ea26203284D0484",
+        "contractAddress": "0x7Ad5a9017b74238dBEc6051844111D67de9d3c1D",
+        "hash": "0xf14338581f7f0a795946828e9b27b21cd1d09dc219fbf0debc638f6292e3079b"
+    },
+    {
         "name": "Add facet to Factory, facet name: ERC20Facet",
-        "contractAddress": "0x2Fd8f53Ba5D32A181D92e609fBf4A396fcA38de3",
-        "hash": "0xf582e9ed01c75519d0a5d3ac12dce428600352206b2adb0307e1783d81afb329"
+        "contractAddress": "0xC11f6Ef78C65f3bA593E35d7b60A9079Ef4A46C7",
+        "hash": "0xc9aa7187320a6d19c8c177a1121a695243dd01433c3946cf7fd69e7a688d495f"
     },
     {
         "name": "Add facet to Factory, facet name: ERC721Facet",
-        "contractAddress": "0x1Fa26E1146AeCe5A617D79Df43132A21d58cAcb1",
-        "hash": "0x566d8ce2599c449ef4e566e19283aa42af113c28959ff40c56bea24a53e34820"
+        "contractAddress": "0x41C52b4Cdfc02541F20F6B2Ad4ed60e904FA51C2",
+        "hash": "0xbf88dc4fe9754ce61170cd279127c4071073165138218eefd4648d50cbfb2a72"
     },
     {
         "name": "Add facet to Factory, facet name: RecoveryFacet",
-        "contractAddress": "0xc12eF7d779bE1EaAF6d29fA5B5F76EBcFb4a3c5a",
-        "hash": "0x84c9808a55ab0851d1ec036fa44b1f0eeed9dee02ae6c34a4274edb1001fb6ff"
+        "contractAddress": "0x5F24bd5238F332f25bFC6B150962894ef62ef866",
+        "hash": "0xd5e2e0aa14293213012a1048919d9074d63baed2385d7bb5b70ba79937870e6c"
     },
     {
         "name": "Add facet to Factory, facet name: SemaphoreFacet",
-        "contractAddress": "0x32A7C90b35A424ae390ad02dC70C5dBfE40d12B9",
-        "hash": "0xc64bb76265693cb7cf9ad9b67112ec8cc0d5a75d126dcba322b9e47ee406f5eb"
+        "contractAddress": "0xc99c61Bf010b57FDB4Be5b67701b08CdAa0Cf42C",
+        "hash": "0x3740fbb4e3b2360f0c9d4a397ea1fc249a6689ac0b810a92c2063c21ee16dc75"
     },
     {
         "name": "Add facet to Factory, facet name: SemaphoreVotingFacet",
-        "contractAddress": "0x9F1C425CC7ef7DfDC963Ff4562132dc276e3B094",
-        "hash": "0x72051fec25d1c641b26d1367a0f65bc2a0f806dfe4468ed59850c1433fd60943"
+        "contractAddress": "0x34263C9FBDc77102346123ec72ac00de2a0b2fD3",
+        "hash": "0x1730210807395ba7cab152ae16726984fa07163b50b600db46188d3d980b8cf6"
     },
     {
         "name": "Create wallet for alice",
-        "contractAddress": "0x64C2Fbc31afE74BAEcAe92Bb28D33bce6B454C0B",
-        "hash": "0xf233e0e90092db9e10065676e5610e1d03e3a902228818ad8e06ea97faf0dbeb"
+        "contractAddress": "0xac6E57d5D818b01F382FaAb630Be9176E51477Ee",
+        "hash": "0x185a917ce3e9b92ba7611a40d5b5df399185b22b739e8360ce7df5225541f2a7"
     },
     {
         "name": "Create wallet for bob",
-        "contractAddress": "0xE5581265432511eF7470759BeB3275cCEc529b75",
-        "hash": "0xf233e0e90092db9e10065676e5610e1d03e3a902228818ad8e06ea97faf0dbeb"
+        "contractAddress": "0x2CcCa3b7561Ef9c301A45B36CfCb52b886D18D1e",
+        "hash": "0x185a917ce3e9b92ba7611a40d5b5df399185b22b739e8360ce7df5225541f2a7"
     },
     {
         "name": "Alice setVerifiers",
-        "contractAddress": "0x64C2Fbc31afE74BAEcAe92Bb28D33bce6B454C0B",
-        "hash": "0x451efad5993a47d155a17b573b2c7b0b9226c364f3c730ca5d06c424e943e6c9"
+        "contractAddress": "0xac6E57d5D818b01F382FaAb630Be9176E51477Ee",
+        "hash": "0x159fde66cb128196c014b11c61d45a56ba105bd29d3bb02bc4a27db11137181e"
     },
     {
         "name": "Bob setVerifiers",
-        "contractAddress": "0xE5581265432511eF7470759BeB3275cCEc529b75",
-        "hash": "0xc9db152c18348593eff6a8429dfbb7cb128021a7fe7b4eaace7579e186d6efaa"
+        "contractAddress": "0x2CcCa3b7561Ef9c301A45B36CfCb52b886D18D1e",
+        "hash": "0x42e806ca12b76c176f23b4f0878b2c186d0922b52cc3b76ec6502d041fd8e940"
     },
     {
         "name": "aliceCreateGroupTransaction",
-        "contractAddress": "0x64C2Fbc31afE74BAEcAe92Bb28D33bce6B454C0B",
-        "hash": "0x3c4726f5d2e019f5ba56000da71e61c4342952acad40462069ef99990fa466e6"
+        "contractAddress": "0xac6E57d5D818b01F382FaAb630Be9176E51477Ee",
+        "hash": "0xa2be9bb9a9f1a6909426070dbcc105b88bb51e3d48884d6e6d3901d5d0f846bc"
     },
     {
         "name": "bobCreateGroupTransaction",
-        "contractAddress": "0xE5581265432511eF7470759BeB3275cCEc529b75",
-        "hash": "0xcfbd872de41020de551206866d374e478be8072fd65c55fd2f1bf76939235768"
+        "contractAddress": "0x2CcCa3b7561Ef9c301A45B36CfCb52b886D18D1e",
+        "hash": "0xc023fb2b18e53e5ddc7442a4a7e034fd17bdfda78aeb93da28a18f1bf512a6b3"
     },
     {
         "name": "Add Guardians to Alice Wallet",
-        "contractAddress": "0x64C2Fbc31afE74BAEcAe92Bb28D33bce6B454C0B",
-        "hash": "0xf233e0e90092db9e10065676e5610e1d03e3a902228818ad8e06ea97faf0dbeb"
+        "contractAddress": "0xac6E57d5D818b01F382FaAb630Be9176E51477Ee",
+        "hash": "0x185a917ce3e9b92ba7611a40d5b5df399185b22b739e8360ce7df5225541f2a7"
     },
     {
         "name": "Add Guardians to Bob Wallet",
-        "contractAddress": "0xE5581265432511eF7470759BeB3275cCEc529b75",
-        "hash": "0xf233e0e90092db9e10065676e5610e1d03e3a902228818ad8e06ea97faf0dbeb"
+        "contractAddress": "0x2CcCa3b7561Ef9c301A45B36CfCb52b886D18D1e",
+        "hash": "0x185a917ce3e9b92ba7611a40d5b5df399185b22b739e8360ce7df5225541f2a7"
     }
 ]
