@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
@@ -29,8 +29,6 @@ abstract contract SemaphoreGroupsBase is
         _createGroup(groupId, depth, zeroValue);
 
         _setGroupAdmin(groupId, admin);
-
-        emit GroupAdminUpdated(groupId, address(0), admin);
 
         _afterCreateGroup(groupId, depth, zeroValue, admin);
     }

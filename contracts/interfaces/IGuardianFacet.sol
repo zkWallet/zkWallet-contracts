@@ -7,7 +7,7 @@ import {IGuardian} from "../guardian/IGuardian.sol";
 /**
  * @title GuardianFacet interface
  */
-interface IGuardianFacet {
+interface IGuardianFacet is IGuardian {
     /**
      * @notice return the current version of GuardianFacet
      */

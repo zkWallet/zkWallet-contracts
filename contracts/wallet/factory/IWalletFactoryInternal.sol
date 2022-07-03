@@ -6,11 +6,16 @@ pragma solidity ^0.8.4;
  * @title WalletFactory interface needed by internal functions
  */
 interface IWalletFactoryInternal {
+    struct VerifierDTO {
+        uint8 merkleTreeDepth;
+        address contractAddress;
+    }
+
     /**
      * @notice emitted when anew diamond wallet is created by user
      * @param instance: the address of the instance
      */
-    event NewDiamondWallet(address instance);
+    event WalletIsCreated(address instance);
 
     /**
      * @notice emitted when Diamond address is set

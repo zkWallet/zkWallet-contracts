@@ -7,6 +7,8 @@ import { IDiamondBase } from "@solidstate/contracts/proxy/diamond/base/IDiamondB
 import { IDiamondReadable } from "@solidstate/contracts/proxy/diamond/readable/IDiamondReadable.sol";
 import { IDiamondWritable } from "@solidstate/contracts/proxy/diamond/writable/IDiamondWritable.sol";
 
+import { ISimplicyDiamondInternal } from "./ISimplicyDiamondInternal.sol";
+
 /**
  * @title SimplicyDiamond interface
  */
@@ -14,7 +16,8 @@ interface ISimplicyDiamond is
     IDiamondBase,
     IDiamondReadable,
     IDiamondWritable,
-    IERC165 
+    IERC165,
+    ISimplicyDiamondInternal
 {
     /**
      * @notice get the address of the fallback contract

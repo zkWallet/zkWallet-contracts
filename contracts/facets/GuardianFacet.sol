@@ -1,23 +1,31 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
-import "hardhat/console.sol";
-import {SafeOwnableInternal} from "@solidstate/contracts/access/ownable/SafeOwnableInternal.sol";
+import { SafeOwnableInternal } from "@solidstate/contracts/access/ownable/SafeOwnableInternal.sol";
 
-import {IGuardianFacet} from "../interfaces/IGuardianFacet.sol";
-import {Guardian} from "../guardian/Guardian.sol";
-import {GuardianStorage} from "../guardian/GuardianStorage.sol";
+import { IGuardianFacet } from "../interfaces/IGuardianFacet.sol";
+import { Guardian } from "../guardian/Guardian.sol";
+import { GuardianStorage } from "../guardian/GuardianStorage.sol";
 
-import {SemaphoreGroupsBaseInternal} from "../semaphore/base/SemaphoreGroupsBase/SemaphoreGroupsBaseInternal.sol";
-import {SemaphoreGroupsBaseStorage} from "../semaphore/base/SemaphoreGroupsBase/SemaphoreGroupsBaseStorage.sol";
+import { SemaphoreGroupsBaseInternal } from "../semaphore/base/SemaphoreGroupsBase/SemaphoreGroupsBaseInternal.sol";
+import { SemaphoreGroupsBaseStorage } from "../semaphore/base/SemaphoreGroupsBase/SemaphoreGroupsBaseStorage.sol";
 
-contract GuardianFacet is IGuardianFacet,  Guardian, SemaphoreGroupsBaseInternal , SafeOwnableInternal {
+
+/**
+ * @title GuardianFacet 
+ */
+contract GuardianFacet is 
+    IGuardianFacet, 
+    Guardian, 
+    SemaphoreGroupsBaseInternal,
+    SafeOwnableInternal 
+{
     /**
      * @notice return the current version of GuardianFacet
      */
     function guardianFacetVersion() public pure override returns (string memory) {
-        return "0.0.1";
+        return "0.1.0.alpha";
     }
 
     /**

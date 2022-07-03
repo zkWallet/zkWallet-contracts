@@ -2,58 +2,30 @@ import fs from "fs";
 import { BigNumber, Contract } from "ethers";
 import { run, hardhatArguments, ethers, network } from "hardhat";
 import {
-  SimplicyWalletDiamond,
-  WalletFactoryDiamond,
+  IZkWalletDiamond,
+  ZkWalletFactoryDiamond,
   WalletFactoryFacet,
+  IGuardianFacet,
 } from "@simplicy/typechain-types";
-import { DeployedContract, Verifier } from "../types";
+import { DeployedContract, Verifier, Facet } from "../types";
 
 async function main() {
-  let factoryDiamond: WalletFactoryDiamond;
-  let alice, bob, diamond: SimplicyWalletDiamond;
+  let factoryDiamond: ZkWalletFactoryDiamond;
+  let diamond: IZkWalletDiamond;
   let walletFactoryFacetInstance: Contract | WalletFactoryFacet;
+  let guardianInstance: Contract | IGuardianFacet;
   let factoryFacets: DeployedContract[];
 
   let facetCuts: { target: string; action: number; selectors: any }[] = [];
-  let aliceSemaphoreInstance: any;
-  let bobSemaphoreInstance: any;
-  let aliceSemaphoreGroupsInstance: any;
-  let bobSemaphoreGroupsInstance: any;
-  let aliceGuardianInstance: any;
-  let bobGuardianInstance: any;
+
   let facets: DeployedContract[];
   let walletFacets: DeployedContract[];
-
-  const identityCommitments: BigNumber[] = [
-    BigNumber.from(
-      BigInt(
-        "417120863369177508448587683482618072152507466439565022803025664957553068359"
-      )
-    ),
-    BigNumber.from(
-      BigInt(
-        "2406831775386746519644490267981058842396908979429908114658351987980684638639"
-      )
-    ),
-    BigNumber.from(
-      BigInt(
-        "15064152082777430876487719843144077929032170478230727111576035711043722732420"
-      )
-    ),
-  ];
-
-  const depth = Number(process.env.TREE_DEPTH);
-  const groupId: number = 1;
 
   const [deployer, aliceWallet, bobWallet] = await ethers.getSigners();
 
   console.log("network:", network.name);
   console.log("deployer", deployer.address);
   console.log("Account balance:", (await deployer.getBalance()).toString());
-  console.log("aliceWallet", aliceWallet.address);
-  console.log("Account balance:", (await aliceWallet.getBalance()).toString());
-  console.log("bobWallet", bobWallet.address);
-  console.log("Account balance:", (await bobWallet.getBalance()).toString());
 
   const deployedContracts: { name: string; address: string }[] = [];
   const transactionHash: {
@@ -61,6 +33,14 @@ async function main() {
     contractAddress: string;
     hash: string;
   }[] = [];
+
+  // Deploy poseidonT3.
+  const { address } = await run("deploy:poseidonT3", { logs: true });
+  deployedContracts.push({
+    name: "PoseidonT3",
+    address,
+  });
+  const poseidonT3Address = address;
 
   // Deploy verifiers.
   for (let treeDepth = 16; treeDepth <= 32; treeDepth++) {
@@ -77,16 +57,17 @@ async function main() {
 
   // Deploy factory diamond
   factoryDiamond = await run("deploy:diamond", {
-    name: "WalletFactoryDiamond",
+    name: "ZkWalletFactoryDiamond",
     logs: true,
   });
   deployedContracts.push({
-    name: "WalletFactoryDiamond",
+    name: "ZkWalletFactoryDiamond",
     address: factoryDiamond.address,
   });
 
   factoryFacets = await run("deploy:facets", {
-    facets: [{ name: "WalletFactoryFacet" }, { name: "CountersFacet" }],
+    facets: [{ name: "WalletFactoryFacet" }],
+    logs: true,
   });
 
   for (let i = 0; i < factoryFacets.length; i++) {
@@ -103,13 +84,6 @@ async function main() {
         (fn) => factoryFacets[0].contract.interface.getSighash(fn)
       ),
     },
-    {
-      target: factoryFacets[1].address,
-      action: 0,
-      selectors: Object.keys(factoryFacets[1].contract.interface.functions).map(
-        (fn) => factoryFacets[1].contract.interface.getSighash(fn)
-      ),
-    },
   ];
 
   //do the cut
@@ -119,25 +93,11 @@ async function main() {
     "0x"
   );
 
-  // Deploy wallet diamond for cloning
-  diamond = await run("deploy:diamond", {
-    name: "SimplicyWalletDiamond",
-    owner: deployer.address,
+  diamond = await run("deploy:diamond-with-poseidon", {
+    name: "ZkWalletDiamond",
+    library: poseidonT3Address,
     logs: true,
   });
-
-  deployedContracts.push({
-    name: "SimplicyWalletDiamond",
-    address: diamond.address,
-  });
-
-  // Deploy poseidonT3.
-  const { address } = await run("deploy:poseidonT3", { logs: true });
-  deployedContracts.push({
-    name: "PoseidonT3",
-    address,
-  });
-  const poseidonT3Address = address;
 
   facets = await run("deploy:facets-with-poseidon", {
     library: poseidonT3Address,
@@ -174,11 +134,10 @@ async function main() {
 
   walletFacets = await run("deploy:facets", {
     facets: [
-      { name: "ERC20Facet" },
-      { name: "ERC721Facet" },
+      { name: "ERC20ServiceFacet" },
+      { name: "ERC721ServiceFacet" },
       { name: "RecoveryFacet" },
       { name: "SemaphoreFacet" },
-      { name: "SemaphoreVotingFacet" },
     ],
   });
 
@@ -218,13 +177,6 @@ async function main() {
         (fn) => walletFacets[3].contract.interface.getSighash(fn)
       ),
     },
-    {
-      target: walletFacets[4].address,
-      action: 0,
-      selectors: Object.keys(walletFacets[4].contract.interface.functions).map(
-        (fn) => walletFacets[4].contract.interface.getSighash(fn)
-      ),
-    },
   ];
 
   //do the cut for wallet contract
@@ -243,27 +195,41 @@ async function main() {
     await walletFactoryFacetInstance.walletFactoryFacetVersion()
   );
 
-  console.log("SimplicyWalletDiamond version:", await diamond.version());
+  console.log(
+    "#add diamond implementation to factory===================================="
+  );
 
-  console.log("#addDiamond====================================");
-  const tx = await walletFactoryFacetInstance.setDiamond(diamond.address);
-  const txEvent = await tx.wait();
-  console.log("txEvent:", txEvent.events);
+  const setDiamondTrx = await walletFactoryFacetInstance.setDiamond(
+    diamond.address
+  );
+
   transactionHash.push({
-    name: `Add diamond to Factory, diamond address: ${diamond.address}`,
+    name: `Add diamond  ${diamond.address} implementation to factory`,
     contractAddress: walletFactoryFacetInstance.address,
-    hash: tx.hash,
+    hash: setDiamondTrx.hash,
   });
 
-  console.log(
-    "#addFacet====================================",
-    walletFacets.length
-  );
+  console.log("#addFacet====================================");
+  for (let i = 0; i < facets.length; i++) {
+    const transaction = await walletFactoryFacetInstance.addFacet(
+      facets[i].name,
+      facets[i].address,
+      "0.1.alpha"
+    );
+
+    console.log(await transaction.wait());
+
+    transactionHash.push({
+      name: `Add facet to Factory, facet name: ${facets[i].name}`,
+      contractAddress: facets[i].address,
+      hash: transaction.hash,
+    });
+  }
   for (let i = 0; i < walletFacets.length; i++) {
     const transaction = await walletFactoryFacetInstance.addFacet(
       walletFacets[i].name,
       walletFacets[i].address,
-      "0.0.1"
+      "0.1.alpha"
     );
 
     transactionHash.push({
@@ -273,209 +239,52 @@ async function main() {
     });
   }
 
-  // create a wallet for alice
-  const hashId = ethers.utils.formatBytes32String("1");
-  const transaction = await walletFactoryFacetInstance
-    .connect(aliceWallet)
-    .createWallet(hashId, aliceWallet.address);
-  const receipt = await transaction.wait();
-  alice = await ethers.getContractAt(
-    "SimplicyWalletDiamond",
-    receipt.events[0].address
-  );
+  console.log("facets:", await walletFactoryFacetInstance.getFacets());
+
+  await diamond["initOwner(address)"](factoryDiamond.address);
+
   deployedContracts.push({
-    name: "Alice Wallet",
-    address: receipt.events[0].address,
-  });
-  transactionHash.push({
-    name: "Create wallet for alice",
-    contractAddress: receipt.events[0].address,
-    hash: transaction.hash,
+    name: "ZkWalletDiamond",
+    address: diamond.address,
   });
 
-  // create a wallet for bob
-  const hashIdBob = ethers.utils.formatBytes32String("2");
-  const transactionBob = await walletFactoryFacetInstance
-    .connect(bobWallet)
-    .createWallet(hashIdBob, bobWallet.address);
-  const receiptBob = await transactionBob.wait();
-  bob = await ethers.getContractAt(
-    "SimplicyWalletDiamond",
-    receiptBob.events[0].address
-  );
-  deployedContracts.push({
-    name: "Bob Wallet",
-    address: receiptBob.events[0].address,
-  });
-  transactionHash.push({
-    name: "Create wallet for bob",
-    contractAddress: receiptBob.events[0].address,
-    hash: transaction.hash,
-  });
-
-  facetCuts = [
-    {
-      target: facets[0].address,
-      action: 0,
-      selectors: Object.keys(facets[0].contract.interface.functions).map((fn) =>
-        facets[0].contract.interface.getSighash(fn)
-      ),
-    },
-    {
-      target: facets[1].address,
-      action: 0,
-      selectors: Object.keys(facets[1].contract.interface.functions).map((fn) =>
-        facets[1].contract.interface.getSighash(fn)
-      ),
-    },
-    {
-      target: walletFacets[0].address,
-      action: 0,
-      selectors: Object.keys(walletFacets[0].contract.interface.functions).map(
-        (fn) => walletFacets[0].contract.interface.getSighash(fn)
-      ),
-    },
-    {
-      target: walletFacets[1].address,
-      action: 0,
-      selectors: Object.keys(walletFacets[1].contract.interface.functions).map(
-        (fn) => walletFacets[1].contract.interface.getSighash(fn)
-      ),
-    },
-    {
-      target: walletFacets[2].address,
-      action: 0,
-      selectors: Object.keys(walletFacets[2].contract.interface.functions).map(
-        (fn) => walletFacets[2].contract.interface.getSighash(fn)
-      ),
-    },
-    {
-      target: walletFacets[3].address,
-      action: 0,
-      selectors: Object.keys(walletFacets[3].contract.interface.functions).map(
-        (fn) => walletFacets[3].contract.interface.getSighash(fn)
-      ),
-    },
-    {
-      target: walletFacets[4].address,
-      action: 0,
-      selectors: Object.keys(walletFacets[4].contract.interface.functions).map(
-        (fn) => walletFacets[4].contract.interface.getSighash(fn)
-      ),
-    },
-  ];
-
-  //do the cut for alice wallet
-  await alice
-    .connect(aliceWallet)
-    .diamondCut(facetCuts, ethers.constants.AddressZero, "0x");
-
-  //do the cut for bob wallet
-  await bob
-    .connect(bobWallet)
-    .diamondCut(facetCuts, ethers.constants.AddressZero, "0x");
-
-  aliceSemaphoreInstance = await ethers.getContractAt(
-    "SemaphoreFacet",
-    alice.address
-  );
-  bobSemaphoreInstance = await ethers.getContractAt(
-    "SemaphoreFacet",
-    bob.address
-  );
-
-  aliceSemaphoreGroupsInstance = await ethers.getContractAt(
-    "SemaphoreGroupsFacet",
-    alice.address
-  );
-
-  bobSemaphoreGroupsInstance = await ethers.getContractAt(
-    "SemaphoreGroupsFacet",
-    bob.address
-  );
-
-  aliceGuardianInstance = await ethers.getContractAt(
-    "GuardianFacet",
-    alice.address
-  );
-  bobGuardianInstance = await ethers.getContractAt(
-    "GuardianFacet",
-    bob.address
-  );
-
-  const verifier: string = "Verifier" + depth;
+  const verifier: string = "Verifier" + 20;
   const foundVerifier = deployedContracts.filter((obj) => {
     return obj.name === verifier;
   });
 
   console.log(verifier, foundVerifier[0].address);
   const verifiers: Verifier[] = [
-    { merkleTreeDepth: depth, contractAddress: foundVerifier[0].address },
+    { merkleTreeDepth: 20, contractAddress: foundVerifier[0].address },
   ];
 
-  // set verifiers for Alice and Bob
-  const aliceTransaction = await aliceSemaphoreInstance
+  const hashId = ethers.utils.formatBytes32String("1");
+  const createWalletTx = await walletFactoryFacetInstance
     .connect(aliceWallet)
-    .setVerifiers(verifiers);
-  console.log("Alice setVerifiers transaction hash: ", aliceTransaction.hash);
+    .createWallet(hashId, aliceWallet.address, verifiers);
+  const receipt = await createWalletTx.wait();
+  // console.log("createWalletTx:", await createWalletTx.wait());
+  const newWallet = receipt.events[0].args[0];
+  console.log("createWalletTx newWallet:", newWallet);
+  const owner = await diamond.owner();
+  console.log("owner:", owner);
+  console.log("deployer:", deployer.address);
+  console.log("aliceWallet:", aliceWallet.address);
+  console.log("factory:", factoryDiamond.address);
 
-  transactionHash.push({
-    name: "Alice setVerifiers",
-    contractAddress: aliceSemaphoreInstance.address,
-    hash: aliceTransaction.hash,
-  });
+  const newDiamond = await ethers.getContractAt("ZkWalletDiamond", newWallet);
 
-  const bobTransaction = await bobSemaphoreInstance
-    .connect(bobWallet)
-    .setVerifiers(verifiers);
-  console.log("Bob setVerifiers transaction hash: ", bobTransaction.hash);
+  console.log("wallet newOwner address:", await newDiamond.owner());
 
-  transactionHash.push({
-    name: "Bob setVerifiers",
-    contractAddress: bobSemaphoreInstance.address,
-    hash: bobTransaction.hash,
-  });
+  console.log("facets:", await newDiamond.facets());
 
-  // create default group for Alice and Bob
-  const aliceCreateGroupTransaction = await aliceSemaphoreGroupsInstance
-    .connect(aliceWallet)
-    .createGroup(groupId, depth, 0, deployer.address);
+  // guardianInstance = await ethers.getContractAt(
+  //   "GuardianFacet",
+  //   newDiamond.address
+  // );
+  // console.log("guardianInstance:", await newDiamond.guardianFacetVersion());
 
-  transactionHash.push({
-    name: "aliceCreateGroupTransaction",
-    contractAddress: aliceSemaphoreGroupsInstance.address,
-    hash: aliceCreateGroupTransaction.hash,
-  });
-
-  const bobCreateGroupTransaction = await bobSemaphoreGroupsInstance
-    .connect(bobWallet)
-    .createGroup(groupId, depth, 0, deployer.address);
-
-  transactionHash.push({
-    name: "bobCreateGroupTransaction",
-    contractAddress: bobSemaphoreGroupsInstance.address,
-    hash: bobCreateGroupTransaction.hash,
-  });
-
-  await aliceGuardianInstance
-    .connect(aliceWallet)
-    .addGuardians(groupId, identityCommitments);
-
-  transactionHash.push({
-    name: "Add Guardians to Alice Wallet",
-    contractAddress: aliceGuardianInstance.address,
-    hash: transaction.hash,
-  });
-
-  await bobGuardianInstance
-    .connect(bobWallet)
-    .addGuardians(groupId, identityCommitments);
-
-  transactionHash.push({
-    name: "Add Guardians to Bob Wallet",
-    contractAddress: bobGuardianInstance.address,
-    hash: transaction.hash,
-  });
+  // console.log("facets:", await newDiamond.facets());
 
   fs.writeFileSync(
     `./deployed-contracts/${hardhatArguments.network}.json`,

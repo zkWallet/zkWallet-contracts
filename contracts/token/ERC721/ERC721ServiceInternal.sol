@@ -1,9 +1,9 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
-import {IERC721ServiceInternal} from "./IERC721ServiceInternal.sol";
-import {ERC721ServiceStorage} from "./ERC721ServiceStorage.sol";
+import { IERC721ServiceInternal } from "./IERC721ServiceInternal.sol";
+import { ERC721ServiceStorage } from "./ERC721ServiceStorage.sol";
 
 /**
  * @title ERC721Service internal functions, excluding optional extensions
@@ -45,6 +45,17 @@ abstract contract ERC721ServiceInternal is IERC721ServiceInternal {
         ERC721ServiceStorage.layout().deleteERC721(tokenAddress);
 
         emit ERC721TokenRemoved(tokenAddress);
+    }
+
+    /**
+     * @notice internal function: deposit a ERC721 token to ERC721Service.
+     * @param token: the address of the ERC721 token.
+     * @param tokenId: the tokenId of token deposited.
+     */
+    function _depositERC721(address token, uint256 tokenId) internal virtual {
+        if (_getERC721TokenIndex(token) == 0) {
+            _registerERC721(token);
+        }
     }
 
     /**
@@ -113,4 +124,17 @@ abstract contract ERC721ServiceInternal is IERC721ServiceInternal {
      * @notice hook that is called after removeERC721
      */
     function _afterRemoveERC721(address tokenAddress) internal virtual view {}
+
+     /**
+     * @notice hook that is called before depositERC721
+     */
+    function _beforedepositERC721(address tokenAddress, uint256 tokenId) internal virtual view {
+        require(tokenAddress != address(0), "ERC7211Service: tokenAddress is the zero address");
+        require(tokenId > 0, "ERC20Service: tokenId is zero");
+    }
+
+    /**
+     * @notice hook that is called after depositERC721
+     */
+    function _afterDepositERC721(address tokenAddress, uint256 tokenId) internal virtual view {}
 }

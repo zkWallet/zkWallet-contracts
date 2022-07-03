@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
@@ -17,4 +17,11 @@ interface IERC721ServiceInternal {
      * @param tokenAddress: the address of the ERC721 token
      */
     event ERC721TokenRemoved(address indexed tokenAddress); 
+
+     /**
+     * @notice emitted when a ERC721 token is deposited.
+     * @param tokenAddress: the address of the ERC721 token.
+     * @param tokenId: the tokenId of token deposited.
+     */
+    event ERC721Deposited(address indexed tokenAddress, uint256 tokenId);
 }

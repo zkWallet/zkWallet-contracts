@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
@@ -17,4 +17,11 @@ interface IERC20ServiceInternal {
      * @param tokenAddress: the address of the ERC20 token
      */
     event ERC20TokenRemoved(address tokenAddress); 
+
+    /**
+     * @notice emitted when a ERC20 token is deposited.
+     * @param tokenAddress: the address of the ERC20 token.
+     * @param amount: the amount of token deposited.
+     */
+    event ERC20Deposited(address indexed tokenAddress, uint256 amount);
 }

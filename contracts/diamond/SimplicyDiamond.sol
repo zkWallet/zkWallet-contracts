@@ -1,8 +1,7 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
-import "hardhat/console.sol";
 import { IOwnable, Ownable, OwnableInternal, OwnableStorage } from "@solidstate/contracts/access/ownable/Ownable.sol";
 import { ISafeOwnable, SafeOwnable } from "@solidstate/contracts/access/ownable/SafeOwnable.sol";
 import { IERC173 } from "@solidstate/contracts/access/IERC173.sol";

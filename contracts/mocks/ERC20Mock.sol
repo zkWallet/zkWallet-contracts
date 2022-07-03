@@ -1,8 +1,8 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
-import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 /**
  * @title mock class using ERC20 
@@ -14,30 +14,10 @@ contract ERC20Mock is ERC20 {
         address initialAccount,
         uint256 initialBalance
     ) payable ERC20(name, symbol) {
-        _mint(initialAccount, initialBalance);
+        _mint(initialAccount, initialBalance * 10**decimals());
     }
 
-    function mint(address account, uint256 amount) public {
-        _mint(account, amount);
-    }
-
-    function burn(address account, uint256 amount) public {
-        _burn(account, amount);
-    }
-
-    function transferInternal(
-        address from,
-        address to,
-        uint256 value
-    ) public {
-        _transfer(from, to, value);
-    }
-
-    function approveInternal(
-        address owner,
-        address spender,
-        uint256 value
-    ) public {
-        _approve(owner, spender, value);
+    function burn(uint256 amount) public {
+        _burn(msg.sender, amount);
     }
 }

@@ -10,3 +10,9 @@ export type Verifier = {
   contractAddress: string;
   merkleTreeDepth: Number;
 };
+
+export type Facet = {
+  name: string;
+  facetAddress: string;
+  version: string;
+};

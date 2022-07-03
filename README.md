@@ -1,6 +1,6 @@
-# zkSocialRecoveryWallet circuits and contracts
+# zkWallet circuits and contracts
 
-This folder was generated using [Hardhat](https://github.com/NomicFoundation/hardhat) and contains all the smart contracts used in the zkSocialRecoveryWallet application.
+This repository was generated using [Hardhat](https://github.com/NomicFoundation/hardhat) and contains all the smart contracts used in the zkSocialRecoveryWallet application.
 
 ## Install dependencies
 

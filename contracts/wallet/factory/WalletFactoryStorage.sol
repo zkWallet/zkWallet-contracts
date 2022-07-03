@@ -1,9 +1,12 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
 import {ISolidStateDiamond} from "@solidstate/contracts/proxy/diamond/ISolidStateDiamond.sol";
 
+/**
+ * @title WalletFactory Storage base on Diamond Standard Layout storage pattern
+ */
 library WalletFactoryStorage {
     struct Facet {
         string name;
@@ -17,7 +20,7 @@ library WalletFactoryStorage {
         address diamond;
 
         // facet address -> facetsIdx
-        mapping(address => uint) facetIndex;
+        mapping(address => uint256) facetIndex;
         Facet[] facets;
     }
 
@@ -52,8 +55,8 @@ library WalletFactoryStorage {
         address facetAddress,
         string memory version
     ) internal returns (bool){
-        uint arrayIndex = s.facets.length;
-        uint index = arrayIndex + 1;
+        uint256 arrayIndex = s.facets.length;
+        uint256 index = arrayIndex + 1;
         s.facets.push(
             Facet(
                 name,
@@ -80,7 +83,7 @@ library WalletFactoryStorage {
         Layout storage s,
         address facetAddress
     ) internal returns (bool) {
-        uint index = s.facetIndex[facetAddress];
+        uint256 index = s.facetIndex[facetAddress];
         require(index > 0, "WalletFactory: FACET_NOT_EXISTS");
 
         uint arrayIndex = index - 1;
@@ -96,11 +99,11 @@ library WalletFactoryStorage {
     }
 
     /**
-     * @notice add a guardian into WalletFactory
+     * @notice add a guardian into WalletFactoryStorage
      * @param hashId: the hash of the identification of the guardian
      * @param guardian: the identityCommitment of the guardian
      */
-    function addGuardian(
+    function storeGuardian(
         Layout storage s,
         bytes32 hashId,
         bytes32 guardian
@@ -109,19 +112,19 @@ library WalletFactoryStorage {
     }
 
     /**
-     * @notice remove a guardian into WalletFactory
+     * @notice delete a guardian from WalletFactoryStorage
      * @param hashId: the hash of the identification of the guardian
      */
-    function removeGuardian(Layout storage s, bytes32 hashId) internal {
+    function deleteGuardian(Layout storage s, bytes32 hashId) internal {
         delete s.guardians[hashId];
     }
 
     /**
-     * @notice add a wallet into WalletFactory
+     * @notice store a wallet into WalletFactoryStorage
      * @param hashId: the hash of the identification of the wallet
      * @param wallet: the address of the wallet
      */
-    function addWallet(
+    function storeWallet(
         Layout storage s,
         bytes32 hashId,
         address wallet

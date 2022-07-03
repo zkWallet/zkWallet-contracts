@@ -1,10 +1,10 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
 import {IRecoveryInternal} from "./IRecoveryInternal.sol";
 /**
- * @title Guardian Storage base on Diamond Standard Layout storage pattern
+ * @title Recovery Storage base on Diamond Standard Layout storage pattern
  */
 library RecoveryStorage {
     struct Layout {
@@ -24,18 +24,34 @@ library RecoveryStorage {
         }
     }
 
+    /**
+     * @notice set the status of the recovery process
+     * @param status: the status of the recovery process
+     */
     function setStatus(Layout storage s, uint8 status) internal {
         s.status = status;
     }
 
+    /**
+     * @notice set the majority of the recovery process
+     * @param majority: the majority of the recovery process
+     */
     function setMajority(Layout storage s, uint256 majority) internal {
         s.majority = majority;
     }
 
+    /**
+     * @notice set the nominee of the recovery process
+     * @param nominee: the nominee of the recovery process
+     */
     function setNominee(Layout storage s, address nominee) internal {
         s.nominee = nominee;
     }
 
+    /**
+     * @notice set the counter of the recovery process
+     * @param counter: the counter of the recovery process
+     */
     function setCounter(Layout storage s, uint8 counter) internal {
         s.counter = counter;
     }

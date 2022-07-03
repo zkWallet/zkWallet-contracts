@@ -1,10 +1,8 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
-import "hardhat/console.sol";
-
-import {IERC20ServiceInternal} from "./IERC20ServiceInternal.sol";
+import { IERC20ServiceInternal } from "./IERC20ServiceInternal.sol";
 import {ERC20ServiceStorage} from "./ERC20ServiceStorage.sol";
 
 /**
@@ -42,14 +40,25 @@ abstract contract ERC20ServiceInternal is IERC20ServiceInternal {
         emit ERC20TokenTracked(tokenAddress);
     }
 
-     /**
-     * @notice remove a new ERC20 token from ERC20Service
+    /**
+     * @notice internal remove a new ERC20 token from ERC20Service
      * @param tokenAddress: the address of the ERC20 token
      */
     function _removeERC20(address tokenAddress) internal virtual {
         ERC20ServiceStorage.layout().deleteERC20(tokenAddress);
 
         emit ERC20TokenRemoved(tokenAddress);
+    }
+
+    /**
+     * @notice internal function: deposit a ERC20 token to ERC20Service.
+     * @param token: the address of the ERC20 token.
+     * @param amount: the amount of tokens to deposit.
+     */
+    function _depositERC20(address token, uint256 amount) internal virtual {
+        if (_getERC20TokenIndex(token) == 0) {
+            _registerERC20(token);
+        }
     }
 
     /**
@@ -92,4 +101,17 @@ abstract contract ERC20ServiceInternal is IERC20ServiceInternal {
      * @notice hook that is called after removeERC20Token
      */
     function _afterRemoveERC20(address tokenAddress) internal virtual view {}
+
+    /**
+     * @notice hook that is called before depositERC20
+     */
+    function _beforedepositERC20(address tokenAddress, uint256 amount) internal virtual view {
+        require(tokenAddress != address(0), "ERC20Service: tokenAddress is the zero address");
+        require(amount > 0, "ERC20Service: amount is zero");
+    }
+
+    /**
+     * @notice hook that is called after depositERC20
+     */
+    function _afterDepositERC20(address tokenAddress, uint256 amount) internal virtual view {}
 }

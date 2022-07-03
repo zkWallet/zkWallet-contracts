@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
@@ -62,6 +62,8 @@ abstract contract SemaphoreGroupsBaseInternal is ISemaphoreGroupsInternal, Incre
 
     function _setGroupAdmin(uint256 groupId, address admin) internal {
         SemaphoreGroupsBaseStorage.layout().setGroupAdmin(groupId, admin);
+
+        emit GroupAdminUpdated(groupId, address(0), admin);
     }
 
     /**

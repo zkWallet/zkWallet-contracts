@@ -1,0 +1,10 @@
+[
+    {
+        "name": "SimplicyTokenDiamond",
+        "address": "0x2d17B056B821aF00B1581934c1B6C78470C7d367"
+    },
+    {
+        "name": "ERC20Facet",
+        "address": "0x168Ced244119e467e1826303dda4E4F10068e208"
+    }
+]

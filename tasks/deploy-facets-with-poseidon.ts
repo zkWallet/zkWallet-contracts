@@ -1,11 +1,6 @@
 import { Contract } from "ethers";
 import { task, types } from "hardhat/config";
-
-type DeployedContract = {
-  name: string;
-  contract: Contract;
-  address: string;
-};
+import { DeployedContract } from "../types";
 
 task("deploy:facets-with-poseidon", "Deploy Facet with poseidon contract")
   .addOptionalParam<boolean>("logs", "Print the logs", true, types.boolean)
@@ -16,7 +11,7 @@ task("deploy:facets-with-poseidon", "Deploy Facet with poseidon contract")
       { logs, library, facets },
       { ethers }
     ): Promise<DeployedContract[]> => {
-      const [deployer, aliceWallet, bobWallet] = await ethers.getSigners();
+      const [deployer] = await ethers.getSigners();
 
       let contracts: DeployedContract[] = [];
 

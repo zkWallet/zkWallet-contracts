@@ -1,12 +1,16 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
-import {OwnableInternal} from "@solidstate/contracts/access/ownable/OwnableInternal.sol";
-import {IVerifier} from "../interfaces/IVerifier.sol";
-import {Semaphore} from "../semaphore/Semaphore.sol";
-import {SemaphoreStorage} from "../semaphore/SemaphoreStorage.sol";
+import { OwnableInternal } from "@solidstate/contracts/access/ownable/OwnableInternal.sol";
+import { IVerifier } from "../interfaces/IVerifier.sol";
+import { Semaphore } from "../semaphore/Semaphore.sol";
+import { SemaphoreStorage } from "../semaphore/SemaphoreStorage.sol";
 
+
+/**
+ * @title SemaphoreFacet 
+ */
 contract SemaphoreFacet is Semaphore, OwnableInternal {
     using SemaphoreStorage for SemaphoreStorage.Layout;
 
@@ -14,7 +18,7 @@ contract SemaphoreFacet is Semaphore, OwnableInternal {
      * @notice return the current version of SemaphoreFacet
      */
     function semaphoreFacetVersion() public pure returns (string memory) {
-        return "0.0.1";
+        return "0.1.0.alpha";
     }
 
     function setVerifiers(Verifier[] memory _verifiers) public onlyOwner {

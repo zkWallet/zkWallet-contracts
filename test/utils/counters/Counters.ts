@@ -4,7 +4,7 @@ import { ethers } from "hardhat";
 import { BigNumber } from "ethers";
 import { CountersMock__factory, CountersMock } from "@simplicy/typechain-types";
 
-describe.only("CountersMock", function () {
+describe("CountersMock", function () {
   let owner: SignerWithAddress;
   let instance: CountersMock;
   let firstIndex: BigNumber;

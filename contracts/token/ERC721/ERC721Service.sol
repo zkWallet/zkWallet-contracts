@@ -1,12 +1,12 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
-import {IERC721} from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
+import { IERC721 } from "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
-import {IERC721Service} from "./IERC721Service.sol";
-import {ERC721ServiceInternal} from "./ERC721ServiceInternal.sol";
-import {ERC721ServiceStorage} from "./ERC721ServiceStorage.sol";
+import { IERC721Service } from "./IERC721Service.sol";
+import { ERC721ServiceInternal } from "./ERC721ServiceInternal.sol";
+import { ERC721ServiceStorage } from "./ERC721ServiceStorage.sol";
 
 /**
  * @title ERC20Service 
@@ -114,5 +114,19 @@ abstract contract ERC721Service is
         _removeERC721(token);
 
         _afterRemoveERC721(token);
+    }
+
+    /**
+     * @inheritdoc IERC721Service
+     */
+    function depositERC721(address token, uint256 tokenId) external {
+        _beforedepositERC721(token, tokenId);
+
+        _depositERC721(token, tokenId);
+        IERC721(token).safeTransferFrom(msg.sender, address(this), tokenId);
+
+        emit ERC721Deposited(token, tokenId);
+
+        _afterDepositERC721(token, tokenId);
     }
 }

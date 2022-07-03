@@ -1,51 +1,46 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
-import {IWalletFactory} from "./IWalletFactory.sol";
-import {WalletFactoryInternal} from "./WalletFactoryInternal.sol";
-import {WalletFactoryStorage} from "./WalletFactoryStorage.sol";
-
+import { IWalletFactory } from "./IWalletFactory.sol";
+import { WalletFactoryInternal } from "./WalletFactoryInternal.sol";
+import { WalletFactoryStorage } from "./WalletFactoryStorage.sol";
 
 abstract contract WalletFactory is IWalletFactory, WalletFactoryInternal {
     /**
-     * @notice query the mapping index of facet.
-     * @param facetAddress: the address of the facet.
+     * @inheritdoc IWalletFactory
      */
     function getFacetIndex(address facetAddress) external view override returns (uint) {
         return _getFacetIndex(facetAddress);
     }
 
-    /**
-     * @notice query a facet.
-     * @param arrayIndex: the index of Facet array.
+     /**
+     * @inheritdoc IWalletFactory
      */
-    function getFacet(uint arrayIndex) external view override returns (WalletFactoryStorage.Facet memory) {
-        _getFacet(arrayIndex);
+    function getFacet(uint256 arrayIndex) external view override returns (WalletFactoryStorage.Facet memory) {
+        return _getFacet(arrayIndex);
     }
 
-    /**
-     * @notice query all facets from the storage
+     /**
+     * @inheritdoc IWalletFactory
      */
     function getFacets() external view override returns (WalletFactoryStorage.Facet[] memory) {
-        _getFacets();
+        return _getFacets();
     }
     
     /**
-     * @notice set the address of the Diamond contract
-     * @param diamond: the address of the Diamond contract
+     * @inheritdoc IWalletFactory
      */
     function setDiamond(address diamond) external override {
         _beforeSetDiamond(diamond);
+
         _setDiamond(diamond);
+
         _afterSetDiamond(diamond);
     }
 
-    /**
-     * @notice add facet to facets array
-     * @param name: the name of the facet
-     * @param facetAddress: the address of the facet contract
-     * @param version: the version of the facet
+     /**
+     * @inheritdoc IWalletFactory
      */
     function addFacet(
         string memory name,
@@ -53,53 +48,59 @@ abstract contract WalletFactory is IWalletFactory, WalletFactoryInternal {
         string memory version
     ) external override {
         _beforeAddFacet(name, facetAddress, version);
+
         _addFacet(name, facetAddress, version);
+
         _afterAddFacet(name, facetAddress, version);
     }
 
     /**
-     * @notice add a guardian into WalletFactory
-     * remember: we are not adding Guardian to a user wallet in this function!
-     * @param hashId: the hash of the identification of the guardian
-     * @param guardian: the identityCommitment of the guardian
+     * @inheritdoc IWalletFactory
      */
     function addGuardian(bytes32 hashId, bytes32 guardian) external override {
         _addGuardian(hashId, guardian);
     }
 
     /**
-     * @notice remove a guardian into WalletFactory
-     * @param hashId: the hash of the identification of the guardian
+     * @inheritdoc IWalletFactory
      */
     function removeGuardian(bytes32 hashId) external override {
         _removeGuardian(hashId);
     }
 
     /**
-     * @notice deploy a new wallet from WalletDiamond
-     * @param hashId: the hash of the identification of the user
-     * @param owner: the owner of the wallet
-     * @return the address of the new wallet
+     * @inheritdoc IWalletFactory
      */
-    function createWallet(bytes32 hashId, address owner) external override returns (address) {
-        return _createWallet(hashId, owner);
+    function createWallet(
+        bytes32 hashId,
+        address owner,
+        VerifierDTO[] memory verifier
+    ) external override returns (address) {
+        _beforeCreateWallet(hashId, owner, verifier);
+        
+        return _createWallet(hashId, owner, verifier);
     }
 
     /**
-     * @notice create a new wallet from WalletDiamond
-     * @param hashId: the hash of the identification of the user
-     * @param salt: salt to deterministically deploy the clone
+     * @inheritdoc IWalletFactory
      */
-    function createWalletDeterministic(bytes32 hashId, bytes32 salt)
+    function createWalletDeterministic(
+        bytes32 hashId,
+        address owner,
+        VerifierDTO[] memory verifiers,
+        bytes32 salt
+    )
         external
         override
+        returns (address)
     {
-        _createWalletDeterministic(hashId, salt);
+        _beforeCreateWalletDeterministic(hashId, owner,verifiers, salt);
+
+        return _createWalletDeterministic(hashId, owner, verifiers, salt);
     }
 
     /**
-     * @notice predict the address of the new wallet
-     * @param salt: salt to deterministically deploy the clone
+     * @inheritdoc IWalletFactory
      */
     function predictDeterministicAddress(bytes32 salt)
         public
@@ -111,15 +112,14 @@ abstract contract WalletFactory is IWalletFactory, WalletFactoryInternal {
     }
 
     /**
-     * @notice query the address of the stored diamond contract
+     * @inheritdoc IWalletFactory
      */
     function getDiamond() public view override returns (address) {
         return _getDiamond();
     }
 
     /**
-     * @notice query the address of the wallet contract
-     * @param hashId: the hash id of the user
+     * @inheritdoc IWalletFactory
      */
     function getWallet(bytes32 hashId) external view returns (address) {
         return _getWallet(hashId);

@@ -1,10 +1,10 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
-import {OwnableInternal} from "@solidstate/contracts/access/ownable/OwnableInternal.sol";
-import {SemaphoreVoting} from "../semaphore/extensions/SemaphoreVoting/SemaphoreVoting.sol";
-import {SemaphoreVotingStorage} from "../semaphore/extensions/SemaphoreVoting/SemaphoreVotingStorage.sol";
+import { OwnableInternal } from "@solidstate/contracts/access/ownable/OwnableInternal.sol";
+import { SemaphoreVoting } from "../semaphore/extensions/SemaphoreVoting/SemaphoreVoting.sol";
+import { SemaphoreVotingStorage } from "../semaphore/extensions/SemaphoreVoting/SemaphoreVotingStorage.sol";
 
 contract SemaphoreVotingFacet is SemaphoreVoting, OwnableInternal {
     using SemaphoreVotingStorage for SemaphoreVotingStorage.Layout;
@@ -13,7 +13,7 @@ contract SemaphoreVotingFacet is SemaphoreVoting, OwnableInternal {
      * @notice return the current version of SemaphoreVotingFacet
      */
     function semaphoreVotingFacetVersion() public pure returns (string memory) {
-        return "0.0.1";
+        return "0.1.0";
     }
 
     /**

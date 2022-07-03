@@ -1,10 +1,10 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
-import {OwnableInternal} from "@solidstate/contracts/access/ownable/OwnableInternal.sol";
+import { OwnableInternal } from "@solidstate/contracts/access/ownable/OwnableInternal.sol";
 
-import {ERC20Service} from "./ERC20Service.sol";
+import { ERC20Service } from "./ERC20Service.sol";
 
 contract ERC20ServiceMock is ERC20Service, OwnableInternal {
     function __getERC20TokenIndex(address tokenAddress) internal view returns (uint256) {

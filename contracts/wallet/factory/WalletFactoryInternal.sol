@@ -1,30 +1,28 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
-
 import "hardhat/console.sol";
-import {ERC165, IERC165, ERC165Storage} from "@solidstate/contracts/introspection/ERC165.sol";
-import {IDiamondWritable} from "@solidstate/contracts/proxy/diamond/writable/IDiamondWritable.sol";
-import {ISafeOwnable, IOwnable} from "@solidstate/contracts/access/ownable/ISafeOwnable.sol";
+import { ERC165, IERC165, ERC165Storage } from "@solidstate/contracts/introspection/ERC165.sol";
+import { IDiamondWritable } from "@solidstate/contracts/proxy/diamond/writable/IDiamondWritable.sol";
+import { ISafeOwnable, IOwnable } from "@solidstate/contracts/access/ownable/ISafeOwnable.sol";
+import { AddressUtils } from "@solidstate/contracts/utils/AddressUtils.sol";
+
 import "@openzeppelin/contracts/utils/Create2.sol";
+import "@openzeppelin/contracts/proxy/Clones.sol";
 
-import {SimplicyWalletDiamond, ISimplicyWalletDiamond} from "../../diamond/SimplicyWalletDiamond.sol";
-import {IWalletFactoryInternal} from "./IWalletFactoryInternal.sol";
-import {WalletFactoryStorage} from "./WalletFactoryStorage.sol";
-
-import {ISemaphore} from "../../semaphore/ISemaphore.sol";
-import {ISemaphoreGroups} from "../../semaphore/ISemaphoreGroups.sol";
-import {ISemaphoreVoting} from "../../semaphore/extensions/SemaphoreVoting/ISemaphoreVoting.sol";
-
-import {CountersInternal} from "../../utils/counters/CountersInternal.sol";
+import { IZkWalletDiamond } from "../../interfaces/IZkWalletDiamond.sol";
+import { IWalletFactoryInternal } from "./IWalletFactoryInternal.sol";
+import { WalletFactoryStorage } from "./WalletFactoryStorage.sol";
 
 /**
  * @title WalletFactory internal functions
  */
-abstract contract WalletFactoryInternal is IWalletFactoryInternal, CountersInternal {
+abstract contract WalletFactoryInternal is IWalletFactoryInternal {
     using WalletFactoryStorage for WalletFactoryStorage.Layout;
     using WalletFactoryStorage for WalletFactoryStorage.Facet;
     using ERC165Storage for ERC165Storage.Layout;
+    using AddressUtils for address;
+    using Clones for address;
 
     string public constant WALLET_CREATION = "WALLET_CREATION";
 
@@ -40,7 +38,7 @@ abstract contract WalletFactoryInternal is IWalletFactoryInternal, CountersInter
      * @notice internal function query a facet.
      * @param arrayIndex: the index of Facet array.
      */
-    function _getFacet(uint arrayIndex) internal view virtual returns (WalletFactoryStorage.Facet memory) {
+    function _getFacet(uint256 arrayIndex) internal view virtual returns (WalletFactoryStorage.Facet memory) {
         return WalletFactoryStorage.layout().facets[arrayIndex];
     }
 
@@ -105,8 +103,11 @@ abstract contract WalletFactoryInternal is IWalletFactoryInternal, CountersInter
         address facetAddress,
         string memory version
     ) internal virtual {
-        WalletFactoryStorage.layout().storeFacet(name, facetAddress, version);
-
+        require(
+            WalletFactoryStorage.layout().storeFacet(name, facetAddress, version),
+            "WalletFactory: not able to store facet"
+        );
+        
         emit FacetIsAdded(name, facetAddress, version);
     }
 
@@ -115,7 +116,10 @@ abstract contract WalletFactoryInternal is IWalletFactoryInternal, CountersInter
      * @param facetAddress: facet name to be removed
      */
     function _removeFacet(address facetAddress) internal virtual {
-        WalletFactoryStorage.layout().deleteFacet(facetAddress);
+        require(
+            WalletFactoryStorage.layout().deleteFacet(facetAddress),
+            "WalletFactory: not able to remove facet"
+        );
 
         emit FacetIsRemoved(facetAddress);
     }
@@ -126,7 +130,7 @@ abstract contract WalletFactoryInternal is IWalletFactoryInternal, CountersInter
      * @param guardian: the identityCommitment of the guardian
      */
     function _addGuardian(bytes32 hashId, bytes32 guardian) internal virtual {
-        WalletFactoryStorage.layout().addGuardian(hashId, guardian);
+        WalletFactoryStorage.layout().storeGuardian(hashId, guardian);
 
         emit GuardianAdded(hashId, guardian);
     }
@@ -138,7 +142,7 @@ abstract contract WalletFactoryInternal is IWalletFactoryInternal, CountersInter
     function _removeGuardian(bytes32 hashId) internal virtual {
         bytes32 guardian = WalletFactoryStorage.layout().guardians[hashId];
 
-        WalletFactoryStorage.layout().removeGuardian(hashId);
+        WalletFactoryStorage.layout().deleteGuardian(hashId);
 
         emit GuardianRemoved(hashId, guardian);
     }
@@ -147,49 +151,82 @@ abstract contract WalletFactoryInternal is IWalletFactoryInternal, CountersInter
      * @notice internal function create a new wallet from WalletDiamond
      * @param hashId: the hash of the identification of the user
      * @param owner; the owner of the wallet
+     * @param verifiers: the verfiers contract to be added to Semaphore
      * @return the address of the new wallet
      */
-    function _createWallet(bytes32 hashId, address owner)
+    function _createWallet(
+        bytes32 hashId,
+        address owner,
+        VerifierDTO[] memory verifiers
+    )
         internal
         virtual
         returns (address)
     {
         address diamond = _getDiamond();
+        WalletFactoryStorage.Facet[] memory facets = _getFacets();
 
-        address deployed = address(new SimplicyWalletDiamond(owner));
+        address newClone = diamond.clone();
 
-        WalletFactoryStorage.layout().addWallet(hashId, deployed);
+       // IZkWalletDiamond(payable(newClone)).initOwner(owner);
+        (bool success, bytes memory data) = newClone.call(
+            abi.encodeWithSignature("initOwner(address)", owner)
+        );
+        
+        // (bool success, bytes memory data) = newClone.call(
+        //     abi.encodeWithSignature("init(address,(string,address,string),(uint8,address))", owner, facets, verifiers)
+        // );
+        
+        WalletFactoryStorage.layout().storeWallet(hashId, newClone);
 
-        emit NewDiamondWallet(deployed);
+        emit WalletIsCreated(newClone);
 
-        return deployed;
+        return newClone;
     }
 
-    /**
-     * @notice internal function create
-      a new wallet from WalletDiamond
-     * this function uses the create2 opcode and a `salt` to deterministically deploy
-     * @param hashId: the hash of the identification of the user
-     * @param salt: salt to deterministically deploy the clone
+   /**
+     * @notice internal function create a new wallet from WalletDiamond.
+     * @param hashId: the hash of the identification of the user.
+     * @param owner: the owner of the wallet.
+     * @param verifiers: the verfiers contract to be added to Semaphore
+     * @param salt: salt to deterministically deploy the clone.
+    * @return the address of the new wallet
      */
-    function _createWalletDeterministic(bytes32 hashId, bytes32 salt)
+    function _createWalletDeterministic(
+        bytes32 hashId,
+        address owner,
+        VerifierDTO[] memory verifiers,
+        bytes32 salt
+    )
         internal
         virtual
+        returns (address)
     {
         address diamond = _getDiamond();
+        WalletFactoryStorage.Facet[] memory facets = _getFacets();
 
-        address deployed = address(0); // TODO: diamond.cloneDeterministic(salt);
+        address newClone = diamond.cloneDeterministic(salt);
 
-        WalletFactoryStorage.layout().addWallet(hashId, deployed);
+        (bool success, bytes memory data) = newClone.call(
+            abi.encodeWithSignature("init(address,(string,address,string),(uint8,address))", owner, facets, verifiers)
+        );
 
-        emit NewDiamondWallet(deployed);
+        WalletFactoryStorage.layout().storeWallet(hashId, newClone);
+
+        emit WalletIsCreated(newClone);
+
+        return newClone;
     }
 
     /**
      * @notice hook that is called before a wallet is created
      * to learn more about hooks: https://docs.openzeppelin.com/contracts/4.x/extending-contracts#using-hooks
      */
-    function _beforeCreateWallet(bytes32 hashId) internal view virtual {
+    function _beforeCreateWallet( 
+        bytes32 hashId,
+        address owner,
+        VerifierDTO[] memory verifiers
+    ) internal view virtual {
         require(
             _getDiamond() != address(0),
             "WalletFactory: Diamond address is the zero address  "
@@ -202,32 +239,21 @@ abstract contract WalletFactoryInternal is IWalletFactoryInternal, CountersInter
     }
 
     /**
-     * @notice hook that is called after a wallet is createdt
-     * to learn more about hooks: https://docs.openzeppelin.com/contracts/4.x/extending-contracts#using-hooks
-     */
-    function _afterCreateWallet(bytes32 hashId) internal view virtual {}
-
-    /**
      * @notice hook that is called before a wallet is created
      * to learn more about hooks: https://docs.openzeppelin.com/contracts/4.x/extending-contracts#using-hooks
      */
-    function _beforeCreateWalletDeterministic(bytes32 hashId, bytes32 salt)
+    function _beforeCreateWalletDeterministic(
+        bytes32 hashId,
+        address owner,
+        VerifierDTO[] memory verifiers,
+        bytes32 salt
+    )
         internal
         view
         virtual
     {
-        _beforeCreateWallet(hashId);
+        _beforeCreateWallet(hashId, owner, verifiers );
     }
-
-    /**
-     * @notice hook that is called after a wallet is createdt
-     * to learn more about hooks: https://docs.openzeppelin.com/contracts/4.x/extending-contracts#using-hooks
-     */
-    function _afterCreateWalletDeterministic(bytes32 hashId, bytes32 salt)
-        internal
-        view
-        virtual
-    {}
 
     /**
      * @notice hook that is called before Diamond is set
@@ -258,18 +284,18 @@ abstract contract WalletFactoryInternal is IWalletFactoryInternal, CountersInter
         require(
             keccak256(abi.encodePacked(name)) !=
                 (keccak256(abi.encodePacked(""))),
-            "WalletFactory: name is the zero value"
+            "WalletFactory: name is empty"
         );
 
         require(
             facetAddress != address(0),
-            "WalletFactory: facetAddress is the zero address  "
+            "WalletFactory: facetAddress is the zero address"
         );
 
         require(
             keccak256(abi.encodePacked(version)) !=
                 (keccak256(abi.encodePacked(""))),
-            "WalletFactory: name is the zero value"
+            "WalletFactory: version is empty"
         );
     }
 
@@ -347,55 +373,4 @@ abstract contract WalletFactoryInternal is IWalletFactoryInternal, CountersInter
      * to learn more about hooks: https://docs.openzeppelin.com/contracts/4.x/extending-contracts#using-hooks
      */
     function _afterRemoveGuardian(bytes32 hashId) internal view virtual {}
-
-    function _getWalletCode() internal view returns (bytes memory) {
-        return
-            abi.encodePacked(
-                type(SimplicyWalletDiamond).creationCode,
-                abi.encode(_getDiamond())
-            );
-    }
-
-    // function _addFacetToWallet(address wallet, address owner) private {
-    //     address semaphoreFacet = _getFacetAddress("SemaphoreFacet");
-    //     address semaphoreGroupsFacet = _getFacetAddress("SemaphoreGroupsFacet");
-    //     address semaphoreVotingFacet = _getFacetAddress("SemaphoreVotingFacet");
-
-    //     ERC165Storage.Layout storage erc165 = ERC165Storage.layout();
-    //     bytes4[] memory semaphoreFacetSelector = new bytes4[](12);
-
-    //     semaphoreFacetSelector[0] = ISemaphore.verifyProof.selector;
-
-    //     erc165.setSupportedInterface(type(IDiamondWritable).interfaceId, true);
-
-    //     IDiamondWritable.FacetCut[]
-    //         memory facetCuts = new IDiamondWritable.FacetCut[](1);
-
-    //     facetCuts[0] = IDiamondWritable.FacetCut({
-    //         target: semaphoreFacet,
-    //         action: IDiamondWritable.FacetCutAction.ADD,
-    //         selectors: semaphoreFacetSelector
-    //     });
-
-    //     // IDiamondWritable(wallet).diamondCut(facetCuts, address(0), "");
-    //     ISimplicyWalletDiamond(wallet).changeOwner(owner);
-
-    //     // facetCuts[1] = IDiamondWritable.FacetCut({
-    //     //     target: semaphoreGroupsFacet,
-    //     //     action: IDiamondWritable.FacetCutAction.ADD,
-    //     //     selectors: selectors
-    //     // });
-
-    //     // selectors[1] = ISemaphoreGroups.getRoot.selector;
-    //     // selectors[2] = ISemaphoreGroups.getDepth.selector;
-    //     // selectors[3] = ISemaphoreGroups.getNumberOfLeaves.selector;
-    //     // TODO: SemaphoreGroupsBase
-
-    //     // selectors[4] = ISemaphoreVoting.createPoll.selector;
-    //     // selectors[5] = ISemaphoreVoting.startPoll.selector;
-    //     // selectors[6] = ISemaphoreVoting.castVote.selector;
-    //     // selectors[7] = ISemaphoreVoting.endPoll.selector;
-
-    //     //IDiamondWritable(wallet).diamondCut(facetCuts, address(0), "");
-    // }
 }

@@ -1,17 +1,22 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
-import {OwnableInternal} from "@solidstate/contracts/access/ownable/OwnableInternal.sol";
+import { OwnableInternal } from "@solidstate/contracts/access/ownable/OwnableInternal.sol";
 
-import {WalletFactory} from "../wallet/factory/WalletFactory.sol";
+import { IWalletFactoryFacet } from "../interfaces/IWalletFactoryFacet.sol";
+import { WalletFactory } from "../wallet/factory/WalletFactory.sol";
 
-contract WalletFactoryFacet is WalletFactory, OwnableInternal {
+
+/**
+ * @title WalletFactoryFacet 
+ */
+contract WalletFactoryFacet is IWalletFactoryFacet, WalletFactory, OwnableInternal {
     /**
      * @notice return the current version of WalletFactoryFacets
      */
-    function walletFactoryFacetVersion() public pure returns (string memory) {
-        return "0.0.1";
+    function walletFactoryFacetVersion() public pure override returns (string memory) {
+        return "0.1.0.alpha";
     }
 
     function _beforeSetDiamond(address diamond)
@@ -23,6 +28,18 @@ contract WalletFactoryFacet is WalletFactory, OwnableInternal {
     {
         super._beforeSetDiamond(diamond);
     }
+
+    function _beforeAddFacet(
+        string memory name,
+        address facetAddress,
+        string memory version
+    ) internal view virtual override onlyOwner {
+        super._beforeAddFacet(name, facetAddress, version);
+    }
+
+     function _beforeRemoveFacet(string memory name) internal view virtual override onlyOwner {
+        super._beforeRemoveFacet(name);
+     }
 
     function _beforeAddGuardian(bytes32 hashId, bytes32 guardian)
         internal

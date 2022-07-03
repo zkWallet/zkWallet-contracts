@@ -1,19 +1,24 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
 
-import {SafeOwnableInternal} from "@solidstate/contracts/access/ownable/SafeOwnableInternal.sol";
-import {Recovery} from "../recovery/Recovery.sol";
-import {RecoveryStorage} from "../recovery/RecoveryStorage.sol";
+import { SafeOwnableInternal } from "@solidstate/contracts/access/ownable/SafeOwnableInternal.sol";
+import { IRecoveryFacet } from "../interfaces/IRecoveryFacet.sol";
+import { Recovery } from "../recovery/Recovery.sol";
+import { RecoveryStorage } from "../recovery/RecoveryStorage.sol";
 
-contract RecoveryFacet is Recovery, SafeOwnableInternal {
+
+/**
+ * @title RecoveryFacet 
+ */
+contract RecoveryFacet is IRecoveryFacet, Recovery, SafeOwnableInternal {
     using RecoveryStorage for RecoveryStorage.Layout;
 
     /**
-     * @notice return the current version of RecoveryFacet
+     * @inheritdoc IRecoveryFacet
      */
-    function recoveryFacetVersion() public pure returns (string memory) {
-        return "0.0.1";
+    function recoveryFacetVersion() public pure override returns (string memory) {
+        return "0.1.0.alpha";
     }
 
     function _beforeResetRecovery() internal view virtual override onlyOwner {}
@@ -21,5 +26,4 @@ contract RecoveryFacet is Recovery, SafeOwnableInternal {
     function _duringRecovery(uint256 majority, address newOwner) internal virtual override {
         _transferOwnership(newOwner);
     }
-
 }

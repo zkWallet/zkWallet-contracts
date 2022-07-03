@@ -8,31 +8,31 @@ uint8 constant MAX_DEPTH = 32;
 
 // semaphoreGroupsBase
 bytes32 constant GET_GROUP_ADMIN_TYPEHASH = keccak256(
-  "getGroupAdmin(uint256 groupId)"
+  "getGroupAdmin(uint256)"
 );
 
 bytes32 constant UPDATE_GROUP_ADMIN_TYPEHASH = keccak256(
-  "createGroup(uint256 groupId,uint8 depth,uint256 zeroValue,address admin)"
+  "createGroup(uint256,uint8,uint256,address)"
 );
 
 bytes32 constant CREATE_GROUP_TYPEHASH = keccak256(
-  "createGroup(uint256 groupId,uint8 depth,uint256 zeroValue,address admin)"
+  "createGroup(uint256,uint8,uint256,address)"
 );
 
 bytes32 constant ADD_MEMBER_TYPEHASH = keccak256(
-  "addMember(uint256 groupId,uint256 identityCommitment)"
+  "addMember(uint256,uint256)"
 );
 
 bytes32 constant REMOVE_MEMBER_TYPEHASH = keccak256(
-  "removeMember(uint256 groupId,uint256 identityCommitment,uint256[] calldata proofSiblings,uint8[] calldata proofPathIndices)"
+  "removeMember(uint256,uint256 identityCommitment,uint256[] calldata,uint8[] calldata)"
 );
 
 bytes32 constant ADD_MEMBERS_TYPEHASH = keccak256(
-  "addMember(uint256 groupId,uint256[] memory identityCommitments)"
+  "addMember(uint256,uint256[] memory)"
 );
 
 bytes32 constant REMOVE_MEMBERS_TYPEHASH = keccak256(
-  "removeMembers(uint256 groupId,RemoveMembersDTO[] calldata members)"
+  "removeMembers(uint256,RemoveMembersDTO[] calldata)"
 );
 
 // guardians
@@ -40,26 +40,30 @@ uint constant MIN_GUARDIANS = 3;
 uint constant MAX_GUARDIANS = 10;
 uint constant GUARDIAN_PENDING_PERIODS = 3 days;
 
+bytes32 constant GET_GUARDIAN_TYPEHASH = keccak256(
+  "getGuardian(uint256)"
+);
+
 bytes32 constant GET_GUARDIANS_TYPEHASH = keccak256(
-  "getGuardians(uint256 groupId)"
+  "getGuardians(bool)"
 );
 
 bytes32 constant NUM_GUARDIANS_TYPEHASH = keccak256(
-  "numGuardians(uint256 groupId)"
+  "numGuardians(bool)"
+);
+
+bytes32 constant REQUIRE_MAJORITY_TYPEHASH = keccak256(
+  "requireMajority(GuardianDTO[] calldata)"
 );
 
 bytes32 constant SET_INITIAL_GUARDIANS_TYPEHASH = keccak256(
-  "setInitialGuardians(uint256 groupId,AddGuardianDTO[] calldata guardians)"
-);
-
-bytes32 constant ADD_GUARDIAN_TYPEHASH = keccak256(
-  "addGuardian(uint256 groupId,uint256 hashId,uint256 identityCommitment,uint256 validUntil)"
+  "setInitialGuardians(uint256[] memory)"
 );
 
 bytes32 constant REMOVE_GUARDIAN_TYPEHASH = keccak256(
-  "removeGuardian(uint256 groupId,uint256 hashId,uint256 validUntil)"
+  "removeGuardian(uint256)"
 );
 
 bytes32 constant REMOVE_GUARDIANS_TYPEHASH = keccak256(
-  "removeGuardians(uint256 groupId,RemoveGuardianDTO[] calldata guardians)"
+  "removeGuardians(uint256[] memory)"
 );
