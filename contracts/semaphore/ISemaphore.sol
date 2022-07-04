@@ -2,6 +2,7 @@
 
 pragma solidity ^0.8.4;
 
+import {IVerifier} from "../interfaces/IVerifier.sol";
 import {ISemaphoreInternal} from "./ISemaphoreInternal.sol";
 
 /**
@@ -24,4 +25,10 @@ interface ISemaphore is ISemaphoreInternal {
         uint256 externalNullifier,
         uint256[8] calldata proof
     ) external;
+
+    /**
+     * @notice query the verifier address by merkle tree depth
+     */
+    function getVerifier(uint8 merkleTreeDepth) external returns (IVerifier);
+
 }

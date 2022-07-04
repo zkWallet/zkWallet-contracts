@@ -10,27 +10,6 @@ abstract contract WalletFactory is IWalletFactory, WalletFactoryInternal {
     /**
      * @inheritdoc IWalletFactory
      */
-    function getFacetIndex(address facetAddress) external view override returns (uint) {
-        return _getFacetIndex(facetAddress);
-    }
-
-     /**
-     * @inheritdoc IWalletFactory
-     */
-    function getFacet(uint256 arrayIndex) external view override returns (WalletFactoryStorage.Facet memory) {
-        return _getFacet(arrayIndex);
-    }
-
-     /**
-     * @inheritdoc IWalletFactory
-     */
-    function getFacets() external view override returns (WalletFactoryStorage.Facet[] memory) {
-        return _getFacets();
-    }
-    
-    /**
-     * @inheritdoc IWalletFactory
-     */
     function setDiamond(address diamond) external override {
         _beforeSetDiamond(diamond);
 
@@ -99,6 +78,27 @@ abstract contract WalletFactory is IWalletFactory, WalletFactoryInternal {
         return _createWalletDeterministic(hashId, owner, verifiers, salt);
     }
 
+    /**
+     * @inheritdoc IWalletFactory
+     */
+    function getFacetIndex(address facetAddress) external view override returns (uint) {
+        return _getFacetIndex(facetAddress);
+    }
+
+     /**
+     * @inheritdoc IWalletFactory
+     */
+    function getFacet(uint256 arrayIndex) external view override returns (WalletFactoryStorage.Facet memory) {
+        return _getFacet(arrayIndex);
+    }
+
+     /**
+     * @inheritdoc IWalletFactory
+     */
+    function getFacets() external view override returns (WalletFactoryStorage.Facet[] memory) {
+        return _getFacets();
+    }
+    
     /**
      * @inheritdoc IWalletFactory
      */

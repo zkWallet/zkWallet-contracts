@@ -9,26 +9,6 @@ import {IRecoveryInternal} from "./IRecoveryInternal.sol";
  */
 interface IRecovery is IRecoveryInternal {
     /**
-     * @notice query the status of the recovery
-     */
-    function getRecoveryStatus() external view returns (RecoveryStatus);
-
-    /**
-     * @notice query the majority of the recovery
-     */
-    function getMajority() external view returns (uint256);
-
-    /**
-     * @notice query the nominee of the recovery
-     */
-    function getRecoveryNominee() external view returns (address);
-
-    /**
-     * @notice query the counter of the recovery
-     */
-    function getRecoveryCounter() external view returns (uint8);
-
-    /**
      * @notice recover the wallet by setting a new owner.
      * @param groupId the group id of the semaphore groups
      * @param signal: semaphore signal
@@ -49,4 +29,24 @@ interface IRecovery is IRecoveryInternal {
      * @notice reset the recovery
      */
     function resetRecovery() external;
+
+    /**
+     * @notice query the status of the recovery
+     */
+    function getRecoveryStatus() external view returns (RecoveryStatus);
+
+    /**
+     * @notice query the majority of the recovery
+     */
+    function getMajority() external view returns (uint256);
+
+    /**
+     * @notice query the nominee of the recovery
+     */
+    function getRecoveryNominee() external view returns (address);
+
+    /**
+     * @notice query the counter of the recovery
+     */
+    function getRecoveryCounter() external view returns (uint8);
 }

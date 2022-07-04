@@ -13,38 +13,6 @@ abstract contract Guardian is IGuardian, GuardianInternal {
     /**
      * @inheritdoc IGuardian
      */
-    function getGuardian(uint256 hashId) external view override returns (GuardianStorage.Guardian memory) {
-        uint index = _getGuardianIndex(hashId);
-        require(index > 0, "Guardian: GUARDIAN_NOT_FOUND");
-
-        uint arrayIndex = index - 1;
-        return _getGuardian(arrayIndex);
-    }
-
-    /**
-     * @inheritdoc IGuardian
-     */
-    function getGuardians(bool includePendingAddition) public view override returns (GuardianStorage.Guardian[] memory) {
-        return _getGuardians(includePendingAddition);
-    }
-
-    /**
-     * @inheritdoc IGuardian
-     */
-    function numGuardians(bool includePendingAddition) external view override returns (uint256) {
-        return _numGuardians(includePendingAddition);
-    }
-
-    /**
-     * @inheritdoc IGuardian
-     */
-    function requireMajority(GuardianDTO[] calldata guardians) external view override {
-        _requireMajority(guardians);
-    }
-
-    /**
-     * @inheritdoc IGuardian
-     */
     function removeGuardians(uint256[] memory guardians) external override {
         _beforeRemoveGuardians(guardians);
 
@@ -77,7 +45,7 @@ abstract contract Guardian is IGuardian, GuardianInternal {
         _afterSetInitialGuardians(guardians);
     }
 
-     /**
+    /**
      * @inheritdoc IGuardian
      */
     function addGuardian(uint256 hashId) public override returns(bool){
@@ -93,5 +61,37 @@ abstract contract Guardian is IGuardian, GuardianInternal {
         _beforeRemoveGuardian(hashId);
         
         return _removeGuardian(hashId);
+    }
+
+    /**
+     * @inheritdoc IGuardian
+     */
+    function getGuardian(uint256 hashId) external view override returns (GuardianStorage.Guardian memory) {
+        uint index = _getGuardianIndex(hashId);
+        require(index > 0, "Guardian: GUARDIAN_NOT_FOUND");
+
+        uint arrayIndex = index - 1;
+        return _getGuardian(arrayIndex);
+    }
+
+    /**
+     * @inheritdoc IGuardian
+     */
+    function getGuardians(bool includePendingAddition) public view override returns (GuardianStorage.Guardian[] memory) {
+        return _getGuardians(includePendingAddition);
+    }
+
+    /**
+     * @inheritdoc IGuardian
+     */
+    function numGuardians(bool includePendingAddition) external view override returns (uint256) {
+        return _numGuardians(includePendingAddition);
+    }
+
+    /**
+     * @inheritdoc IGuardian
+     */
+    function requireMajority(GuardianDTO[] calldata guardians) external view override {
+        _requireMajority(guardians);
     }
 }

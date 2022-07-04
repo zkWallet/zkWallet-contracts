@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 pragma solidity ^0.8.4;
-import "hardhat/console.sol";
+
 import { ERC165, IERC165, ERC165Storage } from "@solidstate/contracts/introspection/ERC165.sol";
 import { IDiamondWritable } from "@solidstate/contracts/proxy/diamond/writable/IDiamondWritable.sol";
 import { ISafeOwnable, IOwnable } from "@solidstate/contracts/access/ownable/ISafeOwnable.sol";
@@ -11,6 +11,7 @@ import "@openzeppelin/contracts/utils/Create2.sol";
 import "@openzeppelin/contracts/proxy/Clones.sol";
 
 import { IZkWalletDiamond } from "../../interfaces/IZkWalletDiamond.sol";
+import { ZkWalletDiamond } from "../../diamond/zkWallet/ZkWalletDiamond.sol";
 import { IWalletFactoryInternal } from "./IWalletFactoryInternal.sol";
 import { WalletFactoryStorage } from "./WalletFactoryStorage.sol";
 
@@ -25,62 +26,6 @@ abstract contract WalletFactoryInternal is IWalletFactoryInternal {
     using Clones for address;
 
     string public constant WALLET_CREATION = "WALLET_CREATION";
-
-    /**
-     * @notice internal function query the mapping index of facet.
-     * @param facetAddress: the address of the facet.
-     */
-    function _getFacetIndex(address facetAddress) internal view virtual returns (uint) {
-        return WalletFactoryStorage.layout().facetIndex[facetAddress];
-    }
-
-    /**
-     * @notice internal function query a facet.
-     * @param arrayIndex: the index of Facet array.
-     */
-    function _getFacet(uint256 arrayIndex) internal view virtual returns (WalletFactoryStorage.Facet memory) {
-        return WalletFactoryStorage.layout().facets[arrayIndex];
-    }
-
-    /**
-     * @notice internal function query all facets from the storage
-     */
-    function _getFacets() internal view virtual returns (WalletFactoryStorage.Facet[] memory) {
-        return WalletFactoryStorage.layout().facets;
-    }
-
-    /**
-     * @notice internal function query the address of the Diamond contract
-     */
-    function _getDiamond() internal view virtual returns (address) {
-        return WalletFactoryStorage.layout().diamond;
-    }
-
-    /**
-     * @notice internal function query the address of a wallet
-     * @param hashId: the hash id of the user
-     */
-    function _getWallet(bytes32 hashId)
-        internal
-        view
-        virtual
-        returns (address)
-    {
-        return WalletFactoryStorage.layout().wallets[hashId];
-    }
-
-    /**
-     * @notice internal function predict the address of the new wallet
-     * @param salt: salt to deterministically deploy the clone
-     */
-    function _predictDeterministicAddress(bytes32 salt)
-        internal
-        view
-        virtual
-        returns (address predicted)
-    {
-        return address(0); // TODO: _getDiamond().predictDeterministicAddress(salt);
-    }
 
     /**
      * @notice internal function set the address of the Diamond contract
@@ -163,25 +108,15 @@ abstract contract WalletFactoryInternal is IWalletFactoryInternal {
         virtual
         returns (address)
     {
-        address diamond = _getDiamond();
         WalletFactoryStorage.Facet[] memory facets = _getFacets();
 
-        address newClone = diamond.clone();
-
-       // IZkWalletDiamond(payable(newClone)).initOwner(owner);
-        (bool success, bytes memory data) = newClone.call(
-            abi.encodeWithSignature("initOwner(address)", owner)
-        );
+        address deployed = address(new ZkWalletDiamond(owner, facets, verifiers));
         
-        // (bool success, bytes memory data) = newClone.call(
-        //     abi.encodeWithSignature("init(address,(string,address,string),(uint8,address))", owner, facets, verifiers)
-        // );
-        
-        WalletFactoryStorage.layout().storeWallet(hashId, newClone);
+        WalletFactoryStorage.layout().storeWallet(hashId, deployed);
 
-        emit WalletIsCreated(newClone);
+        emit WalletIsCreated(deployed);
 
-        return newClone;
+        return deployed;
     }
 
    /**
@@ -218,6 +153,62 @@ abstract contract WalletFactoryInternal is IWalletFactoryInternal {
         return newClone;
     }
 
+     /**
+     * @notice internal function query the mapping index of facet.
+     * @param facetAddress: the address of the facet.
+     */
+    function _getFacetIndex(address facetAddress) internal view virtual returns (uint) {
+        return WalletFactoryStorage.layout().facetIndex[facetAddress];
+    }
+
+    /**
+     * @notice internal function query a facet.
+     * @param arrayIndex: the index of Facet array.
+     */
+    function _getFacet(uint256 arrayIndex) internal view virtual returns (WalletFactoryStorage.Facet memory) {
+        return WalletFactoryStorage.layout().facets[arrayIndex];
+    }
+
+    /**
+     * @notice internal function query all facets from the storage
+     */
+    function _getFacets() internal view virtual returns (WalletFactoryStorage.Facet[] memory) {
+        return WalletFactoryStorage.layout().facets;
+    }
+
+    /**
+     * @notice internal function query the address of the Diamond contract
+     */
+    function _getDiamond() internal view virtual returns (address) {
+        return WalletFactoryStorage.layout().diamond;
+    }
+
+    /**
+     * @notice internal function query the address of a wallet
+     * @param hashId: the hash id of the user
+     */
+    function _getWallet(bytes32 hashId)
+        internal
+        view
+        virtual
+        returns (address)
+    {
+        return WalletFactoryStorage.layout().wallets[hashId];
+    }
+
+    /**
+     * @notice internal function predict the address of the new wallet
+     * @param salt: salt to deterministically deploy the clone
+     */
+    function _predictDeterministicAddress(bytes32 salt)
+        internal
+        view
+        virtual
+        returns (address predicted)
+    {
+        return address(0); // TODO: _getDiamond().predictDeterministicAddress(salt);
+    }
+
     /**
      * @notice hook that is called before a wallet is created
      * to learn more about hooks: https://docs.openzeppelin.com/contracts/4.x/extending-contracts#using-hooks
@@ -227,10 +218,10 @@ abstract contract WalletFactoryInternal is IWalletFactoryInternal {
         address owner,
         VerifierDTO[] memory verifiers
     ) internal view virtual {
-        require(
-            _getDiamond() != address(0),
-            "WalletFactory: Diamond address is the zero address  "
-        );
+        // require(
+        //     _getDiamond() != address(0),
+        //     "WalletFactory: Diamond address is the zero address  "
+        // );
 
         require(
             hashId != bytes32(0),

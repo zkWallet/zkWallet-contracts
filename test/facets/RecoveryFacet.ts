@@ -18,7 +18,7 @@ const depth: Number = Number(process.env.TREE_DEPTH);
 const zero: BigNumber = ethers.constants.Zero;
 const members: bigint[] = createIdentityCommitments(3);
 
-describe("RecoveryFacet", function () {
+describe.only("RecoveryFacet", function () {
   let owner: SignerWithAddress;
   let nonOwner: SignerWithAddress;
   let nominee: SignerWithAddress;
@@ -40,9 +40,10 @@ describe("RecoveryFacet", function () {
     BigNumber.from(members[2]),
   ];
 
+  const depth = Number(process.env.TREE_DEPTH);
+
   before(async function () {
     [owner, nonOwner, nominee, groupAdmin] = await ethers.getSigners();
-    console.log("members:", members);
   });
 
   beforeEach(async function () {
@@ -139,11 +140,13 @@ describe("RecoveryFacet", function () {
     it("can call functions through diamond address", async function () {
       expect(await diamond.owner()).to.equal(owner.address);
       expect(await diamond.version()).to.equal("0.0.1");
-      expect(await instance.recoveryFacetVersion()).to.equal("0.0.1");
-      expect(await semaphoreInstance.semaphoreFacetVersion()).to.equal("0.0.1");
+      expect(await instance.recoveryFacetVersion()).to.equal("0.1.0.alpha");
+      expect(await semaphoreInstance.semaphoreFacetVersion()).to.equal(
+        "0.1.0.alpha"
+      );
       expect(
         await semaphoreGroupsInstance.semaphoreGroupsFacetVersion()
-      ).to.equal("0.0.1");
+      ).to.equal("0.1.0.alpha");
     });
   });
   describe("::RecoveryFacet", function () {

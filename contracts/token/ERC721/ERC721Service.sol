@@ -34,7 +34,10 @@ abstract contract ERC721Service is
     /**
      * @inheritdoc IERC721Service
      */
-    function ownerOfERC721(address token, uint256 tokenId) external view override returns (address owner) {
+    function ownerOfERC721(
+        address token,
+        uint256 tokenId
+    ) external view override returns (address owner) {
         return IERC721(token).ownerOf(tokenId);
     }
 

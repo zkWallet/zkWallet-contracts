@@ -2,11 +2,11 @@ import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { Contract } from "ethers";
 import {
   IGuardianFacet,
-  IEtherServiceFacet,
   ISemaphoreFacet,
   ISemaphoreGroupsFacet,
   IERC20ServiceFacet,
   IERC721ServiceFacet,
+  IEtherServiceFacet,
   IRecoveryFacet,
   IWalletFactoryFacet,
   IZkWalletDiamond,
@@ -18,10 +18,11 @@ import { expect } from "chai";
 import { ethers, run } from "hardhat";
 import { DeployedContract, Verifier, Facet } from "../../types";
 
-describe.only("ZkWalletFactoryDiamond", function () {
+describe("ZkWalletFactoryDiamond", function () {
   let owner: SignerWithAddress;
   let nonOwner: SignerWithAddress;
   let alice: SignerWithAddress;
+  let bob: SignerWithAddress;
 
   let diamond: ZkWalletFactoryDiamond;
   let instance: Contract | IWalletFactoryFacet;
@@ -45,8 +46,10 @@ describe.only("ZkWalletFactoryDiamond", function () {
   let verifiers: Verifier[] = [];
   let verifier20: string;
 
+  const depth = Number(process.env.TREE_DEPTH);
+
   before(async function () {
-    [owner, nonOwner, alice] = await ethers.getSigners();
+    [owner, nonOwner, alice, bob] = await ethers.getSigners();
   });
 
   beforeEach(async function () {
@@ -141,11 +144,11 @@ describe.only("ZkWalletFactoryDiamond", function () {
         facetAddress: anotherWalletFacets[2].address,
         version: "0.1.0.alpha",
       },
-      // {
-      //   name: "SemaphoreFacet",
-      //   facetAddress: anotherWalletFacets[3].address,
-      //   version: "0.1.0.alpha",
-      // },
+      {
+        name: "SemaphoreFacet",
+        facetAddress: anotherWalletFacets[3].address,
+        version: "0.1.0.alpha",
+      },
       {
         name: "EtherServiceFacet",
         facetAddress: anotherWalletFacets[4].address,
@@ -159,16 +162,25 @@ describe.only("ZkWalletFactoryDiamond", function () {
     });
 
     verifier20 = foundVerifier[0].address;
+    console.log("verifier20", verifier20);
 
     verifiers = [
-      { merkleTreeDepth: 20, contractAddress: foundVerifier[0].address },
+      {
+        merkleTreeDepth: depth,
+        contractAddress: foundVerifier[0].address,
+      },
     ];
+
+    // console.log("verifiers", verifiers);
+    // console.log("newFacets", newFacets);
 
     walletDiamond = await new ZkWalletDiamond__factory(owner).deploy(
       owner.address,
       newFacets,
       verifiers
     );
+    console.log(walletDiamond);
+    console.log("walletDiamond.address", walletDiamond.address);
   });
   describe("::ZkWalletFactoryDiamond", function () {
     it("should call functions through diamond address", async function () {
@@ -430,8 +442,6 @@ describe.only("ZkWalletFactoryDiamond", function () {
             expect(facetIndex).to.equal(i + 3);
           }
 
-          //await walletDiamond["initOwner(address)"](diamond.address);
-
           const hashId = ethers.utils.formatBytes32String("1");
 
           const trx = await instance[
@@ -451,8 +461,6 @@ describe.only("ZkWalletFactoryDiamond", function () {
     const hashId: string = ethers.utils.formatBytes32String("1");
 
     beforeEach(async function () {
-      //await instance["setDiamond(address)"](walletDiamond.address);
-
       for (let i = 0; i < walletFacets.length; i++) {
         await instance["addFacet(string,address,string)"](
           walletFacets[i].name,
@@ -468,8 +476,6 @@ describe.only("ZkWalletFactoryDiamond", function () {
           "0.1.0.alpha"
         );
       }
-
-      //await walletDiamond["initOwner(address)"](diamond.address);
 
       const tx = await instance[
         "createWallet(bytes32,address,(uint8,address)[])"
@@ -578,32 +584,33 @@ describe.only("ZkWalletFactoryDiamond", function () {
           });
         });
       });
-      // describe("::SemaphoreFacet", function () {
-      //   beforeEach(async function () {
-      //     aliceSemaphoreInstance = await ethers.getContractAt(
-      //       "SemaphoreFacet",
-      //       newAliceWallet.address
-      //     );
-      //   });
-      //   describe("#semaphoreFacetVersion()", function () {
-      //     it("should return the correct version", async function () {
-      //       expect(
-      //         await aliceSemaphoreInstance.callStatic[
-      //           "semaphoreFacetVersion()"
-      //         ]()
-      //       ).to.equal("0.1.0.alpha");
-      //     });
-      //   });
-      //   describe("#getVerifier(uint8)", function () {
-      //     it("should return the correct verifier address", async function () {
-      //       expect(
-      //         await aliceSemaphoreInstance.callStatic["getVerifier(uint8)"](20)
-      //       ).to.equal(verifier20);
-      //     });
-      //   });
-      // });
+      describe("::SemaphoreFacet", function () {
+        beforeEach(async function () {
+          aliceSemaphoreInstance = await ethers.getContractAt(
+            "SemaphoreFacet",
+            newAliceWallet.address
+          );
+        });
+        describe("#semaphoreFacetVersion()", function () {
+          it("should return the correct version", async function () {
+            expect(
+              await aliceSemaphoreInstance.callStatic[
+                "semaphoreFacetVersion()"
+              ]()
+            ).to.equal("0.1.0.alpha");
+          });
+        });
+        describe("#getVerifier(uint8)", function () {
+          it("should return the correct verifier address", async function () {
+            expect(
+              await aliceSemaphoreInstance.callStatic["getVerifier(uint8)"](20)
+            ).to.equal(verifier20);
+          });
+        });
+      });
       describe("::EtherServiceFacet", function () {
         let amountInEther = "0.01";
+
         beforeEach(async function () {
           aliceEtherInstance = await ethers.getContractAt(
             "EtherServiceFacet",
@@ -618,14 +625,39 @@ describe.only("ZkWalletFactoryDiamond", function () {
           alice.sendTransaction(tx).then((txObj) => {
             console.log("txHash", txObj.hash);
           });
-        });
-        describe("#etherServiceFacetVersion()", function () {
-          it("should return the correct version", async function () {
-            expect(
-              await aliceEtherInstance.callStatic[
-                "etherServiceFacetVersion()"
-              ]()
-            ).to.equal("0.1.0.alpha");
+          describe("#etherServiceFacetVersion()", function () {
+            it("should return the correct version", async function () {
+              expect(
+                await aliceEtherInstance.callStatic[
+                  "etherServiceFacetVersion()"
+                ]()
+              ).to.equal("0.1.0.alpha");
+            });
+          });
+          describe("#getEtherBalance()", function () {
+            it("should return the correct balance", async function () {
+              expect(
+                await aliceEtherInstance.callStatic["getEtherBalance()"]()
+              ).to.equal(amountInEther);
+            });
+          });
+          describe("#transferEther(to, amount)", function () {
+            it("should emit event", async function () {
+              const tx = await aliceEtherInstance.callStatic[
+                "transferEther(address,uint256)"
+              ](bob.address, ethers.utils.parseEther("0.01"));
+
+              const receipt = await tx.wait();
+              console.log(receipt);
+
+              await expect(tx)
+                .to.emit(aliceEtherInstance, "EtherTransfered")
+                .withArgs(bob.address, ethers.utils.parseEther("0.01"));
+
+              expect(
+                await aliceEtherInstance.callStatic["getEtherBalance()"]()
+              ).to.equal(amountInEther);
+            });
           });
         });
       });

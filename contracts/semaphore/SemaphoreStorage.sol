@@ -2,11 +2,11 @@
 
 pragma solidity ^0.8.4;
 
-import {IVerifier} from "../interfaces/IVerifier.sol";
+import { IVerifier } from "../interfaces/IVerifier.sol";
 
 library SemaphoreStorage {
     struct Layout {
-        mapping(uint8 => IVerifier) verifiers;
+        mapping(uint256 => IVerifier) verifiers;
     }
 
     bytes32 internal constant STORAGE_SLOT =

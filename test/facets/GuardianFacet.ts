@@ -16,7 +16,7 @@ const depth: Number = Number(process.env.TREE_DEPTH);
 const zero: BigNumber = ethers.constants.Zero;
 const members: bigint[] = createIdentityCommitments(3);
 
-describe("GuardianFacet", function () {
+describe.only("GuardianFacet", function () {
   let owner: SignerWithAddress;
   let nonOwner: SignerWithAddress;
   let diamond: SimplicyWalletDiamond;
@@ -114,7 +114,7 @@ describe("GuardianFacet", function () {
     it("can call functions through diamond address", async function () {
       expect(await diamond.owner()).to.equal(owner.address);
       expect(await diamond.version()).to.equal("0.0.1");
-      expect(await instance.guardianFacetVersion()).to.equal("0.0.1");
+      expect(await instance.guardianFacetVersion()).to.equal("0.1.0.alpha");
     });
   });
   describeBehaviorOfGuardian(async () => instance, {
@@ -175,6 +175,15 @@ describe("GuardianFacet", function () {
           ).to.be.revertedWith("SemaphoreGroupsBase: GROUP_ID_NOT_EXIST");
         });
         it("non-owner", async function () {
+          await semaphoreGroupsInstance
+            .connect(owner)
+            ["createGroup(uint256,uint8,uint256,address)"](
+              groupId,
+              Number(depth),
+              zero,
+              owner.address
+            );
+
           await expect(
             instance
               .connect(nonOwner)

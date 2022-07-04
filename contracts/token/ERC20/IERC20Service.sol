@@ -9,19 +9,6 @@ import {IERC20ServiceInternal} from "./IERC20ServiceInternal.sol";
  */
 interface IERC20Service is IERC20ServiceInternal {
     /**
-     * @notice query all tracked ERC20 tokens.
-     * @return tracked ERC20 tokens.
-     */
-    function getAllTrackedERC20Tokens() external view returns (address[] memory);
-
-    /**
-     * @notice query the token balance of the given token for this address.
-     * @param token : the address of the token.
-     * @return token balance of this address.
-     */
-    function balanceOfERC20(address token) external view returns (uint256);
-
-    /**
      * @notice sets `amount` as the allowance of `spender` over the caller's tokens.
      * @param token: the address of tracked token to move.
      * @param spender: the address of the spender.
@@ -72,4 +59,17 @@ interface IERC20Service is IERC20ServiceInternal {
      * @param amount: the amount of token to deposit.
      */
     function depositERC20(address token, uint256 amount) external;
+
+     /**
+     * @notice query all tracked ERC20 tokens.
+     * @return tracked ERC20 tokens.
+     */
+    function getAllTrackedERC20Tokens() external view returns (address[] memory);
+
+    /**
+     * @notice query the token balance of the given token for this address.
+     * @param token : the address of the token.
+     * @return token balance of this address.
+     */
+    function balanceOfERC20(address token) external view returns (uint256);
 }

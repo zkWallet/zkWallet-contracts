@@ -10,13 +10,7 @@ import { IWalletFactoryInternal } from "../wallet/factory/IWalletFactoryInternal
 /**
  * @title ZkWalletDiamond  interface
  */
-interface IZkWalletDiamond is IZkWalletDiamondBase  {
-    function initOwner(address owner_) external;
-    function init(
-        address owner_,
-        WalletFactoryStorage.Facet[] memory facets_,
-        IWalletFactoryInternal.VerifierDTO[] memory verifiers
-    ) external; 
+interface IZkWalletDiamond is IZkWalletDiamondBase  { 
     function version() external view returns (string memory);
 }
 

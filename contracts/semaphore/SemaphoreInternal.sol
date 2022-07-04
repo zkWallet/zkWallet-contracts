@@ -16,6 +16,16 @@ abstract contract SemaphoreInternal is ISemaphoreInternal, SemaphoreCoreBaseInte
     using SemaphoreStorage for SemaphoreStorage.Layout;
     using SemaphoreCoreBaseStorage for SemaphoreCoreBaseStorage.Layout;
     using IncrementalBinaryTreeStorage for IncrementalBinaryTreeStorage.Layout;
+    
+    /**
+     * @notice internal function: saves the nullifier hash to avoid double signaling and emits an event
+     * if the zero-knowledge proof is valid
+     * @param groupId: group id of the group
+     * @param signal: semaphore signal
+     * @param nullifierHash: nullifier hash
+     * @param externalNullifier: external nullifier
+     * @param proof: Zero-knowledge proof
+     */
 
     function _verifyProof(
         uint256 groupId,
@@ -34,6 +44,13 @@ abstract contract SemaphoreInternal is ISemaphoreInternal, SemaphoreCoreBaseInte
 
         // Prevent double-voting
         SemaphoreCoreBaseStorage.layout().saveNullifierHash(nullifierHash);
+    }
+
+    /**
+     * @notice query the verifier address by merkle tree depth
+     */
+    function _getVerifier(uint8 merkleTreeDepth) internal returns (IVerifier) {
+        return SemaphoreStorage.layout().verifiers[merkleTreeDepth];
     }
 
     /**

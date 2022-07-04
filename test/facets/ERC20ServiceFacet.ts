@@ -6,7 +6,7 @@ import {
   SimplicyWalletDiamond,
 } from "@simplicy/typechain-types";
 
-describe("ERC20Facet", function () {
+describe.only("ERC20ServiceFacet", function () {
   let owner: SignerWithAddress;
   let nonOwner: SignerWithAddress;
   let receiver: SignerWithAddress;
@@ -46,6 +46,7 @@ describe("ERC20Facet", function () {
 
     walletDiamond = await run("deploy:diamond", {
       name: "SimplicyWalletDiamond",
+      owner: owner.address,
       logs: false,
     });
 
@@ -56,7 +57,7 @@ describe("ERC20Facet", function () {
     expect(facets).to.have.lengthOf(1);
 
     facets = await run("deploy:facets", {
-      facets: [{ name: "ERC20Facet" }],
+      facets: [{ name: "ERC20ServiceFacet" }],
       logs: false,
     });
 
@@ -75,7 +76,10 @@ describe("ERC20Facet", function () {
       .connect(deployer)
       .diamondCut(facetCuts, ethers.constants.AddressZero, "0x");
 
-    instance = await ethers.getContractAt("ERC20Facet", walletDiamond.address);
+    instance = await ethers.getContractAt(
+      "ERC20ServiceFacet",
+      walletDiamond.address
+    );
   });
 
   describe("::SimplicyWalletDiamond", function () {
@@ -84,9 +88,9 @@ describe("ERC20Facet", function () {
       expect(await walletDiamond.version()).to.equal("0.0.1");
     });
   });
-  describe("::ERC20Facet", function () {
+  describe("::ERC20ServiceFacet", function () {
     it("should call functions through diamond address", async function () {
-      expect(await instance.erc20FacetVersion()).to.equal("0.0.1");
+      expect(await instance.erc20ServiceFacetVersion()).to.equal("0.1.0.alpha");
     });
     describe("#getAllTrackedERC20Tokens", function () {
       it("should able getAllTrackedERC20Tokens", async function () {

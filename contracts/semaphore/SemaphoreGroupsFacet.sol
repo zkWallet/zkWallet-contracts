@@ -3,8 +3,8 @@
 pragma solidity ^0.8.4;
 
 import { OwnableInternal } from "@solidstate/contracts/access/ownable/OwnableInternal.sol";
-import { SemaphoreGroupsBase } from "../semaphore/base/SemaphoreGroupsBase/SemaphoreGroupsBase.sol";
-import { SemaphoreGroupsBaseStorage } from "../semaphore/base/SemaphoreGroupsBase/SemaphoreGroupsBaseStorage.sol";
+import { SemaphoreGroupsBase } from "./base/SemaphoreGroupsBase/SemaphoreGroupsBase.sol";
+import { SemaphoreGroupsBaseStorage } from "./base/SemaphoreGroupsBase/SemaphoreGroupsBaseStorage.sol";
 
 
 /**
@@ -14,7 +14,7 @@ contract SemaphoreGroupsFacet is SemaphoreGroupsBase, OwnableInternal {
     /**
      * @notice return the current version of SemaphoreGroupsFacet
      */
-    function semaphoreGroupsFacetVersion() public pure returns (string memory) {
+    function semaphoreGroupsFacetVersion() external pure returns (string memory) {
         return "0.1.0.alpha";
     }
 

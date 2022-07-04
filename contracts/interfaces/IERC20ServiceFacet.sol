@@ -2,7 +2,8 @@
 
 pragma solidity ^0.8.4;
 
-import {IERC20Service} from "../../../../token/ERC20/IERC20Service.sol";
+import { IERC20Service } from "../token/ERC20/IERC20Service.sol";
+
 
 /**
  * @title ERC20ServiceFacet interface

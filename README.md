@@ -223,86 +223,107 @@ yarn deploy:facet-with-poseidon --facets '[{"name": "GuardianFacet"}, {"name": "
 ```
 network: harmonyDevnet
 deployer 0xA023A773610B3DaD60f3c5787101D4681110e861
-Account balance: 10007745809330000000000
-aliceWallet 0xBa15895E78550495Bb8a9979ABCb106b2EdC9F63
-Account balance: 10007753729720000000000
-bobWallet 0x8Fd1C63CCc49E316CB9fdeB45f8Fb3944aBed4aC
-Account balance: 10008998565590000000000
-Verifier16 contract has been deployed to: 0x8d2171b7dDC7F6B0f04657835a6b19F04B821353
-Verifier17 contract has been deployed to: 0x64D87dC944Fb6956Ff09b4a1da2BfBFf4F78f976
-Verifier18 contract has been deployed to: 0xa8007c877333508A07eA9f16CF2a2415057Ec0BC
-Verifier19 contract has been deployed to: 0x434a85Da614E439929e7480464B18c1cea043B19
-Verifier20 contract has been deployed to: 0x21176AA38497bdeab3CdB4368CFF53c428B001f7
-Verifier21 contract has been deployed to: 0x48164EcB1CB426C72DCE0421F4426daE264724a7
-Verifier22 contract has been deployed to: 0x50c3B09c4b478bd88D0ED14B056AcaFb679Bd345
-Verifier23 contract has been deployed to: 0xbDc6e16F514e8d8098ABc90Ab40482d5CbD7c9Aa
-Verifier24 contract has been deployed to: 0x6c3Ebf4d06e9595248fA7cc506ad87CffE445dee
-Verifier25 contract has been deployed to: 0x6fCe423A2fDDe6788a27a99b59e0Cb40579CE988
-Verifier26 contract has been deployed to: 0xCD81D914F1032F7d4c4AB088546c7d70A438cFC3
-Verifier27 contract has been deployed to: 0x9eE3cC20Eb1e6a695192A9EDB0512694d31d81bf
-Verifier28 contract has been deployed to: 0x18145aa8e5eb71959EaAC9Be2B383A070E80300A
-Verifier29 contract has been deployed to: 0x5a6A9c1412179ef061CDF328E6b66BB8c5F337B6
-Verifier30 contract has been deployed to: 0x532E815c80198b78512858F4cf125be4858c5e9A
-Verifier31 contract has been deployed to: 0xf3a727DFC9eC0ca43934Aa5c9424EeB040C9Fb7c
-Verifier32 contract has been deployed to: 0xaA048F0280d8F8B72f6E0Ed3D17E91ba1d1a8387
-WalletFactoryDiamond contract has been deployed to: 0xb9853e45b3537975035159ece4E9F53EC18480Fd
-[ { name: 'WalletFactoryFacet' }, { name: 'CountersFacet' } ]
-WalletFactoryFacet contract has been deployed to: 0x58aD3eEFB1832ef971CDe8e45A7239E7dd8f9444
-CountersFacet contract has been deployed to: 0x02C1384694653D88919a1eF6EB8d3906a731640b
-SimplicyWalletDiamond contract has been deployed to: 0x2338c67c687F3d6A28C27Df15325F06A6BF1C627
-PoseidonT3 contract has been deployed to: 0x1fB6C0Cc4b846a4A25B41f3AAD59b4C719474E3F
+Account balance: 10004909274830000000000
+ZkWalletFactoryDiamond contract has been deployed to: 0xF64a874474EFAe562B3Ccec0d081C64b862696ed
+PoseidonT3 contract has been deployed to: 0x56924BaA61e1F121218282336156Cc170c41B051
+Verifier16 contract has been deployed to: 0xDF84B7D104276bE843a81FA0e7Ce4e7e1F73CA7E
+Verifier17 contract has been deployed to: 0x79c905Ce62b38100C2eA7C5A40836960d56f7420
+Verifier18 contract has been deployed to: 0x298DeD46C68639Bbe9b9CbDFEb63Aa82EcDE75Aa
+Verifier19 contract has been deployed to: 0x27C673cdcD056FBb93F701438aab771d3C00634e
+Verifier20 contract has been deployed to: 0x4c469d74a65BCfBA0D9500457Cc76Daff220098a
+Verifier21 contract has been deployed to: 0xbFeB824187A9E046cA37264e234E987f5CFE10F8
+Verifier22 contract has been deployed to: 0x08cbB7504E4227D4BfaE9B50f765dFe5404CDE8a
+Verifier23 contract has been deployed to: 0xdCa536459b8eFc88cDD8e6d84a080694a687E3C2
+Verifier24 contract has been deployed to: 0xA8C8255D0565eD61bf9ED024fA6Ec796764B9D26
+Verifier25 contract has been deployed to: 0xAfacB48B9cdB93BadFe8Baae0543F4BD95460739
+Verifier26 contract has been deployed to: 0xf6Df4abe7e909789326E4c023Ecf33D1108FF601
+Verifier27 contract has been deployed to: 0xe5d7529917041ab3Bd2e67EAD06B54CD04b13aD3
+Verifier28 contract has been deployed to: 0x2E4ea96cbF43BF4BBb699214eA988f28F17F3fF3
+Verifier29 contract has been deployed to: 0x7445b0B183b5a74104fcF1A8fE70F9518c0D4605
+Verifier30 contract has been deployed to: 0xD37b6C9Bd8dC97F7021856154D9773e3Df43995C
+Verifier31 contract has been deployed to: 0x541252940a7F2e0b4E0Ab38737c9376c931a66C6
+Verifier32 contract has been deployed to: 0xe0925FEf5F260b40bb64aDd86DFBFE7Da76B007F
+[ { name: 'WalletFactoryFacet' } ]
+WalletFactoryFacet contract has been deployed to: 0x878821Ef4f0F3Ab6e39bb342218C7497d9523cd1
 [ { name: 'GuardianFacet' }, { name: 'SemaphoreGroupsFacet' } ]
-GuardianFacet contract has been deployed to: 0x3d4370D915c52E801963533E0aC54EAF4a57177b
-SemaphoreGroupsFacet contract has been deployed to: 0x7bA44FAF27B18d04Af0950f30617B5AAACceC038
+GuardianFacet contract has been deployed to: 0x13522F1f4968BD85cDE1294536774430551518dB
+SemaphoreGroupsFacet contract has been deployed to: 0x20Aea34C2441539D5A2497f2DF98bB93575c18ac
 [
-  { name: 'ERC20Facet' },
-  { name: 'ERC721Facet' },
   { name: 'RecoveryFacet' },
+  { name: 'ERC20ServiceFacet' },
+  { name: 'ERC721ServiceFacet' },
   { name: 'SemaphoreFacet' },
-  { name: 'SemaphoreVotingFacet' }
+  { name: 'EtherServiceFacet' }
 ]
-ERC20Facet contract has been deployed to: 0x5BA6985e2F04cA4Ef362dCFF0Ac793E1715F2E10
-ERC721Facet contract has been deployed to: 0xEA33dC1D03A626C899dfA6bD9BA61AcEce886AF1
-RecoveryFacet contract has been deployed to: 0xC509433465D6e3b60CA192e81659BBEDffE7fd3b
-SemaphoreFacet contract has been deployed to: 0xF6f822A0aaE0CDd6dDb6c0BA7284a74B006A0824
-SemaphoreVotingFacet contract has been deployed to: 0x43133D828f1E4c209eB60B4fEbD01221C72E4Ca4
-WalletFactoryDiamond version: 0.0.1
-walletFactoryFacetVersion: 0.0.1
-SimplicyWalletDiamond version: 0.0.1
-#addDiamond====================================
-txEvent: [
-  {
-    transactionIndex: 0,
-    blockNumber: 6700748,
-    transactionHash: '0xc9a2505310da12e72561a6bdcc734c5a88d0f87a414880095d884247ee84e279',
-    address: '0xb9853e45b3537975035159ece4E9F53EC18480Fd',
-    topics: [
-      '0x4703b806ce253ec467a0cec6e96db61459e46d554e98ae0c96e6bffc747e3018'
-    ],
-    data: '0x0000000000000000000000002338c67c687f3d6a28c27df15325f06a6bf1c627',
-    logIndex: 0,
-    blockHash: '0xc5ab029a0f7cd96bca1bea5ea77dba31f6676dc9822601f5303d05429364da8c',
-    args: [
-      '0x2338c67c687F3d6A28C27Df15325F06A6BF1C627',
-      wallet: '0x2338c67c687F3d6A28C27Df15325F06A6BF1C627'
-    ],
-    decode: [Function (anonymous)],
-    event: 'DiamondIsSet',
-    eventSignature: 'DiamondIsSet(address)',
-    removeListener: [Function (anonymous)],
-    getBlock: [Function (anonymous)],
-    getTransaction: [Function (anonymous)],
-    getTransactionReceipt: [Function (anonymous)]
-  }
+RecoveryFacet contract has been deployed to: 0x8d9CB131635555E812418354648c1B645796031a
+ERC20ServiceFacet contract has been deployed to: 0x18b61b36FC991c095765Ed2c1D04E0875cDc21ac
+ERC721ServiceFacet contract has been deployed to: 0x5A8215DDfcC356c9526499818eAd868ba4B9422C
+SemaphoreFacet contract has been deployed to: 0xe198d7010AfF9ADA90E349F69481Ad96856ee05b
+EtherServiceFacet contract has been deployed to: 0x40A94B5B3C1A3fb8D1F0FEA8F38FC6d69AE1161e
+ZkWalletDiamond deployed at: 0xaed142a9A54871C0bD58e1014E30fAf2F581d697
+[
+  [
+    'GuardianFacet',
+    '0x13522F1f4968BD85cDE1294536774430551518dB',
+    '0.1.0.alpha',
+    name: 'GuardianFacet',
+    facetAddress: '0x13522F1f4968BD85cDE1294536774430551518dB',
+    version: '0.1.0.alpha'
+  ],
+  [
+    'SemaphoreGroupsFacet',
+    '0x20Aea34C2441539D5A2497f2DF98bB93575c18ac',
+    '0.1.0.alpha',
+    name: 'SemaphoreGroupsFacet',
+    facetAddress: '0x20Aea34C2441539D5A2497f2DF98bB93575c18ac',
+    version: '0.1.0.alpha'
+  ],
+  [
+    'RecoveryFacet',
+    '0x8d9CB131635555E812418354648c1B645796031a',
+    '0.1.0.alpha',
+    name: 'RecoveryFacet',
+    facetAddress: '0x8d9CB131635555E812418354648c1B645796031a',
+    version: '0.1.0.alpha'
+  ],
+  [
+    'ERC20ServiceFacet',
+    '0x18b61b36FC991c095765Ed2c1D04E0875cDc21ac',
+    '0.1.0.alpha',
+    name: 'ERC20ServiceFacet',
+    facetAddress: '0x18b61b36FC991c095765Ed2c1D04E0875cDc21ac',
+    version: '0.1.0.alpha'
+  ],
+  [
+    'ERC721ServiceFacet',
+    '0x5A8215DDfcC356c9526499818eAd868ba4B9422C',
+    '0.1.0.alpha',
+    name: 'ERC721ServiceFacet',
+    facetAddress: '0x5A8215DDfcC356c9526499818eAd868ba4B9422C',
+    version: '0.1.0.alpha'
+  ],
+  [
+    'SemaphoreFacet',
+    '0xe198d7010AfF9ADA90E349F69481Ad96856ee05b',
+    '0.1.0.alpha',
+    name: 'SemaphoreFacet',
+    facetAddress: '0xe198d7010AfF9ADA90E349F69481Ad96856ee05b',
+    version: '0.1.0.alpha'
+  ],
+  [
+    'EtherServiceFacet',
+    '0x40A94B5B3C1A3fb8D1F0FEA8F38FC6d69AE1161e',
+    '0.1.0.alpha',
+    name: 'EtherServiceFacet',
+    facetAddress: '0x40A94B5B3C1A3fb8D1F0FEA8F38FC6d69AE1161e',
+    version: '0.1.0.alpha'
+  ]
 ]
-#addFacet==================================== 5
-Verifier20 0x21176AA38497bdeab3CdB4368CFF53c428B001f7
-Alice setVerifiers transaction hash:  0x373cd09c8caee24111fd00bb4a1990e3f252d4f545c2308ca2af46b6d9f29eb4
-Bob setVerifiers transaction hash:  0xaafbb9e79f04fe1fbc1d2d7c516a32c637be99fe891519b113f48bba7fd27439
-✨  Done in 460.53s.
+Alice address 0x2FBf87AFCD35c291441Bc1dA23dabdbDB77b2100
+✨  Done in 352.21s.
 ```
 
-## Deployment on Testnet
+## Deployment on Mainnet
 ```
 
 ```

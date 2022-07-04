@@ -3,12 +3,12 @@
 pragma solidity ^0.8.4;
 
 import { IERC721Service } from "../token/ERC721/IERC721Service.sol";
-interface IERC721Facet is IERC721Service {
-    /**
-     * @notice return the current version of ERC721Facet
-     */
-    function erc721FacetVersion() external pure returns (string memory);
 
+
+/**
+ * @title ERC721ServiceFacet interface
+ */
+interface IERC721ServiceFacetSelector is IERC721Service {
     function onERC721Received(
         address operator,
         address from,
@@ -31,4 +31,10 @@ interface IERC721Facet is IERC721Service {
         uint256 tokenId,
         bytes calldata data
     ) external override;
+
+      /**
+     * @notice return the current version of ERC721Facet
+     */
+    function erc721ServiceFacetVersion() external pure returns (string memory);
+
 }

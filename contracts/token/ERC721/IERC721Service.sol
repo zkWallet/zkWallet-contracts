@@ -9,27 +9,6 @@ import {IERC721ServiceInternal} from "./IERC721ServiceInternal.sol";
  */
 interface IERC721Service is IERC721ServiceInternal {
     /**
-     * @notice query all tracked ERC721 tokens.
-     * @return tracked ERC721  tokens.
-     */
-    function getAllTrackedERC721Tokens() external view returns (address[] memory);
-
-     /**
-     * @notice query the token balance of the given ERC721 token for this address.
-     * @param token : the address of the ERC721 token.
-     * @return token balance.
-     */
-    function balanceOfERC721(address token) external view returns (uint256);
-
-    /**
-     * @notice query the owner of the `tokenId` token.
-     * @param token: the address of tracked token to query.
-     * @param tokenId: the tokenId of the token to query.
-     *
-     */
-    function ownerOfERC721(address token, uint256 tokenId) external view returns (address owner);
-
-    /**
      * @notice safely transfers `tokenId` token from `from` to `to`.
      * @param token: the address of tracked token to move.
      * @param to: the address of the recipient.
@@ -107,4 +86,25 @@ interface IERC721Service is IERC721ServiceInternal {
      * @param tokenId: the tokenId of token to deposit.
      */
     function depositERC721(address token, uint256 tokenId) external;
+
+    /**
+     * @notice query all tracked ERC721 tokens.
+     * @return tracked ERC721  tokens.
+     */
+    function getAllTrackedERC721Tokens() external view returns (address[] memory);
+
+     /**
+     * @notice query the token balance of the given ERC721 token for this address.
+     * @param token : the address of the ERC721 token.
+     * @return token balance.
+     */
+    function balanceOfERC721(address token) external view returns (uint256);
+
+    /**
+     * @notice query the owner of the `tokenId` token.
+     * @param token: the address of tracked token to query.
+     * @param tokenId: the tokenId of the token to query.
+     *
+     */
+    function ownerOfERC721(address token, uint256 tokenId) external view returns (address owner);
 }

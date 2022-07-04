@@ -13,7 +13,7 @@ contract ZkWalletFactoryDiamond is IZkWalletFactoryDiamond,  SolidStateDiamond {
     /**
      * @notice return the current version of the diamond
      */
-    function version() public pure override returns (string memory) {
+    function version() external pure override returns (string memory) {
         return "0.1.0.alpha";
     }
 }

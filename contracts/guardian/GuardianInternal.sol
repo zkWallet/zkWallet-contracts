@@ -39,6 +39,52 @@ abstract contract GuardianInternal is IGuardianInternal {
     }
 
     /**
+     * @notice internal function add a new guardian to the group.
+     * @param hashId: the hashId of the guardian.
+     * @return returns a boolean value indicating whether the operation succeeded. 
+     *
+     * Emits a {GuardianAdded} event.
+     */
+     function _addGuardian(uint256 hashId) internal virtual returns(bool) {
+        uint numGuardians = _numGuardians(true);
+        require(numGuardians < MAX_GUARDIANS, "Guardian: TOO_MANY_GUARDIANS");
+
+        uint validSince = block.timestamp;
+        if (numGuardians > MIN_GUARDIANS) {
+            validSince = block.timestamp + GUARDIAN_PENDING_PERIODS;
+        }
+        
+        bool returned = GuardianStorage.layout().storeGuardian(hashId,validSince);
+
+        require(returned, "Guardian: FAILED_TO_ADD_GUARDIAN");
+
+        emit GuardianAdded(hashId, validSince);
+
+        return returned;
+    }
+
+     /**
+     * @notice internal function remove guardian from the group.
+     * @param hashId: the hashId of the guardian.
+     * @return returns a boolean value indicating whether the operation succeeded.
+     *
+     * Emits a {GuardianRemoved} event.
+     */
+    function _removeGuardian(uint256 hashId) internal virtual returns(bool) {
+        uint validUntil = block.timestamp + GUARDIAN_PENDING_PERIODS;
+        uint index = _getGuardianIndex(hashId);
+        uint arrayIndex = index - 1;
+
+        GuardianStorage.Guardian memory g = GuardianStorage.layout().guardians[arrayIndex];
+
+        validUntil = _deleteGuardian(g, validUntil);
+    
+        emit GuardianRemoved(hashId, validUntil);
+
+        return true;
+    }
+
+    /**
      * @notice internal query the mapping index of guardian.
      * @param hashId: the hashId of the guardian.
      */
@@ -113,52 +159,6 @@ abstract contract GuardianInternal is IGuardianInternal {
         }
         uint numExtendedSigners = allGuardians.length;
         return signers.length >= (numExtendedSigners >> 1) + 1;
-    }
-
-    /**
-     * @notice internal function add a new guardian to the group.
-     * @param hashId: the hashId of the guardian.
-     * @return returns a boolean value indicating whether the operation succeeded. 
-     *
-     * Emits a {GuardianAdded} event.
-     */
-     function _addGuardian(uint256 hashId) internal virtual returns(bool) {
-        uint numGuardians = _numGuardians(true);
-        require(numGuardians < MAX_GUARDIANS, "Guardian: TOO_MANY_GUARDIANS");
-
-        uint validSince = block.timestamp;
-        if (numGuardians > MIN_GUARDIANS) {
-            validSince = block.timestamp + GUARDIAN_PENDING_PERIODS;
-        }
-        
-        bool returned = GuardianStorage.layout().storeGuardian(hashId,validSince);
-
-        require(returned, "Guardian: FAILED_TO_ADD_GUARDIAN");
-
-        emit GuardianAdded(hashId, validSince);
-
-        return returned;
-    }
-
-     /**
-     * @notice internal function remove guardian from the group.
-     * @param hashId: the hashId of the guardian.
-     * @return returns a boolean value indicating whether the operation succeeded.
-     *
-     * Emits a {GuardianRemoved} event.
-     */
-    function _removeGuardian(uint256 hashId) internal virtual returns(bool) {
-        uint validUntil = block.timestamp + GUARDIAN_PENDING_PERIODS;
-        uint index = _getGuardianIndex(hashId);
-        uint arrayIndex = index - 1;
-
-        GuardianStorage.Guardian memory g = GuardianStorage.layout().guardians[arrayIndex];
-
-        validUntil = _deleteGuardian(g, validUntil);
-    
-        emit GuardianRemoved(hashId, validUntil);
-
-        return true;
     }
 
     /**

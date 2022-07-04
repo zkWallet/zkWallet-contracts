@@ -8,10 +8,10 @@ import {SemaphoreInternal} from "./SemaphoreInternal.sol";
 import {SemaphoreStorage} from "./SemaphoreStorage.sol";
 import {SemaphoreCoreBaseStorage} from "./base/SemaphoreCoreBase/SemaphoreCoreBaseStorage.sol";
 
-abstract contract Semaphore is ISemaphore, SemaphoreInternal {
+abstract contract Semaphore is ISemaphore, SemaphoreInternal {    
     /**
-     * @notice See {ISemaphore-verifyProof}.
-     */ 
+     * @inheritdoc ISemaphore
+     */
     function verifyProof(
         uint256 groupId,
         bytes32 signal,
@@ -26,6 +26,13 @@ abstract contract Semaphore is ISemaphore, SemaphoreInternal {
         emit ProofVerified(groupId, signal);
 
         _afterVerifyProof(groupId, signal, nullifierHash, externalNullifier, proof);
+    }
+
+    /**
+     * @inheritdoc ISemaphore
+     */
+    function getVerifier(uint8 merkleTreeDepth) external override returns (IVerifier) {
+        return _getVerifier(merkleTreeDepth);
     }
 }
   

@@ -7,13 +7,7 @@ import {ISemaphoreGroupsInternal} from "./ISemaphoreGroupsInternal.sol";
 /**
  * @title SemaphoreGroups base interface
  */
-interface ISemaphoreGroupsBase is ISemaphoreGroupsInternal {
-    /**
-     * @notice query a groupAdmin.
-     * @param groupId: the groupId of the group.
-     */
-    function getGroupAdmin(uint256 groupId) external view returns (address);
-    
+interface ISemaphoreGroupsBase is ISemaphoreGroupsInternal { 
     /**
      * @notice Updates the group admin.
      * @param groupId: Id of the group.
@@ -86,4 +80,10 @@ interface ISemaphoreGroupsBase is ISemaphoreGroupsInternal {
         uint256[] calldata proofSiblings,
         uint8[] calldata proofPathIndices
     ) external;
+
+    /**
+     * @notice query a groupAdmin.
+     * @param groupId: the groupId of the group.
+     */
+    function getGroupAdmin(uint256 groupId) external view returns (address);
 }

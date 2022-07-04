@@ -15,17 +15,6 @@ abstract contract ERC721ServiceInternal is IERC721ServiceInternal {
         require(_getERC721TokenIndex(tokenAddress) > 0, "ERC721Service: token not registered");
         _;
     }
-
-    function _getERC721TokenIndex(address tokenAddress) internal view returns (uint256) {
-        return ERC721ServiceStorage.layout().erc721TokenIndex[tokenAddress];
-    }
-
-     /**
-     * @notice query all tracked ERC721 tokens
-     */
-    function _getAllTrackedERC721Tokens() internal view returns (address[] memory) {
-        return ERC721ServiceStorage.layout().erc721Tokens;
-    }
    
     /**
      * @notice register a new ERC721 token
@@ -56,6 +45,20 @@ abstract contract ERC721ServiceInternal is IERC721ServiceInternal {
         if (_getERC721TokenIndex(token) == 0) {
             _registerERC721(token);
         }
+    }
+
+    /**
+     * @notice query the mapping index of ERC721 tokens
+     */
+    function _getERC721TokenIndex(address tokenAddress) internal view returns (uint256) {
+        return ERC721ServiceStorage.layout().erc721TokenIndex[tokenAddress];
+    }
+
+     /**
+     * @notice query all tracked ERC721 tokens
+     */
+    function _getAllTrackedERC721Tokens() internal view returns (address[] memory) {
+        return ERC721ServiceStorage.layout().erc721Tokens;
     }
 
     /**

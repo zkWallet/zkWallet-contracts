@@ -7,7 +7,7 @@ import {ISimplicyWalletDiamond} from "./ISimplicyWalletDiamond.sol";
 
 contract SimplicyWalletDiamond is ISimplicyWalletDiamond, SimplicyDiamond {
     constructor(address owner_) public {
-        _init(owner_);
+        __SimplicyDiamond_init(owner_);
     }
     /**
      * @notice return the current version of the diamond

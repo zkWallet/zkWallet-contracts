@@ -12,7 +12,7 @@ contract SemaphoreVotingFacet is SemaphoreVoting, OwnableInternal {
     /**
      * @notice return the current version of SemaphoreVotingFacet
      */
-    function semaphoreVotingFacetVersion() public pure returns (string memory) {
+    function semaphoreVotingFacetVersion() external pure returns (string memory) {
         return "0.1.0";
     }
 

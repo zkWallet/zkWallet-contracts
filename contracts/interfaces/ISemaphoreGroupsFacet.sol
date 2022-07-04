@@ -3,6 +3,11 @@
 pragma solidity ^0.8.4;
 
 import { ISemaphoreGroups } from "../semaphore/ISemaphoreGroups.sol";
+
+
+/**
+ * @title SemaphoreGroupsFacet interface
+ */
 interface ISemaphoreGroupsFacet is ISemaphoreGroups {
     /**
      * @notice return the current version of SemaphoreGroupsFacet

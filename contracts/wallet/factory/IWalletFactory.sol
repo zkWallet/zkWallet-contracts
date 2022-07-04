@@ -10,43 +10,6 @@ import { WalletFactoryStorage } from "./WalletFactoryStorage.sol";
  */
 interface IWalletFactory is IWalletFactoryInternal {
     /**
-     * @notice query the mapping index of facet.
-     * @param facetAddress: the address of the facet.
-     */
-    function getFacetIndex(address facetAddress) external view returns (uint);
-
-    /**
-     * @notice query a facet.
-     * @param arrayIndex: the index of Facet array.
-     */
-    function getFacet(uint256 arrayIndex) external view returns (WalletFactoryStorage.Facet memory);
-
-    /**
-     * @notice query all facets from the storage.
-     */
-    function getFacets() external view returns (WalletFactoryStorage.Facet[] memory);
-
-    /**
-     * @notice predict the address of the new wallet.
-     * @param salt: salt to deterministically deploy the clone.
-     */
-    function predictDeterministicAddress(bytes32 salt)
-        external
-        view
-        returns (address predicted);
-
-    /**
-     * @notice query the address of the stored diamond contract.
-     */
-    function getDiamond() external view returns (address);
-
-    /**
-     * @notice query the address of the wallet contract.
-     * @param hashId: the hash id of the user.
-     */
-    function getWallet(bytes32 hashId) external view returns (address);
-
-    /**
      * @notice set the address of the Diamond contract.
      * @param diamond: the address of the Diamond contract.
      */
@@ -104,4 +67,41 @@ interface IWalletFactory is IWalletFactoryInternal {
         VerifierDTO[] memory verifiers, 
         bytes32 salt
     ) external  returns (address);
+
+    /**
+     * @notice query the mapping index of facet.
+     * @param facetAddress: the address of the facet.
+     */
+    function getFacetIndex(address facetAddress) external view returns (uint);
+
+    /**
+     * @notice query a facet.
+     * @param arrayIndex: the index of Facet array.
+     */
+    function getFacet(uint256 arrayIndex) external view returns (WalletFactoryStorage.Facet memory);
+
+    /**
+     * @notice query all facets from the storage.
+     */
+    function getFacets() external view returns (WalletFactoryStorage.Facet[] memory);
+
+    /**
+     * @notice predict the address of the new wallet.
+     * @param salt: salt to deterministically deploy the clone.
+     */
+    function predictDeterministicAddress(bytes32 salt)
+        external
+        view
+        returns (address predicted);
+
+    /**
+     * @notice query the address of the stored diamond contract.
+     */
+    function getDiamond() external view returns (address);
+
+    /**
+     * @notice query the address of the wallet contract.
+     * @param hashId: the hash id of the user.
+     */
+    function getWallet(bytes32 hashId) external view returns (address);
 }

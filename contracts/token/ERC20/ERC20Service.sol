@@ -20,21 +20,11 @@ abstract contract ERC20Service is
     /**
      * @inheritdoc IERC20Service
      */
-    function getAllTrackedERC20Tokens() external view override returns (address[] memory) {
-        return _getAllTrackedERC20Tokens();
-    }
-
-    /**
-     * @inheritdoc IERC20Service
-     */
-    function balanceOfERC20(address token) external view returns (uint256) {
-        return IERC20(token).balanceOf(address(this));
-    }
-
-    /**
-     * @inheritdoc IERC20Service
-     */
-    function transferERC20(address token, address to, uint256 amount) external override returns (bool) {
+    function transferERC20(
+        address token,
+        address to,
+        uint256 amount
+    ) external override returns (bool) {
         _beforeTransferERC20(token, to, amount);
 
         return IERC20(token).transfer(to, amount);
@@ -43,7 +33,12 @@ abstract contract ERC20Service is
     /**
      * @inheritdoc IERC20Service
      */
-    function transferERC20From(address token, address from, address to, uint256 amount) external returns (bool) {
+    function transferERC20From(
+        address token,
+        address from,
+        address to,
+        uint256 amount
+    ) external override returns (bool) {
         _beforeTransferERC20From(token, from, to, amount);
 
         return IERC20(token).transferFrom(from, to, amount);
@@ -52,7 +47,11 @@ abstract contract ERC20Service is
     /**
      * @inheritdoc IERC20Service
      */
-    function approveERC20(address token, address spender, uint256 amount) external override returns (bool) {
+    function approveERC20(
+        address token,
+        address spender,
+        uint256 amount
+    ) external override returns (bool) {
         _beforeApproveERC20(token, spender, amount);
 
         return IERC20(token).approve(spender, amount);
@@ -83,7 +82,7 @@ abstract contract ERC20Service is
     /**
      * @inheritdoc IERC20Service
      */
-    function depositERC20(address token, uint256 amount) external {
+    function depositERC20(address token, uint256 amount) external override {
         _beforedepositERC20(token, amount);
 
         _depositERC20(token, amount);
@@ -92,5 +91,19 @@ abstract contract ERC20Service is
         emit ERC20Deposited(token, amount);
 
         _afterDepositERC20(token, amount);
+    }
+
+    /**
+     * @inheritdoc IERC20Service
+     */
+    function getAllTrackedERC20Tokens() external view override returns (address[] memory) {
+        return _getAllTrackedERC20Tokens();
+    }
+
+    /**
+     * @inheritdoc IERC20Service
+     */
+    function balanceOfERC20(address token) external view override returns (uint256) {
+        return IERC20(token).balanceOf(address(this));
     }
 }

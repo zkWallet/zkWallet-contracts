@@ -11,22 +11,6 @@ import {RecoveryStorage} from "./RecoveryStorage.sol";
 abstract contract RecoveryInternal is IRecoveryInternal {
     using RecoveryStorage for RecoveryStorage.Layout;
 
-    function _getStatus() internal view virtual returns (IRecoveryInternal.RecoveryStatus) {
-        return IRecoveryInternal.RecoveryStatus(RecoveryStorage.layout().status);
-    }
-
-    function _getMajority() internal view virtual returns (uint256) {
-        return RecoveryStorage.layout().majority;
-    }
-
-    function _getNominee() internal view virtual returns (address) {
-        return RecoveryStorage.layout().nominee;
-    }
-
-    function _getCounter() internal view virtual returns (uint8) {
-        return RecoveryStorage.layout().counter;
-    }
-
     /**
      * @notice internal functio recover a wallet by setting a new owner,
      */
@@ -47,6 +31,22 @@ abstract contract RecoveryInternal is IRecoveryInternal {
         RecoveryStorage.layout().setMajority(0);
         RecoveryStorage.layout().setNominee(0x0000000000000000000000000000000000000000);
         RecoveryStorage.layout().setCounter(0);
+    }
+
+    function _getStatus() internal view virtual returns (IRecoveryInternal.RecoveryStatus) {
+        return IRecoveryInternal.RecoveryStatus(RecoveryStorage.layout().status);
+    }
+
+    function _getMajority() internal view virtual returns (uint256) {
+        return RecoveryStorage.layout().majority;
+    }
+
+    function _getNominee() internal view virtual returns (address) {
+        return RecoveryStorage.layout().nominee;
+    }
+
+    function _getCounter() internal view virtual returns (uint8) {
+        return RecoveryStorage.layout().counter;
     }
 
     /**

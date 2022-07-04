@@ -17,20 +17,6 @@ abstract contract ERC20ServiceInternal is IERC20ServiceInternal {
     }
 
     /**
-     * @notice query the mapping index of ERC20 tokens
-     */
-    function _getERC20TokenIndex(address tokenAddress) internal view returns (uint256) {
-        return ERC20ServiceStorage.layout().erc20TokenIndex[tokenAddress];
-    }
-
-    /**
-     * @notice query all tracked ERC20 tokens
-     */
-    function _getAllTrackedERC20Tokens() internal view returns (address[] memory) {
-        return ERC20ServiceStorage.layout().erc20Tokens;
-    }
-   
-    /**
      * @notice register a new ERC20 token
      * @param tokenAddress: the address of the ERC721 token
      */
@@ -59,6 +45,20 @@ abstract contract ERC20ServiceInternal is IERC20ServiceInternal {
         if (_getERC20TokenIndex(token) == 0) {
             _registerERC20(token);
         }
+    }
+
+    /**
+     * @notice query the mapping index of ERC20 tokens
+     */
+    function _getERC20TokenIndex(address tokenAddress) internal view returns (uint256) {
+        return ERC20ServiceStorage.layout().erc20TokenIndex[tokenAddress];
+    }
+
+    /**
+     * @notice query all tracked ERC20 tokens
+     */
+    function _getAllTrackedERC20Tokens() internal view returns (address[] memory) {
+        return ERC20ServiceStorage.layout().erc20Tokens;
     }
 
     /**

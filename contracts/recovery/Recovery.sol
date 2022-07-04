@@ -19,31 +19,6 @@ abstract contract Recovery is IRecovery, ISemaphoreInternal, RecoveryInternal, G
     /**
      * @inheritdoc IRecovery
      */
-    function getRecoveryStatus() public view virtual override returns (IRecovery.RecoveryStatus) {
-        return _getStatus();
-    }
-
-    /**
-     * @inheritdoc IRecovery
-     */
-    function getMajority() public view virtual override returns (uint256) {
-        return _getMajority();
-    }
-
-    function getRecoveryNominee() public view virtual override returns (address) {
-        return _getNominee();
-    }
-
-    /**
-     * @inheritdoc IRecovery
-     */
-    function getRecoveryCounter() public view virtual override returns (uint8) {
-        return _getCounter();
-    }
-
-    /**
-     * @inheritdoc IRecovery
-     */
     function recover(//
         uint256 groupId,
         bytes32 signal,
@@ -82,5 +57,30 @@ abstract contract Recovery is IRecovery, ISemaphoreInternal, RecoveryInternal, G
         _resetRecovery();
 
         _afterResetRecovery();
+    }
+
+    /**
+     * @inheritdoc IRecovery
+     */
+    function getRecoveryStatus() public view virtual override returns (IRecovery.RecoveryStatus) {
+        return _getStatus();
+    }
+
+    /**
+     * @inheritdoc IRecovery
+     */
+    function getMajority() public view virtual override returns (uint256) {
+        return _getMajority();
+    }
+
+    function getRecoveryNominee() public view virtual override returns (address) {
+        return _getNominee();
+    }
+
+    /**
+     * @inheritdoc IRecovery
+     */
+    function getRecoveryCounter() public view virtual override returns (uint8) {
+        return _getCounter();
     }
 }

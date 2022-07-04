@@ -4,17 +4,17 @@ pragma solidity ^0.8.4;
 
 import { SafeOwnableInternal } from "@solidstate/contracts/access/ownable/SafeOwnableInternal.sol";
 
-import { Counters } from "../utils/counters/Counters.sol";
+import { Counters } from "./Counters.sol";
 
 /**
- * @title Counters Mock 
+ * @title CountersFacet 
  */
 contract CountersFacet is Counters, SafeOwnableInternal {
-     /**
+    /**
      * @notice return the current version of CountersFacet
      */
-    function countersVersion() public pure returns (string memory) {
-        return "0.0.1";
+    function countersFacetVersion() external pure returns (string memory) {
+        return "0.1.0.alpha";
     }
     function _beforeIncrement(uint256 index) internal view virtual override onlyOwner {
         super._beforeIncrement(index);

@@ -7,8 +7,8 @@ export type DeployedContract = {
 };
 
 export type Verifier = {
+  merkleTreeDepth: number;
   contractAddress: string;
-  merkleTreeDepth: Number;
 };
 
 export type Facet = {

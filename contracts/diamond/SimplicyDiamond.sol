@@ -26,7 +26,7 @@ abstract contract SimplicyDiamond is
     using ERC165Storage for ERC165Storage.Layout;
     using OwnableStorage for OwnableStorage.Layout;
 
-    function _init(address owner_) internal {
+    function __SimplicyDiamond_init(address owner_) internal {
         ERC165Storage.Layout storage erc165 = ERC165Storage.layout();
         bytes4[] memory selectors = new bytes4[](12);
 

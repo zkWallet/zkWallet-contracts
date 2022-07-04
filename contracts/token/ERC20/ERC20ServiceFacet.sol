@@ -4,9 +4,9 @@ pragma solidity ^0.8.4;
 
 import { OwnableInternal } from "@solidstate/contracts/access/ownable/OwnableInternal.sol";
 
-import { IERC20ServiceFacet } from "../../../interfaces/facets/token/ERC20/IERC20ServiceFacet.sol";
-import { ERC20Service } from "../../../token/ERC20/ERC20Service.sol";
-import { ERC20ServiceStorage } from "../../../token/ERC20/ERC20ServiceStorage.sol";
+import { IERC20ServiceFacet } from "../../interfaces/IERC20ServiceFacet.sol";
+import { ERC20Service } from "./ERC20Service.sol";
+import { ERC20ServiceStorage } from "./ERC20ServiceStorage.sol";
 
 
 /**
@@ -18,7 +18,7 @@ contract ERC20ServiceFacet is IERC20ServiceFacet, ERC20Service, OwnableInternal 
     /**
      * @inheritdoc IERC20ServiceFacet
      */
-    function erc20ServiceFacetVersion() public pure override returns (string memory) {
+    function erc20ServiceFacetVersion() external pure override returns (string memory) {
         return "0.1.0.alpha";
     }
 

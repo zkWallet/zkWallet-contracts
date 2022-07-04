@@ -32,19 +32,6 @@ abstract contract SemaphoreGroupsBaseInternal is ISemaphoreGroupsInternal, Incre
     }
 
     /**
-     * @notice internal query query a groupAdmin.
-     * @param groupId: the groupId of the group.
-     */
-    function _getGroupAdmin(uint256 groupId)
-        internal
-        view
-        virtual
-        returns (address)
-    {
-        return SemaphoreGroupsBaseStorage.layout().groupAdmins[groupId];
-    }
-
-    /**
      * @notice internal function creates a new group by initializing the associated tree
      * @param groupId: group id of the group
      * @param depth: depth of the tree
@@ -101,6 +88,19 @@ abstract contract SemaphoreGroupsBaseInternal is ISemaphoreGroupsInternal, Incre
         uint256 root = _getRoot(groupId);
 
         emit MemberRemoved(groupId, identityCommitment, root);
+    }
+
+    /**
+     * @notice internal query query a groupAdmin.
+     * @param groupId: the groupId of the group.
+     */
+    function _getGroupAdmin(uint256 groupId)
+        internal
+        view
+        virtual
+        returns (address)
+    {
+        return SemaphoreGroupsBaseStorage.layout().groupAdmins[groupId];
     }
 
     /**

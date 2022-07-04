@@ -15,7 +15,7 @@ contract WalletFactoryFacet is IWalletFactoryFacet, WalletFactory, OwnableIntern
     /**
      * @notice return the current version of WalletFactoryFacets
      */
-    function walletFactoryFacetVersion() public pure override returns (string memory) {
+    function walletFactoryFacetVersion() external pure override returns (string memory) {
         return "0.1.0.alpha";
     }
 

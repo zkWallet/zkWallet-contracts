@@ -4,8 +4,8 @@ pragma solidity ^0.8.4;
 
 import { SafeOwnableInternal } from "@solidstate/contracts/access/ownable/SafeOwnableInternal.sol";
 import { IRecoveryFacet } from "../interfaces/IRecoveryFacet.sol";
-import { Recovery } from "../recovery/Recovery.sol";
-import { RecoveryStorage } from "../recovery/RecoveryStorage.sol";
+import { Recovery } from "./Recovery.sol";
+import { RecoveryStorage } from "./RecoveryStorage.sol";
 
 
 /**
@@ -17,7 +17,7 @@ contract RecoveryFacet is IRecoveryFacet, Recovery, SafeOwnableInternal {
     /**
      * @inheritdoc IRecoveryFacet
      */
-    function recoveryFacetVersion() public pure override returns (string memory) {
+    function recoveryFacetVersion() external pure override returns (string memory) {
         return "0.1.0.alpha";
     }
 

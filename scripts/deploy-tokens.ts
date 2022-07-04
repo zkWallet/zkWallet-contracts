@@ -17,18 +17,6 @@ async function main() {
   console.log("deployer", deployer.address);
   console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  const SimplicyERC20Upgradeable = await ethers.getContractFactory(
-    "SimplicyERC20Upgradeable"
-  );
-  const instance = await upgrades.deployProxy(SimplicyERC20Upgradeable, [
-    name,
-    symbol,
-    supply,
-  ]);
-  await instance.deployed();
-
-  console.log("SimplicyERC20Upgradeable address:", instance.address);
-
   const token = await new ERC20Mock__factory(deployer).deploy(
     name,
     symbol,
