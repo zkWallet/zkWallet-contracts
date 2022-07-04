@@ -96,6 +96,7 @@ const config: HardhatUserConfig = {
         process.env.GUARDIAN2_PRIVATE_KEY as string,
         process.env.GUARDIAN3_PRIVATE_KEY as string,
       ],
+      gasPrice: 1000000000000,
     },
     harmony: {
       url: process.env.HARMONY_URL || "",
@@ -109,15 +110,16 @@ const config: HardhatUserConfig = {
       ],
     },
     polygon: {
-      url: process.env.POLYGON_URL || "",
+      url: `https://polygon-mainnet.g.alchemy.com/v2/${
+        process.env.POLYGON_API_KEY as string
+      }`,
+      chainId: 137,
       accounts: [
         process.env.PRIVATE_KEY as string,
         process.env.ALICE_PRIVATE_KEY as string,
         process.env.BOB_PRIVATE_KEY as string,
-        process.env.GUARDIAN1_PRIVATE_KEY as string,
-        process.env.GUARDIAN2_PRIVATE_KEY as string,
-        process.env.GUARDIAN3_PRIVATE_KEY as string,
       ],
+      gasPrice: 40000000000,
     },
     mumbai: {
       url: process.env.MUMBAI_URL || "",
@@ -141,7 +143,6 @@ const config: HardhatUserConfig = {
     apiKey: {
       mainnet: process.env.ETHERSCAN_API_KEY as string,
       polygon: process.env.POLYGONSCAN_API_KEY as string,
-      mumbai: process.env.POLYGONSCAN_API_KEY as string,
     },
   },
 

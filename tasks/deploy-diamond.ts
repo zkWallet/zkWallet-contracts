@@ -10,9 +10,13 @@ task("deploy:diamond", "Deploy diamond contract")
     types.string
   )
   .addOptionalParam("args", "The args of the contract", undefined, types.json)
+  .addOptionalParam("nonce", "The nonce of the deployer", "", types.string)
   .addParam("name", "Diamond name", undefined, types.string)
   .setAction(
-    async ({ logs, owner, args, name }, { ethers }): Promise<Contract> => {
+    async (
+      { logs, owner, args, nonce, name },
+      { ethers }
+    ): Promise<Contract> => {
       const [deployer] = await ethers.getSigners();
 
       const ContractFactory = await ethers.getContractFactory(name, {
@@ -28,7 +32,7 @@ task("deploy:diamond", "Deploy diamond contract")
       } else if (owner && args) {
         diamond = await ContractFactory.deploy(owner, args);
       } else {
-        diamond = await ContractFactory.deploy();
+        diamond = await ContractFactory.deploy({ nonce: nonce });
       }
 
       await diamond.deployed();

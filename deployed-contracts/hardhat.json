@@ -67,10 +67,5 @@
         "name": "Add facet to Factory, Facet address: 0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e",
         "contractAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
         "hash": "0xceeb5a0b16ad4dafc30fb8051b883289f018d4fe150cac30d528d899c2c043b5"
-    },
-    {
-        "name": "Create wallet for Alice, new wallet created address: 0xa16E02E87b7454126E5E10d957A927A7F5B5d2be",
-        "contractAddress": "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-        "hash": "0xa1e38b53e45cb652910ff33431caf7f542de2d03c791cee54599aaa01222146d"
     }
 ]

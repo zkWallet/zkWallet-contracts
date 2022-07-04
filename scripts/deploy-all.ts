@@ -20,7 +20,7 @@ import { DeployedContract, Verifier, Facet } from "../types";
 async function main() {
   const [deployer, aliceWallet, bobWallet] = await ethers.getSigners();
 
-  let diamond: ZkWalletFactoryDiamond;
+  let diamond: any | Contract | ZkWalletFactoryDiamond;
   let instance: Contract | IWalletFactoryFacet;
   let aliceGuardianInstance: Contract | IGuardianFacet;
   let aliceSemaphoreInstance: Contract | ISemaphoreFacet;
@@ -44,6 +44,9 @@ async function main() {
 
   const depth = Number(process.env.TREE_DEPTH);
 
+  let nonce = await ethers.provider.getTransactionCount(deployer.address);
+  console.log("nonce =" + nonce);
+
   console.log("network:", network.name);
   console.log("deployer", deployer.address);
   console.log("Account balance:", (await deployer.getBalance()).toString());
@@ -56,8 +59,14 @@ async function main() {
 
   diamond = await run("deploy:diamond", {
     name: "ZkWalletFactoryDiamond",
+    nonce: nonce.toString(),
     logs: true,
   });
+
+  // diamond = await ethers.getContractAt(
+  //   "ZkWalletFactoryDiamond",
+  //   "0x7Cbe3DB16C1e29e2394B3D8EB190bB72Da9A098C"
+  // );
 
   deployedContracts.push({
     name: "ZkWalletFactoryDiamond",
@@ -133,7 +142,7 @@ async function main() {
     ],
     logs: true,
   });
-  for (let i = 0; i < anotherWalletFacets.length; i++) {
+  for (let i = 0; i < facets.length; i++) {
     deployedContracts.push({
       name: anotherWalletFacets[i].name,
       address: anotherWalletFacets[i].address,
@@ -189,6 +198,9 @@ async function main() {
     { merkleTreeDepth: 20, contractAddress: foundVerifier[0].address },
   ];
 
+  console.log("newFacets:", newFacets);
+  console.log("verifiers:", verifiers);
+
   walletDiamond = await new ZkWalletDiamond__factory(deployer).deploy(
     deployer.address,
     newFacets,
@@ -240,23 +252,23 @@ async function main() {
       hash: anotherAddFacetTrx.hash,
     });
   }
-  console.log(await instance.getFacets());
+  // console.log(await instance.getFacets());
 
-  const hashId = ethers.utils.formatBytes32String("1");
+  // const hashId = ethers.utils.formatBytes32String("1");
 
-  const trx = await instance["createWallet(bytes32,address,(uint8,address)[])"](
-    hashId,
-    aliceWallet.address,
-    verifiers
-  );
+  // const trx = await instance["createWallet(bytes32,address,(uint8,address)[])"](
+  //   hashId,
+  //   aliceWallet.address,
+  //   verifiers
+  // );
 
-  const receipt = await trx.wait();
-  console.log("Alice address", receipt.events[0].address);
-  transactionHash.push({
-    name: `Create wallet for Alice, new wallet created address: ${receipt.events[0].address}`,
-    contractAddress: instance.address,
-    hash: trx.hash,
-  });
+  // const receipt = await trx.wait();
+  // console.log("Alice address", receipt.events[0].address);
+  // transactionHash.push({
+  //   name: `Create wallet for Alice, new wallet created address: ${receipt.events[0].address}`,
+  //   contractAddress: instance.address,
+  //   hash: trx.hash,
+  // });
 
   // const newDiamond = await ethers.getContractAt("ZkWalletDiamond", newWallet);
 

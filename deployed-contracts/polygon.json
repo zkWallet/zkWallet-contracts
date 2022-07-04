@@ -1,0 +1,71 @@
+[
+    {
+        "name": "ZkWalletFactoryDiamond",
+        "address": "0x083409136b251DC1A8c47958874C80197424dFdF"
+    },
+    {
+        "name": "PoseidonT3",
+        "address": "0xe3E689D1cb070713C88A18C3A13f266B4fD58778"
+    },
+    {
+        "name": "Verifier20",
+        "address": "0x727C8e95D76Feef514c1AF34d4CDAE61266FC2Ba"
+    },
+    {
+        "name": "WalletFactoryFacet",
+        "address": "0x1c0966796C46C8e4230B9f4D1Fe151Efa1eB75fD"
+    },
+    {
+        "name": "GuardianFacet",
+        "address": "0x9b28bED203EDd813d6D278FC8AF9743CEeB081A0"
+    },
+    {
+        "name": "RecoveryFacet",
+        "address": "0x1CB9e127D7f25C2dE99de822B72B47da85a3D37E"
+    },
+    {
+        "name": "ZkWalletDiamond",
+        "address": "0xE1F42c534828d93B31f21657F0bfe48C879A1107"
+    }
+][
+    {
+        "name": "Add diamond to Factory, diamond address: 0xE1F42c534828d93B31f21657F0bfe48C879A1107",
+        "contractAddress": "0x083409136b251DC1A8c47958874C80197424dFdF",
+        "hash": "0x6c8081aaa8eb65c59f02be4444362d0b68fc325dd30a182672016285c1044f11"
+    },
+    {
+        "name": "Add facet to Factory, Facet address: 0x9b28bED203EDd813d6D278FC8AF9743CEeB081A0",
+        "contractAddress": "0x083409136b251DC1A8c47958874C80197424dFdF",
+        "hash": "0xcdfa5ab45b4fd1cb8bbba5f7d5a8f548e93020e0b4d5969428650439bbe749a7"
+    },
+    {
+        "name": "Add facet to Factory, Facet address: 0xb1a9662b07263CB7419eBa90fA7cF835ee686965",
+        "contractAddress": "0x083409136b251DC1A8c47958874C80197424dFdF",
+        "hash": "0x927d865b8a4c747598c309339bbec636e6cd523f9385cce23c61fdff89d44766"
+    },
+    {
+        "name": "Add facet to Factory, Facet address: 0x1CB9e127D7f25C2dE99de822B72B47da85a3D37E",
+        "contractAddress": "0x083409136b251DC1A8c47958874C80197424dFdF",
+        "hash": "0xc22314df59e24927b2836fb0df563748c9cec6cf01b6de8a1395a18d3341d228"
+    },
+    {
+        "name": "Add facet to Factory, Facet address: 0xf6CBd386fAE126414Ac3eAD9b6419Ed620f17446",
+        "contractAddress": "0x083409136b251DC1A8c47958874C80197424dFdF",
+        "hash": "0xefd7f0647fb86b961849b1bf1463fb59451ee2204b2c7a0000f3e30695abb889"
+    },
+    {
+        "name": "Add facet to Factory, Facet address: 0xc241533F9D0F9DEC506d5D8da68C430BAFd26e5A",
+        "contractAddress": "0x083409136b251DC1A8c47958874C80197424dFdF",
+        "hash": "0x59562c598d978ff96fdd34691108e0524f062a3bc1349eda3bc2cb1b6e94fa49"
+    },
+    {
+        "name": "Add facet to Factory, Facet address: 0x0D47a2Ca986fCCAFCe7b93178383c64855241704",
+        "contractAddress": "0x083409136b251DC1A8c47958874C80197424dFdF",
+        "hash": "0x763c75bd98cb9536e73669ee0d67de2467c23c8f3c6d104c8addfac82a9c397a"
+    },
+    {
+        "name": "Add facet to Factory, Facet address: 0x17aBCcd552D3D026dCfDA1BB1E3F4C107Fcb288b",
+        "contractAddress": "0x083409136b251DC1A8c47958874C80197424dFdF",
+        "hash": "0x82dd6297c8768f93ccb7c171ae23328f07e472e2b41bc1b80cb03feb1d716302"
+    }
+]

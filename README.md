@@ -323,9 +323,34 @@ Alice address 0x2FBf87AFCD35c291441Bc1dA23dabdbDB77b2100
 ✨  Done in 352.21s.
 ```
 
-## Deployment on Mainnet
+## Deployment on Polygon Mainnet
 ```
-
+nonce =0
+network: polygon
+deployer 0xA023A773610B3DaD60f3c5787101D4681110e861
+Account balance: 1305966314207646794
+ZkWalletFactoryDiamond contract has been deployed to: 0x083409136b251DC1A8c47958874C80197424dFdF
+PoseidonT3 contract has been deployed to: 0xe3E689D1cb070713C88A18C3A13f266B4fD58778
+Verifier20 contract has been deployed to: 0x727C8e95D76Feef514c1AF34d4CDAE61266FC2Ba
+[ { name: 'WalletFactoryFacet' } ]
+WalletFactoryFacet contract has been deployed to: 0x1c0966796C46C8e4230B9f4D1Fe151Efa1eB75fD
+[ { name: 'GuardianFacet' }, { name: 'SemaphoreGroupsFacet' } ]
+GuardianFacet contract has been deployed to: 0x9b28bED203EDd813d6D278FC8AF9743CEeB081A0
+SemaphoreGroupsFacet contract has been deployed to: 0xb1a9662b07263CB7419eBa90fA7cF835ee686965
+[
+  { name: 'RecoveryFacet' },
+  { name: 'ERC20ServiceFacet' },
+  { name: 'ERC721ServiceFacet' },
+  { name: 'SemaphoreFacet' },
+  { name: 'EtherServiceFacet' }
+]
+RecoveryFacet contract has been deployed to: 0x1CB9e127D7f25C2dE99de822B72B47da85a3D37E
+ERC20ServiceFacet contract has been deployed to: 0xf6CBd386fAE126414Ac3eAD9b6419Ed620f17446
+ERC721ServiceFacet contract has been deployed to: 0xc241533F9D0F9DEC506d5D8da68C430BAFd26e5A
+SemaphoreFacet contract has been deployed to: 0x0D47a2Ca986fCCAFCe7b93178383c64855241704
+EtherServiceFacet contract has been deployed to: 0x17aBCcd552D3D026dCfDA1BB1E3F4C107Fcb288b
+ZkWalletDiamond deployed at: 0xE1F42c534828d93B31f21657F0bfe48C879A1107
+✨  Done in 90.61s.
 ```
 
 ## Contribute
