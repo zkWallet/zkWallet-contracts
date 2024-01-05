@@ -1,0 +1,106 @@
+yarn run v1.22.21
+$ hardhat run scripts/deploy-all.ts --network gobiTestnet
+network: gobiTestnet
+deployer 0x1D0F925ed121a53B9241c129D6CE5DB130e2C3d6
+Account balance: 5482521179998938934
+aliceWallet 0x9d5CC1FaC7916308244ce6F912d503711467Bcb2
+Account balance: 1510000000000000000
+bobWallet 0x81Bb78D23A309dacB5d1d6faeeb7BA881EB58a33
+Account balance: 1000000000000000000
+Verifier16 contract has been deployed to: 0x2f5093aCcce2eb61d609f0B02BDeEAF05d41c684
+Verifier17 contract has been deployed to: 0x291Caeb892a79D39CdBEAA5dD8127B6372E930a7
+Verifier18 contract has been deployed to: 0x70E87f5b8CAc83B91dAAC45e7601Fe34C490F1B3
+Verifier19 contract has been deployed to: 0x2CdDf9F177813b2fFA76fBBe9910aBd4dF0ab184
+Verifier20 contract has been deployed to: 0x2e35a6d09b8887BfEfe5dDe6acC2e48C4AFA8781
+Verifier21 contract has been deployed to: 0x2bD1FF2Bd50EAb7083Ca4Ebe96cc3991bd64b941
+Verifier22 contract has been deployed to: 0x2889Fc143AFF2dB5B20884Ee399b849a3762d4A4
+Verifier23 contract has been deployed to: 0xBa778b0242B7c6211c368259811D94B5AF603777
+Verifier24 contract has been deployed to: 0x906D30A622b9DfaA4D9f4D25fcaacde9fD115BAe
+Verifier25 contract has been deployed to: 0x4ACa4ab14760c4b6A2159a4172FDFD9aF88aef1A
+Verifier26 contract has been deployed to: 0x267e70cEcd90C53F112De61F170D847C932c0792
+Verifier27 contract has been deployed to: 0xe162999bD92DAE9C717b8387f6aA975de29c56f3
+Verifier28 contract has been deployed to: 0xC24Da02f228bA1662b92910b49F131cc1ee51964
+Verifier29 contract has been deployed to: 0xa38e2321b2596068F402012fc327b5cf390721CB
+Verifier30 contract has been deployed to: 0xc739acDfb7E5320682dFd7B6D39504Fe8C05051B
+Verifier31 contract has been deployed to: 0x866E8dc84B4B44207343F21dF01fb0f84BC780e0
+Verifier32 contract has been deployed to: 0x72d0E07D8c017A6A86Ac3918b2BA4F093FE21a2c
+WalletFactoryDiamond contract has been deployed to: 0x485599f30552B7DC60d9145B731169F5E10CC69b
+[ { name: 'WalletFactoryFacet' }, { name: 'CountersFacet' } ]
+WalletFactoryFacet contract has been deployed to: 0x9aaC57D7398f820f715238498e7c452f0792501C
+CountersFacet contract has been deployed to: 0xB1286ee1BF904F7369C563A8798C397185D47847
+SimplicyWalletDiamond contract has been deployed to: 0x3703C700B889F18ff790d7e804e2E1E816Be83A1
+PoseidonT3 contract has been deployed to: 0x06e1e09227F6b8EcE4423590D57CAe218e75CcCF
+[ { name: 'GuardianFacet' }, { name: 'SemaphoreGroupsFacet' } ]
+GuardianFacet contract has been deployed to: 0x77Cb37C025784407528df08e7470845aBD4129Ee
+SemaphoreGroupsFacet contract has been deployed to: 0xEc749138c50Dc725C2C6f91E4f081b50e7EA094B
+[
+  { name: 'ERC20Facet' },
+  { name: 'ERC721Facet' },
+  { name: 'RecoveryFacet' },
+  { name: 'SemaphoreFacet' },
+  { name: 'SemaphoreVotingFacet' }
+]
+ERC20Facet contract has been deployed to: 0x7d4CAE6d97844D53Df1a4029573D398Df08E18AA
+ERC721Facet contract has been deployed to: 0xdfe56d4488Ef945476C2AF7c8f3342F80b4c97F7
+RecoveryFacet contract has been deployed to: 0x631B28044eF369CE3B79cC6969761C620b53C6E9
+SemaphoreFacet contract has been deployed to: 0xD961956380A5B37E1aB37524dba8924543304f28
+SemaphoreVotingFacet contract has been deployed to: 0x2f3e71b29753b230038eD4f655a068E13097a5Af
+WalletFactoryDiamond version: 0.0.1
+walletFactoryFacetVersion: 0.0.1
+SimplicyWalletDiamond version: 0.0.1
+#addDiamond====================================
+txEvent: [
+  {
+    transactionIndex: 2,
+    blockNumber: 1298316,
+    transactionHash: '0xa0dacf01b7ce4be8cf3979bd5e87f0dce7ae3687d16a6aad4c02e500703ca119',
+    address: '0x485599f30552B7DC60d9145B731169F5E10CC69b',
+    topics: [
+      '0x4703b806ce253ec467a0cec6e96db61459e46d554e98ae0c96e6bffc747e3018'
+    ],
+    data: '0x0000000000000000000000003703c700b889f18ff790d7e804e2e1e816be83a1',
+    logIndex: 1,
+    blockHash: '0x2c04e47c3158298d2497f0d8c641da619a80cdc91700e9cc1fbdea760bc72afd',
+    args: [
+      '0x3703C700B889F18ff790d7e804e2E1E816Be83A1',
+      wallet: '0x3703C700B889F18ff790d7e804e2E1E816Be83A1'
+    ],
+    decode: [Function (anonymous)],
+    event: 'DiamondIsSet',
+    eventSignature: 'DiamondIsSet(address)',
+    removeListener: [Function (anonymous)],
+    getBlock: [Function (anonymous)],
+    getTransaction: [Function (anonymous)],
+    getTransactionReceipt: [Function (anonymous)]
+  }
+]
+#addFacet==================================== 5
+Verifier20 0x2e35a6d09b8887BfEfe5dDe6acC2e48C4AFA8781
+Error: cannot estimate gas; transaction may fail or may require manual gas limit [ See: https://links.ethers.org/v5-errors-UNPREDICTABLE_GAS_LIMIT ] (reason="Execution reverted", method="estimateGas", transaction={"from":"0x9d5CC1FaC7916308244ce6F912d503711467Bcb2","to":"0x047A6972c7F14Bc519b7AE3986D715b4e21b19A3","data":"0x1417aa05000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000010000000000000000000000002e35a6d09b8887bfefe5dde6acc2e48c4afa87810000000000000000000000000000000000000000000000000000000000000014","accessList":null}, error={"name":"ProviderError","code":-32000,"_isProviderError":true,"data":"0x08c379a0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000324469616d6f6e64426173653a206e6f20666163657420666f756e6420666f722066756e6374696f6e207369676e61747572650000000000000000000000000000"}, code=UNPREDICTABLE_GAS_LIMIT, version=providers/5.6.8)
+    at Logger.makeError (/Users/iamdev/Documents/zkWallet/zkWallet-contracts/node_modules/@ethersproject/logger/src.ts/index.ts:261:28)
+    at Logger.throwError (/Users/iamdev/Documents/zkWallet/zkWallet-contracts/node_modules/@ethersproject/logger/src.ts/index.ts:273:20)
+    at checkError (/Users/iamdev/Documents/zkWallet/zkWallet-contracts/node_modules/@ethersproject/providers/src.ts/json-rpc-provider.ts:78:20)
+    at EthersProviderWrapper.<anonymous> (/Users/iamdev/Documents/zkWallet/zkWallet-contracts/node_modules/@ethersproject/providers/src.ts/json-rpc-provider.ts:603:20)
+    at step (/Users/iamdev/Documents/zkWallet/zkWallet-contracts/node_modules/@ethersproject/providers/lib/json-rpc-provider.js:48:23)
+    at Object.throw (/Users/iamdev/Documents/zkWallet/zkWallet-contracts/node_modules/@ethersproject/providers/lib/json-rpc-provider.js:29:53)
+    at rejected (/Users/iamdev/Documents/zkWallet/zkWallet-contracts/node_modules/@ethersproject/providers/lib/json-rpc-provider.js:21:65)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5) {
+  reason: 'Execution reverted',
+  code: 'UNPREDICTABLE_GAS_LIMIT',
+  method: 'estimateGas',
+  transaction: {
+    from: '0x9d5CC1FaC7916308244ce6F912d503711467Bcb2',
+    to: '0x047A6972c7F14Bc519b7AE3986D715b4e21b19A3',
+    data: '0x1417aa05000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000010000000000000000000000002e35a6d09b8887bfefe5dde6acc2e48c4afa87810000000000000000000000000000000000000000000000000000000000000014',
+    accessList: null
+  },
+  error: ProviderError: Execution reverted
+      at HttpProvider.request (/Users/iamdev/Documents/zkWallet/zkWallet-contracts/node_modules/hardhat/src/internal/core/providers/http.ts:78:19)
+      at LocalAccountsProvider.request (/Users/iamdev/Documents/zkWallet/zkWallet-contracts/node_modules/hardhat/src/internal/core/providers/accounts.ts:188:34)
+      at runMicrotasks (<anonymous>)
+      at processTicksAndRejections (node:internal/process/task_queues:96:5)
+      at async EthersProviderWrapper.send (/Users/iamdev/Documents/zkWallet/zkWallet-contracts/node_modules/@nomiclabs/hardhat-ethers/src/internal/ethers-provider-wrapper.ts:13:20)
+}
+error Command failed with exit code 1.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
